@@ -7,9 +7,11 @@ use App\Entity\Sortie;
 use App\Form\RechercheType;
 use App\Form\SortieType;
 use App\Repository\CampusRepository;
+use App\Repository\EtatRepository;
 use App\Repository\LieuRepository;
 use App\Repository\SortieRepository;
 use App\Repository\VilleRepository;
+use http\Client\Curl\User;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -55,7 +57,9 @@ class SortieController extends AbstractController
     public function new(Request $request,
                         SortieRepository $sortieRepository,
                         VilleRepository $villeRepository,
-                        LieuRepository $lieuRepository
+                        LieuRepository $lieuRepository,
+                        EtatRepository $etatRepository,
+                        CampusRepository $campusRepository
     ): Response
     {
         $sortie = new Sortie();
@@ -65,9 +69,9 @@ class SortieController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $sortie->setEtat(1);
-            $sortie->setOrganisateur(1);
-            $sortie->setCampus(1);
+            $sortie->setEtat($etatRepository->findAll()[0]);
+            $sortie->setOrganisateur($this->getUser());
+            $sortie->setCampus($form['campus']->getData());
             $sortieRepository->add($sortie);
             return $this->redirectToRoute('app_sortie_index', [], Response::HTTP_SEE_OTHER);
         }
@@ -115,5 +119,13 @@ class SortieController extends AbstractController
         }
 
         return $this->redirectToRoute('app_sortie_index', [], Response::HTTP_SEE_OTHER);
+    }
+
+    #[Route('sortie/etat/{id}', name: 'app_modif_etat', methods: ['GET'])]
+    public function modifEtat(Sortie $sortie, SortieRepository $sortieRepository,EtatRepository $etatRepository): Response
+    {
+       $sortie->setEtat($etatRepository->findOneBy(['id' => '2']));
+       $sortieRepository->modifEtat($sortie);
+       return $this->redirectToRoute('app_sortie_index', [], Response::HTTP_SEE_OTHER);
     }
 }
