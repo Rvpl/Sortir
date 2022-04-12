@@ -59,6 +59,13 @@ class SortieRepository extends ServiceEntityRepository
                 ->getResult();
     }
 
+    public function modifEtat(Sortie $sortie,bool $flush = true){
+        $sortie->setEtat($sortie->getEtat());
+        if($flush){
+            $this->_em->flush();
+        }
+    }
+
     // /**
     //  * @return Sortie[] Returns an array of Sortie objects
     //  */
