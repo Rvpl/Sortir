@@ -1,33 +1,44 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Sortie index{% endblock %}
+{% block title %}Sorties{% endblock %}
 
 {% block body %}
-    <h1>Sortie index</h1>
 
-    <table class="table">
+    <div id="entete">
+        <b>Filtrer les sorties</b>
+        {{ form_start(formRecherche) }}
+            {{ form_row(formRecherche.campus) }}
+            {{ form_row(formRecherche.nom) }}
+            {{ form_row(formRecherche.dateHeureDebut) }}
+            {{ form_row(formRecherche.dateLimiteInscription) }}
+        <button  type="submit" class="btn btn-primary">{{ button_label|default('Rechercher') }}</button>
+        {{ form_end(formRecherche) }}
+        <br>
+    </div>
+
+    <table class="table table-dark table-striped">
         <thead>
             <tr>
-                <th>Id</th>
                 <th>Nom</th>
-                <th>DateHeureDebut</th>
-                <th>Duree</th>
-                <th>DateLimiteInscription</th>
-                <th>NbInscriptionMax</th>
-                <th>InfoSortie</th>
-                <th>actions</th>
+                <th>Date de la sortie</th>
+                <th>Clôture</th>
+                <th>Inscrits/places</th>
+                <th>Etat</th>
+                <th>Inscrit</th>
+                <th>Organisateur</th>
+                <th>Actions</th>
             </tr>
         </thead>
         <tbody>
         {% for sortie in sorties %}
             <tr>
-                <td>{{ sortie.id }}</td>
                 <td>{{ sortie.nom }}</td>
-                <td>{{ sortie.dateHeureDebut ? sortie.dateHeureDebut|date('Y-m-d H:i:s') : '' }}</td>
-                <td>{{ sortie.duree ? sortie.duree|date('H:i:s') : '' }}</td>
-                <td>{{ sortie.dateLimiteInscription ? sortie.dateLimiteInscription|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ sortie.dateHeureDebut ? sortie.dateHeureDebut|date('Y-m-d H:i') : '' }}</td>
+                <td>{{ sortie.dateLimiteInscription ? sortie.dateLimiteInscription|date('Y-m-d H:i') : '' }}</td>
                 <td>{{ sortie.nbInscriptionMax }}</td>
-                <td>{{ sortie.infoSortie }}</td>
+                <td>{{ sortie.etat.libelle }}</td>
+                <td></td>
+                <td>{{ sortie.organisateur.nom }}</td>
                 <td>
                     <a href="{{ path('app_sortie_show', {'id': sortie.id}) }}">show</a>
                     <a href="{{ path('app_sortie_edit', {'id': sortie.id}) }}">edit</a>
@@ -41,5 +52,7 @@
         </tbody>
     </table>
 
-    <a href="{{ path('app_sortie_new') }}">Create new</a>
+    <a href="{{ path('app_sortie_new') }}">
+        <button class="btn btn-warning">Créer une sortie</button>
+    </a>
 {% endblock %}
