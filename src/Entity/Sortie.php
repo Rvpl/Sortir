@@ -45,6 +45,9 @@ class Sortie
     #[ORM\ManyToMany(targetEntity: Participant::class, inversedBy: 'sorties')]
     private $inscrits;
 
+    #[ORM\ManyToOne(targetEntity: Lieu::class, inversedBy: 'sorties')]
+    private $lieu;
+
     public function __construct()
     {
         $this->inscrits = new ArrayCollection();
@@ -183,6 +186,18 @@ class Sortie
     public function removeInscrit(Participant $inscrit): self
     {
         $this->inscrits->removeElement($inscrit);
+
+        return $this;
+    }
+
+    public function getLieu(): ?Lieu
+    {
+        return $this->lieu;
+    }
+
+    public function setLieu(?Lieu $lieu): self
+    {
+        $this->lieu = $lieu;
 
         return $this;
     }
