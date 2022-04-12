@@ -59,7 +59,7 @@ class CampusController extends AbstractController
 
         return $this->renderForm('campus/edit.html.twig', [
             'campus' => $campus,
-            'form' => $form,
+            'formCampus' => $form,
         ]);
     }
 
