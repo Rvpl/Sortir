@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Sortie;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\ORMException;
 use Doctrine\Persistence\ManagerRegistry;
@@ -43,6 +44,19 @@ class SortieRepository extends ServiceEntityRepository
         if ($flush) {
             $this->_em->flush();
         }
+    }
+    public function recherche(Sortie $sortie){
+        $qb = $this->createQueryBuilder('s')
+            ->where('s.nom LIKE :nom')
+            ->andWhere('s.dateHeureDebut = :dateDebut')
+            ->andWhere('s.dateLimiteInscription = :dateLim')
+            ->andWhere('s.campus = :campus')
+            ->setParameter('nom','%'.$sortie->getNom().'%')
+            ->setParameter('dateDebut',$sortie->getDateHeureDebut())
+            ->setParameter('dateLim',$sortie->getDateLimiteInscription())
+            ->setParameter('campus',$sortie->getCampus()->getId());
+            return $qb->getQuery()
+                ->getResult();
     }
 
     // /**
