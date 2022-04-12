@@ -3,35 +3,59 @@
 {% block title %}Ville index{% endblock %}
 
 {% block body %}
-    <h1>Ville index</h1>
+    <h1>Gérer les villes</h1>
+    <div>
+        <h5>Filter les villes</h5>
+        <form>
 
+        </form>
+    </div>
     <table class="table">
         <thead>
             <tr>
-                <th>Id</th>
-                <th>Nom</th>
-                <th>CodePostal</th>
-                <th>actions</th>
+                <th>Ville</th>
+                <th>Code Postal</th>
+                <th>Actions</th>
             </tr>
         </thead>
         <tbody>
+
         {% for ville in villes %}
             <tr>
-                <td>{{ ville.id }}</td>
                 <td>{{ ville.nom }}</td>
                 <td>{{ ville.codePostal }}</td>
                 <td>
                     <a href="{{ path('app_ville_show', {'id': ville.id}) }}">show</a>
                     <a href="{{ path('app_ville_edit', {'id': ville.id}) }}">edit</a>
+                    <a href="{{ path('app_ville_delete', {'id': ville.id}) }}">delete</a>
                 </td>
+            </tr>
+            <tr>
+
             </tr>
         {% else %}
             <tr>
-                <td colspan="4">no records found</td>
+                <td colspan="4">Aucune ville enregistrée</td>
             </tr>
         {% endfor %}
+
         </tbody>
     </table>
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@getbootstrap">Ajouter une ville</button>
 
-    <a href="{{ path('app_ville_new') }}">Create new</a>
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Nouvelle Ville</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    {{ include('ville/_form.html.twig') }}
+                </div>
+            </div>
+        </div>
+    </div>
+
+
 {% endblock %}
