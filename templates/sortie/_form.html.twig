@@ -1,7 +1,22 @@
 {{ form_start(form) }}
-    {{ form_widget(form) }}
-
-
+    {{ form_row(form.nom) }}
+    {{ form_row(form.dateHeureDebut) }}
+    {{ form_row(form.duree) }}
+    {{ form_row(form.dateLimiteInscription) }}
+    {{ form_row(form.nbInscriptionMax) }}
+    {{ form_row(form.infoSortie) }}
+    {% for ville in villes %}
+        {{ ville.nom }}
+    {% endfor %}
+    {{ form_row(form.campus) }}
+    {{ form_row(form.lieu) }}
+    {% for ville in villes %}
+        {{ ville.codePostal }}
+    {% endfor %}
+    {% for lieu in lieux %}
+        {{ lieu.rue }}
+    {% endfor %}
+    {{ form_row(form.rue) }}
     <button class="btn">{{ button_label|default('Enregistrer') }}</button>
     <button class="btn">{{ button_label|default('Publier ton événement') }}</button>
     <button class="btn">{{ button_label|default('Annuler') }}</button>
