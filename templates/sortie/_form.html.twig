@@ -6,17 +6,16 @@
     {{ form_row(form.nbInscriptionMax) }}
     {{ form_row(form.infoSortie) }}
     {% for ville in villes %}
-        {{ ville.nom }}
+       <p>Ville : {{ ville.nom }}</p>
     {% endfor %}
     {{ form_row(form.campus) }}
     {{ form_row(form.lieu) }}
     {% for ville in villes %}
-        {{ ville.codePostal }}
+        <p>Code postal : {{ ville.codePostal }}</p>
     {% endfor %}
     {% for lieu in lieux %}
-        {{ lieu.rue }}
+        <p>Rue : {{ lieu.rue }}</p>
     {% endfor %}
-    {{ form_row(form.rue) }}
     <button class="btn">{{ button_label|default('Enregistrer') }}</button>
     <button class="btn">{{ button_label|default('Publier ton événement') }}</button>
     <button class="btn">{{ button_label|default('Annuler') }}</button>
