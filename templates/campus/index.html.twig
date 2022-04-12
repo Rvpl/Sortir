@@ -16,11 +16,10 @@
         <tbody>
         {% for campus in campuses %}
             <tr>
-                <td>{{ campus.id }}</td>
                 <td>{{ campus.nom }}</td>
                 <td>
-                    <a href="{{ path('app_campus_show', {'id': campus.id}) }}">show</a>
                     <a href="{{ path('app_campus_edit', {'id': campus.id}) }}">edit</a>
+                    <a href="{{ path('app_campus_delete', {'id': campus.id}) }}">delete</a>
                 </td>
             </tr>
         {% else %}
@@ -31,5 +30,19 @@
         </tbody>
     </table>
 
-    <a href="{{ path('app_campus_new') }}">Create new</a>
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@getbootstrap">Nouveau campus</button>
+
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Entrez un campus</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    {{ include('campus/_form.html.twig') }}
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}
