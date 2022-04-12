@@ -1,0 +1,28 @@
+.titreSortie{
+    text-align: center;
+}
+.cards {
+    margin: 2em 5em;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(150px, 1fr));
+    grid-gap: 20px;
+
+}
+
+.card {
+    text-align: center;
+    display: grid;
+    grid-template-rows: max-content 50px 0fr;
+}
+.boutonsShow{
+    display:block;
+    text-align: center;
+}
+.boutonsShow a{
+
+    text-decoration: none;
+}
+.btnSup{
+    display:block;
+    text-align: center;
+}

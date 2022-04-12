@@ -9,6 +9,7 @@ use App\Entity\Ville;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
+use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -27,7 +28,7 @@ class SortieType extends AbstractType
             ->add('dateHeureDebut', DateTimeType::class, [
                 "label" => "Date et heure de la sortie : "
                 ])
-            ->add('duree', IntegerType::class, [
+            ->add('duree', TimeType::class, [
                 "label" => "Durée :"
             ])
             ->add('dateLimiteInscription',DateTimeType::class, [
@@ -48,12 +49,11 @@ class SortieType extends AbstractType
             ->add('lieu', EntityType::class,
                 [
                     "class" => Lieu::class,
-                    "choice_label" => "nom"
+                    "choice_label" => "nom",
                 ])
-
-
-
-
+            ->add('rue', FormType::class, [
+                'mapped' => false
+            ])
         ;
     }
 

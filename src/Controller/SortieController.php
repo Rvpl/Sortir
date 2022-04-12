@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Sortie;
 use App\Entity\Ville;
 use App\Form\SortieType;
+use App\Repository\LieuRepository;
 use App\Repository\SortieRepository;
 use App\Repository\VilleRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -26,10 +27,12 @@ class SortieController extends AbstractController
     #[Route('/new', name: 'app_sortie_new', methods: ['GET', 'POST'])]
     public function new(Request $request,
                         SortieRepository $sortieRepository,
-                        VilleRepository $villeRepository
+                        VilleRepository $villeRepository,
+                        LieuRepository $lieuRepository
     ): Response
     {
         $sortie = new Sortie();
+        $lieu = $lieuRepository->findAll();
         $ville = $villeRepository->findAll();
         $form = $this->createForm(SortieType::class, $sortie);
         $form->handleRequest($request);
@@ -43,16 +46,18 @@ class SortieController extends AbstractController
         return $this->renderForm('sortie/new.html.twig',[
             'sortie' => $sortie,
             'form' => $form,
-            'villes' => $ville
+            'villes' => $ville,
+            'lieux' => $lieu
         ]);
     }
 
     #[Route('/{id}', name: 'app_sortie_show', methods: ['GET'])]
-    public function show(Sortie $sortie): Response
+    public function show(Sortie $sortie, VilleRepository $villeRepository,): Response
     {
+        $ville = $villeRepository->findAll();
         return $this->render('sortie/show.html.twig', [
             'sortie' => $sortie,
-
+            'villes' => $ville
         ]);
     }
 
