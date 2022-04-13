@@ -1,0 +1,25 @@
+
+{{ form_start(form) }}
+    <p>Nom de la sortie : {{ sortie.nom }}</p>
+    <p>Campus: {{ sortie.campus.nom }}</p>
+
+    {% for ville in villes %}
+        <p>Code postal : {{ ville.codePostal }}</p>
+    {% endfor %}
+    {% for lieu in lieux %}
+        <p>Lieu : {{ lieu.nom }} {{ lieu.rue }} {{ lieu.ville.nom }} {{ lieu.ville.codePostal }}</p>
+    {% endfor %}
+
+
+    <label for="motif">Motif:</label>
+    <textarea id="motif" name="motif"
+              rows="3" cols="33">
+
+</textarea>
+
+    <button class="btn">{{ button_label|default('Annuler') }}</button>
+    {{ form_end(form) }}
+
+
+
+

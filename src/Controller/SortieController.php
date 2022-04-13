@@ -64,7 +64,7 @@ class SortieController extends AbstractController
                         VilleRepository $villeRepository,
                         LieuRepository $lieuRepository,
                         EtatRepository $etatRepository,
-                        CampusRepository $campusRepository
+
     ): Response
     {
         $sortie = new Sortie();
@@ -90,7 +90,7 @@ class SortieController extends AbstractController
     }
 
     #[Route('sortie/{id}', name: 'app_sortie_show', methods: ['GET'])]
-    public function show(Sortie $sortie, VilleRepository $villeRepository,): Response
+    public function show(Sortie $sortie, VilleRepository $villeRepository): Response
     {
         $ville = $villeRepository->findAll();
         return $this->render('sortie/show.html.twig', [
@@ -100,8 +100,14 @@ class SortieController extends AbstractController
     }
 
     #[Route('sortie/{id}/edit', name: 'app_sortie_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Sortie $sortie, SortieRepository $sortieRepository): Response
+    public function edit(Request $request, Sortie $sortie,
+                         SortieRepository $sortieRepository,
+                         VilleRepository $villeRepository,
+                         LieuRepository $lieuRepository
+    ): Response
     {
+        $formAnnul = $this->createForm(SortieType::class, $sortie);
+        $formAnnul->handleRequest($request);
         $form = $this->createForm(SortieType::class, $sortie);
         $form->handleRequest($request);
 
@@ -109,10 +115,14 @@ class SortieController extends AbstractController
             $sortieRepository->add($sortie);
             return $this->redirectToRoute('app_sortie_index', [], Response::HTTP_SEE_OTHER);
         }
-
+        $lieu = $lieuRepository->findAll();
+        $ville = $villeRepository->findAll();
         return $this->renderForm('sortie/edit.html.twig', [
             'sortie' => $sortie,
             'form' => $form,
+            'villes' => $ville,
+            'lieux' => $lieu,
+            'formAnnul'=>$formAnnul
         ]);
     }
 
