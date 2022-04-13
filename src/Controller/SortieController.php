@@ -155,13 +155,6 @@ class SortieController extends AbstractController
     #[Route('sortie/activite/desister/{id}', name: 'app_sortie_desister', methods: ['POST','GET'])]
     public function desister(Sortie $sortie, ParticipantRepository $participantRepository,EtatRepository $etatRepository, SortieRepository $sortieRepository):Response{
         $userVide = $this->getUser()->getUserIdentifier();
-        $user = $participantRepository->findOneBy(['email' => $userVide]);
-        $sortieRepository->removeInscrit($sortie,$user);
-        return $this->redirectToRoute('app_sortie_index', [], Response::HTTP_SEE_OTHER);
-    }
-    #[Route('sortie/activite/desister/{id}', name: 'app_sortie_desister', methods: ['POST','GET'])]
-    public function desister(Sortie $sortie, ParticipantRepository $participantRepository,EtatRepository $etatRepository, SortieRepository $sortieRepository):Response{
-        $userVide = $this->getUser()->getUserIdentifier();
         $etat = $etatRepository->findOneBy(['id' => 2]);
         $user = $participantRepository->findOneBy(['email' => $userVide]);
         $sortieRepository->removeInscrit($sortie,$user,$etat);
