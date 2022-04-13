@@ -4,7 +4,16 @@
 
 {% block body %}
     <h1>Campus index</h1>
-
+    <div>
+        <h5>Filter les campus</h5>
+    </div>
+    <div>
+        {{ form_start(formRecherche) }}
+        {{ form_row(formRecherche) }}
+        <button type="submit" class="btn">{{ button_label|default('Rechercher') }}</button>
+        {{ form_end(formRecherche) }}
+    </div>
+    <a href="{{ path('app_campus_index') }}">Retour à la liste</a>
     <table class="table">
         <thead>
             <tr>

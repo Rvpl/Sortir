@@ -6,9 +6,6 @@
     <h1>Gérer les villes</h1>
     <div>
         <h5>Filter les villes</h5>
-        <form>
-
-        </form>
     </div>
     <div>
         {{ form_start(formRecherche) }}
@@ -16,6 +13,7 @@
         <button type="submit" class="btn">{{ button_label|default('Rechercher') }}</button>
         {{ form_end(formRecherche) }}
     </div>
+    <a href="{{ path('app_ville_index') }}">Retour à la liste</a>
     <table class="table">
         <thead>
             <tr>
