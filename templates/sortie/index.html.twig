@@ -3,7 +3,6 @@
 {% block title %}Sorties{% endblock %}
 
 {% block body %}
-
     <div id="entete">
         <b>Filtrer les sorties</b>
         {{ form_start(formRecherche) }}
@@ -37,7 +36,6 @@
                 <td>{{ sortie.dateLimiteInscription ? sortie.dateLimiteInscription|date('d/m/Y') : '' }}</td>
                 <td>{{ sortie.inscrits.count }}/{{ sortie.nbInscriptionMax }}</td>
                 <td>{{ sortie.etat.libelle }}</td>
-                <td></td>
                 <td>
                         <a href="{{ path('app_participant_edit', {'id': sortie.organisateur.id}) }}">
                             {{ sortie.organisateur.nom }}
@@ -51,9 +49,6 @@
                         <a href="{{ path('app_modif_etat',{'id' :sortie.id})}}">Modifier</a>
                         <a href=""></a>
                     {% endif %}
-
-
-
                 </td>
             </tr>
         {% else %}
@@ -63,8 +58,9 @@
         {% endfor %}
         </tbody>
     </table>
-
+    {% if app.user %}
     <a href="{{ path('app_sortie_new') }}">
         <button class="btn btn-warning">Créer une sortie</button>
     </a>
+    {% endif %}
 {% endblock %}
