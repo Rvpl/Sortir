@@ -74,6 +74,14 @@ class SortieRepository extends ServiceEntityRepository
         }
     }
 
+    public function removeInscrit(Sortie $sortie, Participant $user,bool $flush = true)
+    {
+        $sortie->removeInscrit($user);
+        if ($flush) {
+            $this->_em->flush();
+        }
+    }
+
     // /**
     //  * @return Sortie[] Returns an array of Sortie objects
     //  */
