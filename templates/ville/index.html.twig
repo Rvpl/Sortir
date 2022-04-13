@@ -10,6 +10,12 @@
 
         </form>
     </div>
+    <div>
+        {{ form_start(form) }}
+        {{ form_row(form) }}
+        <button type="submit" class="btn">{{ button_label|default('Rechercher') }}</button>
+        {{ form_end(form) }}
+    </div>
     <table class="table">
         <thead>
             <tr>

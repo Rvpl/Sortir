@@ -3,6 +3,8 @@
 namespace App\Controller;
 
 use App\Entity\Ville;
+use App\Form\RechercheType;
+use App\Form\RechercheVilleType;
 use App\Form\VilleType;
 use App\Repository\VilleRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -17,20 +19,37 @@ class VilleController extends AbstractController
     #[Route('/', name: 'app_ville_index', methods: ['GET','POST'])]
     public function index(Request $request, VilleRepository $villeRepository): Response
     {
+        $villes= [];
         $ville = new Ville();
+        $villeRecherche = new Ville();
         $form = $this->createForm(VilleType::class, $ville);
         $form->handleRequest($request);
+        $formRecherche= $this->createForm(RechercheVilleType::class, $villes);
+        $formRecherche->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $villeRepository->add($ville);
-            return $this->redirectToRoute('app_ville_index', [], Response::HTTP_SEE_OTHER);
+        if ($formRecherche->isSubmitted() && $formRecherche->isValid()){
+            $villeRecherche->setNom($formRecherche['nom']->getData());
+            $villes = $villeRepository->recherche($villeRecherche);
+
+            return $this->renderForm('ville/index.html.twig',[
+                'villes' => $villes,
+                'form'=>$formRecherche
+            ]);
         }
 
-        return $this->renderForm('ville/index.html.twig', [
-            'villes' => $villeRepository->findAll(),
-            'ville' => $ville,
-            'form' => $form,
-        ]);
+        else if ($form->isSubmitted() && $form->isValid()) {
+            $villeRepository->add($ville);
+            return $this->redirectToRoute('app_ville_index', [], Response::HTTP_SEE_OTHER);
+
+        }else {
+            return $this->renderForm('ville/index.html.twig', [
+                'villes' => $villeRepository->findAll(),
+                'ville' => $ville,
+                'formTest' => $form,
+            ]);
+        }
+
+
 
 
     }
