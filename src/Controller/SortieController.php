@@ -6,7 +6,6 @@ use App\Entity\Campus;
 use App\Entity\Participant;
 use App\Entity\Sortie;
 use App\Form\RechercheType;
-use App\Form\SortieAnnulType;
 use App\Form\SortieType;
 use App\Repository\CampusRepository;
 use App\Repository\EtatRepository;
@@ -32,6 +31,7 @@ class SortieController extends AbstractController
         $sortieCherche = new Sortie();
         $form = $this->createForm(RechercheType::class);
         $form->handleRequest($request);
+
         if ($form->isSubmitted() && $form->isValid()) {
             $campus = $campusRepository->findBy(['id'=> $form['campus']->getData()]);
             $sortieCherche->setNom($form['nom']->getData());
@@ -44,8 +44,7 @@ class SortieController extends AbstractController
             return $this->renderForm('sortie/index.html.twig',[
                 'formRecherche' => $form,
                 'sorties' => $sorties,
-                'participants' => $participantRepository->findAll(),
-
+                'participants' => $participantRepository->findAll()
 
             ]);
         }else{
@@ -53,7 +52,8 @@ class SortieController extends AbstractController
             return $this->renderForm('sortie/index.html.twig', [
                 'sorties' => $sortieRepository->findAll(),
                 'formRecherche' => $form,
-                'participants' => $participantRepository->findAll(),
+                'participants' => $participantRepository->findAll()
+
             ]);
         }
     }
@@ -106,7 +106,7 @@ class SortieController extends AbstractController
                          LieuRepository $lieuRepository
     ): Response
     {
-        $formAnnul = $this->createForm(SortieAnnulType::class, $sortie);
+        $formAnnul = $this->createForm(SortieType::class, $sortie);
         $formAnnul->handleRequest($request);
         $form = $this->createForm(SortieType::class, $sortie);
         $form->handleRequest($request);
