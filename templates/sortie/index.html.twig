@@ -3,6 +3,7 @@
 {% block title %}Sorties{% endblock %}
 
 {% block body %}
+
     <div id="entete">
         <b>Filtrer les sorties</b>
         {{ form_start(formRecherche) }}
@@ -14,6 +15,7 @@
         {{ form_end(formRecherche) }}
         <br>
     </div>
+    {{ dump(app.user.id) }}
     <table class="table table-dark table-striped">
         <thead>
             <tr>
@@ -107,5 +109,7 @@
     <a href="{{ path('app_sortie_new') }}">
         <button class="btn btn-warning">Créer une sortie</button>
     </a>
+
     {% endif %}
+
 {% endblock %}
