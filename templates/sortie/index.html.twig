@@ -67,7 +67,6 @@
                                 <a href="{{ path('app_sortie_show', {'id': sortie.id}) }}">
                                         Afficher
                                 </a>
-
                                 {% if sortie.inscrits.count == 0 and app.user != sortie.organisateur %}
                                     <a>-</a>
                                     <a href="{{ path('app_sortie_inscription',{'id': sortie.id}) }}"> s'inscrire</a>
@@ -75,11 +74,12 @@
 
                                 {% if sortie.inscrits.count > 0 and app.user.id != sortie.organisateur.id %}
                                     {% for inscrit in sortie.inscrits %}
+                                        {{ dump(inscrit) }}
                                         {% if app.user.id == inscrit.id %}
                                             <a>-</a>
                                             <a href="{{ path('app_sortie_desister',{'id': sortie.id}) }}">Se désister</a>
                                             {% else %}
-                                                {% if sortie.etat.id != 1 and sortie.etat.id != 4 and sortie.etat.id != 5 and sortie.inscrits.count < sortie.nbInscriptionMax and sortie.etat.id != 6 %}
+                                                {% if sortie.etat.id != 1 and sortie.etat.id != 4 and sortie.etat.id != 5 and sortie.inscrits.count < sortie.nbInscriptionMax %}
                                                     <a>-</a>
                                                     <a href="{{ path('app_sortie_inscription',{'id': sortie.id}) }}"> s'inscrire</a>
                                                 {% endif %}
