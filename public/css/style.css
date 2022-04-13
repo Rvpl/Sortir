@@ -26,13 +26,14 @@
     display:block;
     text-align: center;
 }
+.container-formSor{
 
+}
 .grids {
     margin: 2em 5em;
     display: grid;
     grid-template-columns: repeat(2, minmax(150px, 1fr));
     grid-gap: 20px;
-
 
 }
 

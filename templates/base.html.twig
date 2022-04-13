@@ -24,6 +24,9 @@
                                 <a class="nav-link" href="{{ path('app_participant_edit', {'id': app.user.id}) }}">Mon profil</a>
                             </li>
                             <li class="nav-item">
+                                <a class="nav-link" href="{{ path('app_sortie_new') }}">Créer une sortie</a>
+                            </li>
+                            <li class="nav-item">
                                 <a href="{{ path('app_logout') }}" class="nav-link">Se déconnecter</a>
                             </li>
                         {% else %}
@@ -35,9 +38,6 @@
                             </li>
                             <li class="nav-item">
                                 <a href="{{ path('app_login') }}" class="nav-link">Se connecter</a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="{{ path('app_register') }}" class="nav-link">S'inscrire</a>
                             </li>
                         {% endif %}
                     </ul>
