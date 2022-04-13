@@ -13,7 +13,8 @@ class RechercherCampusType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('campus',TextType::class)
+            ->add('campus',TextType::class, [
+                'label'=>'Le nom contient :'])
         ;
     }
 
