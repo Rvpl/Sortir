@@ -49,9 +49,13 @@ class Participant implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\ManyToOne(targetEntity: Campus::class, inversedBy: 'participants')]
     private $campus;
 
+    #[ORM\ManyToMany(targetEntity: Sortie::class, mappedBy: 'inscrits')]
+    private $sortiesInscrit;
+
     public function __construct()
     {
         $this->sorties = new ArrayCollection();
+        $this->sortiesInscrit = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -222,6 +226,33 @@ class Participant implements UserInterface, PasswordAuthenticatedUserInterface
     public function setCampus(?Campus $campus): self
     {
         $this->campus = $campus;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Sortie>
+     */
+    public function getSortiesInscrit(): Collection
+    {
+        return $this->sortiesInscrit;
+    }
+
+    public function addSortiesInscrit(Sortie $sortiesInscrit): self
+    {
+        if (!$this->sortiesInscrit->contains($sortiesInscrit)) {
+            $this->sortiesInscrit[] = $sortiesInscrit;
+            $sortiesInscrit->addInscrit($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSortiesInscrit(Sortie $sortiesInscrit): self
+    {
+        if ($this->sortiesInscrit->removeElement($sortiesInscrit)) {
+            $sortiesInscrit->removeInscrit($this);
+        }
 
         return $this;
     }

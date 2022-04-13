@@ -31,7 +31,6 @@ class SortieController extends AbstractController
         $sortieCherche = new Sortie();
         $form = $this->createForm(RechercheType::class);
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
             $campus = $campusRepository->findBy(['id'=> $form['campus']->getData()]);
             $sortieCherche->setNom($form['nom']->getData());
@@ -44,7 +43,8 @@ class SortieController extends AbstractController
             return $this->renderForm('sortie/index.html.twig',[
                 'formRecherche' => $form,
                 'sorties' => $sorties,
-                'participants' => $participantRepository->findAll()
+                'participants' => $participantRepository->findAll(),
+
 
             ]);
         }else{
@@ -52,8 +52,7 @@ class SortieController extends AbstractController
             return $this->renderForm('sortie/index.html.twig', [
                 'sorties' => $sortieRepository->findAll(),
                 'formRecherche' => $form,
-                'participants' => $participantRepository->findAll()
-
+                'participants' => $participantRepository->findAll(),
             ]);
         }
     }
@@ -145,7 +144,10 @@ class SortieController extends AbstractController
     }
 
     #[Route('sortie/activite/inscription/{id}', name: 'app_sortie_inscription', methods: ['POST','GET'])]
-    public function inscription(Request $request,Sortie $sortie, ParticipantRepository $participantRepository):Response{
-
+    public function inscription(Sortie $sortie, ParticipantRepository $participantRepository, SortieRepository $sortieRepository):Response{
+        $userVide = $this->getUser()->getUserIdentifier();
+        $user = $participantRepository->findOneBy(['email' => $userVide]);
+        $sortieRepository->ajoutInscrit($sortie,$user);
+        return $this->redirectToRoute('app_sortie_index', [], Response::HTTP_SEE_OTHER);
     }
 }

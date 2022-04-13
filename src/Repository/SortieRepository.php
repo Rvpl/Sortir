@@ -67,6 +67,13 @@ class SortieRepository extends ServiceEntityRepository
         }
     }
 
+    public function ajoutInscrit(Sortie $sortie, Participant $user,bool $flush = true){
+        $sortie->addInscrit($user);
+        if($flush){
+            $this->_em->flush();
+        }
+    }
+
     // /**
     //  * @return Sortie[] Returns an array of Sortie objects
     //  */
