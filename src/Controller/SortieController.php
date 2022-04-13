@@ -32,6 +32,7 @@ class SortieController extends AbstractController
         $sortieCherche = new Sortie();
         $form = $this->createForm(RechercheType::class);
         $form->handleRequest($request);
+
         if ($form->isSubmitted() && $form->isValid()) {
             $campus = $campusRepository->findBy(['id'=> $form['campus']->getData()]);
             $sortieCherche->setNom($form['nom']->getData());
@@ -44,8 +45,7 @@ class SortieController extends AbstractController
             return $this->renderForm('sortie/index.html.twig',[
                 'formRecherche' => $form,
                 'sorties' => $sorties,
-                'participants' => $participantRepository->findAll(),
-
+                'participants' => $participantRepository->findAll()
 
             ]);
         }else{
@@ -53,7 +53,8 @@ class SortieController extends AbstractController
             return $this->renderForm('sortie/index.html.twig', [
                 'sorties' => $sortieRepository->findAll(),
                 'formRecherche' => $form,
-                'participants' => $participantRepository->findAll(),
+                'participants' => $participantRepository->findAll()
+
             ]);
         }
     }
