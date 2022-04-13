@@ -26,3 +26,18 @@
     display:block;
     text-align: center;
 }
+
+.grids {
+    margin: 2em 5em;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(150px, 1fr));
+    grid-gap: 20px;
+
+
+}
+
+.grid {
+    text-align: center;
+    display: grid;
+    grid-template-rows: max-content 50px 1fr;
+}

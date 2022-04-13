@@ -1,22 +1,24 @@
-{{ form_start(form) }}
-    {{ form_row(form.nom) }}
-    {{ form_row(form.dateHeureDebut) }}
-    {{ form_row(form.duree) }}
-    {{ form_row(form.dateLimiteInscription) }}
-    {{ form_row(form.nbInscriptionMax) }}
-    {{ form_row(form.infoSortie) }}
-    {% for ville in villes %}
-       <p>Ville : {{ ville.nom }}</p>
-    {% endfor %}
-    {{ form_row(form.campus) }}
-    {{ form_row(form.lieu) }}
-    {% for ville in villes %}
-        <p>Code postal : {{ ville.codePostal }}</p>
-    {% endfor %}
-    {% for lieu in lieux %}
-        <p>Rue : {{ lieu.rue }}</p>
-    {% endfor %}
-    <button class="btn">{{ button_label|default('Enregistrer') }}</button>
-    <button class="btn">{{ button_label|default('Publier ton événement') }}</button>
-    <button class="btn">{{ button_label|default('Annuler') }}</button>
-{{ form_end(form) }}
+ {{ form_start(form) }}
+    <div class="grids">
+        <div class="grid">{{ form_row(form.nom) }}</div>
+    <div class="grid">{{ form_row(form.dateHeureDebut) }}</div>
+    <div class="grid">{{ form_row(form.duree) }}</div>
+    <div class="grid">{{ form_row(form.dateLimiteInscription) }}</div>
+    <div class="grid">{{ form_row(form.nbInscriptionMax) }}</div>
+    <div class="grid">{{ form_row(form.infoSortie) }}</div>
+        {% for ville in villes %}
+            <div class="grid"><p>Ville : {{ ville.nom }}</p></div>
+        {% endfor %}
+    <div class="grid">{{ form_row(form.campus) }}</div>
+    <div class="grid">{{ form_row(form.lieu) }}</div>
+        {% for ville in villes %}
+            <div class="grid"><p>Code postal : {{ ville.codePostal }}</p></div>
+        {% endfor %}
+        {% for lieu in lieux %}
+            <div class="grid"><p>Rue : {{ lieu.rue }}</p></div>
+        {% endfor %}
+    </div>
+        <button class="btn">{{ button_label|default('Enregistrer') }}</button>
+        <button class="btn">{{ button_label|default('Publier ton événement') }}</button>
+        <button class="btn">{{ button_label|default('Annuler') }}</button>
+    {{ form_end(form) }}

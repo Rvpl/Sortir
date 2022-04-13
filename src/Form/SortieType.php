@@ -52,10 +52,7 @@ class SortieType extends AbstractType
                     "class" => Lieu::class,
                     "choice_label" => "nom",
                 ])
-          
-            ->add('rue', FormType::class, [
-                'mapped' => false
-            ])
+
         ;
     }
 

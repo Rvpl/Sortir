@@ -2,9 +2,8 @@
 
 {% block title %}Nouvel événement{% endblock %}
 
-{% block bodyAddEvent %}
+{% block body %}
     <h1>Créer son événement</h1>
     {{ include('sortie/_form.html.twig') }}
-
     <button><a href="{{ path('app_sortie_index') }}">back to list</a></button>
 {% endblock %}
