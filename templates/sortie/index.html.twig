@@ -49,15 +49,9 @@
                 </td>
                 {% endif %}
                 <td>
-                    {% if app.user %}
                     <a href="{{ path('app_participant_edit', {'id': sortie.organisateur.id}) }}">
                         {{ sortie.organisateur.prenom }} {{ sortie.organisateur.nom | slice(0,1)}}.
                     </a>
-                    {% else %}
-                        <a>
-                            {{ sortie.organisateur.prenom }} {{ sortie.organisateur.nom | slice(0,1)}}.
-                        </a>
-                        {% endif %}
                 </td>
                 <td>
                     {% if app.user %}
@@ -68,7 +62,6 @@
                             <a href="{{ path('app_sortie_show', {'id': sortie.id}) }}">
                                     Afficher
                             </a>
-                        {% endif %}
 
 
                         {% if sortie.inscrits.count == 0  and sortie.organisateur != app.user%}
@@ -86,7 +79,6 @@
                                 {% endif %}
                             {% endfor %}
                         {% endif %}
-
                     {% else %}
                         <a href="{{ path('app_sortie_show', {'id': sortie.id}) }}">
                             Afficher
