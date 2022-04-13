@@ -14,7 +14,8 @@ class RechercheVilleType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-        ->add('ville',\Symfony\Component\Form\Extension\Core\Type\TextType::class)
+        ->add('ville',\Symfony\Component\Form\Extension\Core\Type\TextType::class, [
+            'label'=>'Le nom contient :'])
         ;
     }
 
