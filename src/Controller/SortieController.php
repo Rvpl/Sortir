@@ -6,7 +6,6 @@ use App\Entity\Campus;
 use App\Entity\Participant;
 use App\Entity\Sortie;
 use App\Form\RechercheType;
-use App\Form\SortieAnnulType;
 use App\Form\SortieType;
 use App\Repository\CampusRepository;
 use App\Repository\EtatRepository;
@@ -32,6 +31,8 @@ class SortieController extends AbstractController
         $sortieCherche = new Sortie();
         $form = $this->createForm(RechercheType::class);
         $form->handleRequest($request);
+
+
         if ($form->isSubmitted() && $form->isValid()) {
             $campus = $campusRepository->findBy(['id'=> $form['campus']->getData()]);
             $sortieCherche->setNom($form['nom']->getData());
@@ -44,8 +45,7 @@ class SortieController extends AbstractController
             return $this->renderForm('sortie/index.html.twig',[
                 'formRecherche' => $form,
                 'sorties' => $sorties,
-                'participants' => $participantRepository->findAll(),
-
+                'participants' => $participantRepository->findAll()
 
             ]);
         }else{
@@ -106,7 +106,7 @@ class SortieController extends AbstractController
                          LieuRepository $lieuRepository
     ): Response
     {
-        $formAnnul = $this->createForm(SortieAnnulType::class, $sortie);
+        $formAnnul = $this->createForm(SortieType::class, $sortie);
         $formAnnul->handleRequest($request);
         $form = $this->createForm(SortieType::class, $sortie);
         $form->handleRequest($request);
@@ -145,10 +145,18 @@ class SortieController extends AbstractController
     }
 
     #[Route('sortie/activite/inscription/{id}', name: 'app_sortie_inscription', methods: ['POST','GET'])]
-    public function inscription(Sortie $sortie, ParticipantRepository $participantRepository, SortieRepository $sortieRepository):Response{
+    public function inscription(Sortie $sortie, ParticipantRepository $participantRepository,EtatRepository $etatRepository, SortieRepository $sortieRepository):Response{
+        $userVide = $this->getUser()->getUserIdentifier();
+        $etat = $etatRepository->findOneBy(['id' => 6]);
+        $user = $participantRepository->findOneBy(['email' => $userVide]);
+        $sortieRepository->ajoutInscrit($sortie,$user,$etat);
+        return $this->redirectToRoute('app_sortie_index', [], Response::HTTP_SEE_OTHER);
+    }
+    #[Route('sortie/activite/desister/{id}', name: 'app_sortie_desister', methods: ['POST','GET'])]
+    public function desister(Sortie $sortie, ParticipantRepository $participantRepository, SortieRepository $sortieRepository):Response{
         $userVide = $this->getUser()->getUserIdentifier();
         $user = $participantRepository->findOneBy(['email' => $userVide]);
-        $sortieRepository->ajoutInscrit($sortie,$user);
+        $sortieRepository->removeInscrit($sortie,$user);
         return $this->redirectToRoute('app_sortie_index', [], Response::HTTP_SEE_OTHER);
     }
 }
