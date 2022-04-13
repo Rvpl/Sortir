@@ -3,7 +3,6 @@
 {% block title %}Sorties{% endblock %}
 
 {% block body %}
-
     <div id="entete">
         <b>Filtrer les sorties</b>
         {{ form_start(formRecherche) }}
@@ -79,7 +78,6 @@
                             Afficher
                         </a>
                     {% endif %}
-
                 </td>
             </tr>
         {% else %}
@@ -93,7 +91,5 @@
     <a href="{{ path('app_sortie_new') }}">
         <button class="btn btn-warning">Créer une sortie</button>
     </a>
-
     {% endif %}
-
 {% endblock %}
