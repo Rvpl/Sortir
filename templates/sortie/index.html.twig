@@ -3,6 +3,7 @@
 {% block title %}Sorties{% endblock %}
 
 {% block body %}
+
     <div id="entete">
         <b>Filtrer les sorties</b>
         {{ form_start(formRecherche) }}
@@ -23,7 +24,9 @@
                 <th>Clôture</th>
                 <th>Inscrits/places</th>
                 <th>Etat</th>
-                <th>Inscrit</th>
+                {% if app.user %}
+                    <th>Inscrit</th>
+                {% endif %}
                 <th>Organisateur</th>
                 <th>Actions</th>
             </tr>
@@ -36,19 +39,47 @@
                 <td>{{ sortie.dateLimiteInscription ? sortie.dateLimiteInscription|date('d/m/Y') : '' }}</td>
                 <td>{{ sortie.inscrits.count }}/{{ sortie.nbInscriptionMax }}</td>
                 <td>{{ sortie.etat.libelle }}</td>
+                {% if app.user %}
                 <td>
-                        <a href="{{ path('app_participant_edit', {'id': sortie.organisateur.id}) }}">
-                            {{ sortie.organisateur.nom }}
-                        </a>
+                    {% for inscrit in sortie.inscrits %}
+                       {% if app.user.id == inscrit.id %}
+                           <p>x</p>
+                        {% endif %}
+                    {% endfor %}
+                </td>
+                {% endif %}
+                <td>
+                    <a href="{{ path('app_participant_edit', {'id': sortie.organisateur.id}) }}">
+                        {{ sortie.organisateur.prenom }} {{ sortie.organisateur.nom | slice(0,1)}}.
+                    </a>
                 </td>
                 <td>
-                    <a href="{{ path('app_sortie_show', {'id': sortie.id}) }}">
-                        Afficher
-                    </a>
-                    {% if sortie.organisateur == app.user and sortie.etat.id == 1 %}
-                        <a href="{{ path('app_modif_etat',{'id' :sortie.id})}}">Modifier</a>
-                        <a href=""></a>
+                    {% if app.user %}
+                        {% if sortie.organisateur == app.user and sortie.etat.id == 1 %}
+                            <a href="{{ path('app_sortie_edit',{'id' :sortie.id})}}">Modifier</a>
+                            <a href="{{ path('app_modif_etat',{'id' :sortie.id})}}">Publier</a>
+                        {% else %}
+                            <a href="{{ path('app_sortie_show', {'id': sortie.id}) }}">
+                                    Afficher
+                            </a>
+
+
+                            {% for inscrit in sortie.inscrits %}
+                                {% if app.user.id == inscrit.id %}
+                                    <a>-</a>
+                                    <a>Se désister</a>
+                                    {% else %}
+                                        <a>-</a>
+                                        <a href="{{ path('app_sortie_inscription',{'id': sortie.id}) }}"> s'inscrire</a>
+                                {% endif %}
+                            {% endfor %}
+                        {% endif %}
+                    {% else %}
+                        <a href="{{ path('app_sortie_show', {'id': sortie.id}) }}">
+                            Afficher
+                        </a>
                     {% endif %}
+
                 </td>
             </tr>
         {% else %}
@@ -62,5 +93,6 @@
     <a href="{{ path('app_sortie_new') }}">
         <button class="btn btn-warning">Créer une sortie</button>
     </a>
+
     {% endif %}
 {% endblock %}
