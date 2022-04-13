@@ -6,7 +6,6 @@ use App\Entity\Campus;
 use App\Entity\Participant;
 use App\Entity\Sortie;
 use App\Form\RechercheType;
-use App\Form\SortieAnnulType;
 use App\Form\SortieType;
 use App\Repository\CampusRepository;
 use App\Repository\EtatRepository;
@@ -107,7 +106,7 @@ class SortieController extends AbstractController
                          LieuRepository $lieuRepository
     ): Response
     {
-        $formAnnul = $this->createForm(SortieAnnulType::class, $sortie);
+        $formAnnul = $this->createForm(SortieType::class, $sortie);
         $formAnnul->handleRequest($request);
         $form = $this->createForm(SortieType::class, $sortie);
         $form->handleRequest($request);
