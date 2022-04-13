@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Entity\Etat;
 use App\Entity\Participant;
 use App\Entity\Sortie;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
@@ -67,8 +68,11 @@ class SortieRepository extends ServiceEntityRepository
         }
     }
 
-    public function ajoutInscrit(Sortie $sortie, Participant $user,bool $flush = true){
+    public function ajoutInscrit(Sortie $sortie, Participant $user,Etat $etat,bool $flush = true){
         $sortie->addInscrit($user);
+        if($sortie->getInscrits()->count() == $sortie->getNbInscriptionMax()){
+            $sortie->setEtat($etat);
+        }
         if($flush){
             $this->_em->flush();
         }
