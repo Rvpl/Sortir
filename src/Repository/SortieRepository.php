@@ -78,8 +78,11 @@ class SortieRepository extends ServiceEntityRepository
         }
     }
 
-    public function removeInscrit(Sortie $sortie, Participant $user,bool $flush = true)
+    public function removeInscrit(Sortie $sortie, Participant $user,Etat $etat,bool $flush = true)
     {
+        if($sortie->getInscrits()->count() == $sortie->getNbInscriptionMax()){
+            $sortie->setEtat($etat);
+        }
         $sortie->removeInscrit($user);
         if ($flush) {
             $this->_em->flush();
