@@ -15,7 +15,6 @@
         {{ form_end(formRecherche) }}
         <br>
     </div>
-    {{ dump(app.user.id) }}
     <table class="table table-dark table-striped">
         <thead>
             <tr>
@@ -76,12 +75,11 @@
 
                                 {% if sortie.inscrits.count > 0 and app.user.id != sortie.organisateur.id %}
                                     {% for inscrit in sortie.inscrits %}
-                                        {{ dump(inscrit) }}
                                         {% if app.user.id == inscrit.id %}
                                             <a>-</a>
                                             <a href="{{ path('app_sortie_desister',{'id': sortie.id}) }}">Se désister</a>
                                             {% else %}
-                                                {% if sortie.etat.id != 1 and sortie.etat.id != 4 and sortie.etat.id != 5 and sortie.inscrits.count < sortie.nbInscriptionMax %}
+                                                {% if sortie.etat.id != 1 and sortie.etat.id != 4 and sortie.etat.id != 5 and sortie.inscrits.count < sortie.nbInscriptionMax and sortie.etat.id != 6 %}
                                                     <a>-</a>
                                                     <a href="{{ path('app_sortie_inscription',{'id': sortie.id}) }}"> s'inscrire</a>
                                                 {% endif %}
