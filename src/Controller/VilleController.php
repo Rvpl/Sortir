@@ -28,12 +28,13 @@ class VilleController extends AbstractController
         $formRecherche->handleRequest($request);
 
         if ($formRecherche->isSubmitted() && $formRecherche->isValid()){
-            $villeRecherche->setNom($formRecherche['nom']->getData());
+            $villeRecherche->setNom($formRecherche['ville']->getData());
             $villes = $villeRepository->recherche($villeRecherche);
 
             return $this->renderForm('ville/index.html.twig',[
                 'villes' => $villes,
-                'form'=>$formRecherche
+                'formRecherche'=>$formRecherche,
+                'formAjout' => $form
             ]);
         }
 
@@ -45,7 +46,8 @@ class VilleController extends AbstractController
             return $this->renderForm('ville/index.html.twig', [
                 'villes' => $villeRepository->findAll(),
                 'ville' => $ville,
-                'formTest' => $form,
+                'formAjout' => $form,
+                'formRecherche'=>$formRecherche
             ]);
         }
 
