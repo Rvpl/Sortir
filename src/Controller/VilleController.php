@@ -22,8 +22,10 @@ class VilleController extends AbstractController
         $villes= [];
         $ville = new Ville();
         $villeRecherche = new Ville();
+
         $form = $this->createForm(VilleType::class, $ville);
         $form->handleRequest($request);
+
         $formRecherche= $this->createForm(RechercheVilleType::class, $villes);
         $formRecherche->handleRequest($request);
 

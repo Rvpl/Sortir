@@ -3,12 +3,14 @@
 namespace App\Controller;
 
 use App\Entity\Campus;
+use App\Entity\Participant;
 use App\Entity\Sortie;
 use App\Form\RechercheType;
 use App\Form\SortieType;
 use App\Repository\CampusRepository;
 use App\Repository\EtatRepository;
 use App\Repository\LieuRepository;
+use App\Repository\ParticipantRepository;
 use App\Repository\SortieRepository;
 use App\Repository\VilleRepository;
 use http\Client\Curl\User;
@@ -21,14 +23,14 @@ use Symfony\Component\Routing\Annotation\Route;
 class SortieController extends AbstractController
 {
     #[Route('/', name: 'app_sortie_index', methods: ['GET', 'POST'])]
-    public function index(Request $request,SortieRepository $sortieRepository,CampusRepository $campusRepository): Response
+    public function index(Request $request,SortieRepository $sortieRepository,CampusRepository $campusRepository,
+                          ParticipantRepository $participantRepository): Response
     {
         $sorties = [];
         $campus = new Campus();
         $sortieCherche = new Sortie();
         $form = $this->createForm(RechercheType::class);
         $form->handleRequest($request);
-
 
         if ($form->isSubmitted() && $form->isValid()) {
             $campus = $campusRepository->findBy(['id'=> $form['campus']->getData()]);
@@ -42,6 +44,7 @@ class SortieController extends AbstractController
             return $this->renderForm('sortie/index.html.twig',[
                 'formRecherche' => $form,
                 'sorties' => $sorties,
+                'participants' => $participantRepository->findAll()
 
             ]);
         }else{
@@ -49,6 +52,8 @@ class SortieController extends AbstractController
             return $this->renderForm('sortie/index.html.twig', [
                 'sorties' => $sortieRepository->findAll(),
                 'formRecherche' => $form,
+                'participants' => $participantRepository->findAll()
+
             ]);
         }
     }
@@ -137,5 +142,10 @@ class SortieController extends AbstractController
        $sortie->setEtat($etatRepository->findOneBy(['id' => '2']));
        $sortieRepository->modifEtat($sortie);
        return $this->redirectToRoute('app_sortie_index', [], Response::HTTP_SEE_OTHER);
+    }
+
+    #[Route('sortie/activite/inscription/{id}', name: 'app_sortie_inscription', methods: ['POST','GET'])]
+    public function inscription(Request $request,Sortie $sortie, ParticipantRepository $participantRepository):Response{
+
     }
 }
