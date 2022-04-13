@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Campus;
 use App\Form\CampusType;
+use App\Form\RechercherCampusType;
 use App\Repository\CampusRepository;
 use Doctrine\DBAL\Types\TextType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -18,11 +19,25 @@ class CampusController extends AbstractController
     #[Route('/', name: 'app_campus_index', methods: ['GET','POST'])]
     public function index(Request $request,CampusRepository $campusRepository): Response
     {
+        $campuses=[];
         $campus = new Campus();
+        $campusRecherche= new Campus();
         $formCampus = $this->createForm(CampusType::class, $campus);
         $formCampus->handleRequest($request);
+        $formRecherche= $this->createForm(RechercherCampusType::class, $campuses);
+        $formRecherche->handleRequest($request);
 
-        if ($formCampus->isSubmitted() && $formCampus->isValid()) {
+        if ($formRecherche->isSubmitted() && $formRecherche->isValid()){
+            $campusRecherche->setNom($formRecherche['campus']->getData());
+            $campuses = $campusRepository->recherche($campusRecherche);
+
+            return $this->renderForm('campus/index.html.twig',[
+                'campuses' => $campuses,
+                'formRecherche'=>$formRecherche,
+                'formAjout' => $formCampus
+            ]);
+
+        } else if ($formCampus->isSubmitted() && $formCampus->isValid()) {
             $campusRepository->add($campus);
             return $this->redirectToRoute('app_campus_index', [], Response::HTTP_SEE_OTHER);
         }
@@ -30,7 +45,8 @@ class CampusController extends AbstractController
         return $this->renderForm('campus/index.html.twig', [
             'campuses' => $campusRepository->findAll(),
             'campus' => $campus,
-            'formCampus' => $formCampus,
+            'formAjout' => $formCampus,
+            'formRecherche'=>$formRecherche
         ]);
 
 
