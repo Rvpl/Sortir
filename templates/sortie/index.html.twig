@@ -66,17 +66,25 @@
                             <a href="{{ path('app_sortie_show', {'id': sortie.id}) }}">
                                     Afficher
                             </a>
+                        {% endif %}
 
+
+                        {% if sortie.inscrits.count == 0  and sortie.organisateur != app.user%}
+                            <a>-</a>
+                            <a href="{{ path('app_sortie_inscription',{'id': sortie.id}) }}"> s'inscrire</a>
+                        {% else %}
                             {% for inscrit in sortie.inscrits %}
+                                {% if (app.user.id != inscrit.id) or (sortie.inscrits ==null)  and (sortie.etat.id != 4) and (sortie.etat.id != 5) and (sortie.inscrits.count < sortie.nbInscriptionMax) and (sortie.etat.id != 1)  %}
+                                    <a>-</a>
+                                    <a href="{{ path('app_sortie_inscription',{'id': sortie.id}) }}"> s'inscrire</a>
+                                {% endif %}
                                 {% if app.user.id == inscrit.id %}
                                     <a>-</a>
-                                    <a>Se désister</a>
-                                    {% elseif  app.user.id == inscrit.id and sortie.etat.id != 4 and sortie.etat.id != 5 and sortie.nbInscriptionMax != nbInscriptionMax %}
-                                        <a>-</a>
-                                        <a href="{{ path('app_sortie_inscription',{'id': sortie.id}) }}"> s'inscrire</a>
+                                    <a href="{{ path('app_sortie_desister',{'id': sortie.id}) }}">Se désister</a>
                                 {% endif %}
                             {% endfor %}
                         {% endif %}
+
                     {% else %}
                         <a href="{{ path('app_sortie_show', {'id': sortie.id}) }}">
                             Afficher
