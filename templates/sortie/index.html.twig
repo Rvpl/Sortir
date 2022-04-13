@@ -3,7 +3,6 @@
 {% block title %}Sorties{% endblock %}
 
 {% block body %}
-
     <div id="entete">
         <b>Filtrer les sorties</b>
         {{ form_start(formRecherche) }}
@@ -63,10 +62,10 @@
                         {% if sortie.organisateur == app.user and sortie.etat.id == 1 %}
                             <a href="{{ path('app_sortie_edit',{'id' :sortie.id})}}">Modifier</a>
                             <a href="{{ path('app_modif_etat',{'id' :sortie.id})}}">Publier</a>
-                            {% else %}
-                                <a href="{{ path('app_sortie_show', {'id': sortie.id}) }}">
-                                        Afficher
-                                </a>
+                        {% else %}
+                            <a href="{{ path('app_sortie_show', {'id': sortie.id}) }}">
+                                    Afficher
+                            </a>
 
                                 {% if sortie.inscrits.count == 0 and app.user != sortie.organisateur %}
                                     <a>-</a>
@@ -107,7 +106,5 @@
     <a href="{{ path('app_sortie_new') }}">
         <button class="btn btn-warning">Créer une sortie</button>
     </a>
-
     {% endif %}
-
 {% endblock %}
