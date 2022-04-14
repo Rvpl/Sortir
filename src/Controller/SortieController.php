@@ -87,7 +87,7 @@ class SortieController extends AbstractController
         ]);
     }
 
-    #[Route('sortie/{id}', name: 'app_sortie_show', methods: ['GET'])]
+    #[Route('sortie/{id}', name: 'app_sortie_show', methods: ['GET', 'POST'])]
     public function show(Sortie $sortie, VilleRepository $villeRepository, SortieRepository $sortieRepository,
                          Request $request, EtatRepository $etatRepository,
                          LieuRepository $lieuRepository): Response
@@ -117,7 +117,6 @@ class SortieController extends AbstractController
                          SortieRepository $sortieRepository,
                          VilleRepository $villeRepository,
                          LieuRepository $lieuRepository,
-                         EtatRepository $etatRepository
 
 
     ): Response
@@ -125,13 +124,6 @@ class SortieController extends AbstractController
 
         $form = $this->createForm(SortieType::class, $sortie);
         $form->handleRequest($request);
-     /*   $formAnnul = $this->createForm(SortieAnnulType::class, $sortie);
-        $formAnnul->handleRequest($request);
-        if ($formAnnul->isSubmitted() && $formAnnul->isValid()) {
-            $etat = $etatRepository->findOneBy(['id' => '5']);
-            $sortieRepository->modifEtatAnn($sortie, $etat);
-            return $this->redirectToRoute('app_sortie_index', [], Response::HTTP_SEE_OTHER);
-        }*/
         if ($form->isSubmitted() && $form->isValid()) {
             $sortieRepository->add($sortie);
             return $this->redirectToRoute('app_sortie_index', [], Response::HTTP_SEE_OTHER);
@@ -143,7 +135,6 @@ class SortieController extends AbstractController
             'form' => $form,
             'villes' => $ville,
             'lieux' => $lieu,
-//            'formAnnul'=>$formAnnul,
 
         ]);
     }
