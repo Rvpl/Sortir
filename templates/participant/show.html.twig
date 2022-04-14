@@ -3,52 +3,22 @@
 {% block title %}Participant{% endblock %}
 
 {% block body %}
-    <h1> {{ participant.nom }} {{ participant.prenom }}</h1>
+    <div>
+        <h1>{{ participant.pseudo }}</h1>
+        <img src="{{ asset('img/' ~ participant.photoProfil) }}" alt="">
+            <p>Prénom : {{ participant.prenom }}</p>
+            <p>Nom : {{ participant.nom }}</p>
+            <p>Téléphone {{ participant.telephone }}</p>
+            <p>Email : {{ participant.email}}</p>
+            <p>Campus : {{ participant.campus.nom }}</p>
+    </div>
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ participant.id }}</td>
-            </tr>
-            <tr>
-                <th>Email</th>
-                <td>{{ participant.email }}</td>
-            </tr>
-            <tr>
-                <th>Roles</th>
-                <td>{{ participant.roles ? participant.roles|json_encode : '' }}</td>
-            </tr>
-            <tr>
-                <th>Password</th>
-                <td>{{ participant.password }}</td>
-            </tr>
-            <tr>
-                <th>Nom</th>
-                <td>{{ participant.nom }}</td>
-            </tr>
-            <tr>
-                <th>Prenom</th>
-                <td>{{ participant.prenom }}</td>
-            </tr>
-            <tr>
-                <th>Telephone</th>
-                <td>{{ participant.telephone }}</td>
-            </tr>
-            <tr>
-                <th>Administrateur</th>
-                <td>{{ participant.administrateur ? 'Yes' : 'No' }}</td>
-            </tr>
-            <tr>
-                <th>Actif</th>
-                <td>{{ participant.actif ? 'Yes' : 'No' }}</td>
-            </tr>
-        </tbody>
-    </table>
+    <a href="{{ path('app_sortie_index') }}">
+        <button class="btn btn-danger">Retour</button>
+    </a>
 
-    <a href="{{ path('app_participant_index') }}">back to list</a>
+    <a href="{{ path('app_participant_edit', {'id': participant.id}) }}">
+        <button class="btn btn-warning">Modifier</button>
+    </a>
 
-    <a href="{{ path('app_participant_edit', {'id': participant.id}) }}">edit</a>
-
-    {{ include('participant/_delete_form.html.twig') }}
 {% endblock %}
