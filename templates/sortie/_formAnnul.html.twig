@@ -9,7 +9,9 @@
         <p>Lieu : {{ lieu.nom }} {{ lieu.rue }} {{ lieu.ville.nom }} {{ lieu.ville.codePostal }}</p>
     {% endfor %}
 {{ form_row(formAnnul.infoSortie) }}
-    <button class="btn">{{ button_label|default('Annuler') }}</button>
+
+    <button class="btn">{{ button_label|default('Enregistrer') }}</button>
+
 
 
     {{ form_end(formAnnul) }}

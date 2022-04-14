@@ -3,60 +3,67 @@
 {% block title %}Sortie{% endblock %}
 
 {% block body %}
-    <h1 class="titreSortie">Sortie</h1>
+    {% for sortie in sorties %}
+        {% if sortie.etat.id == 5 %}
+            <div> {{ sortie.nom }} {{ sortie.infoSortie }}</div>
+        {% else %}
+            <h1 class="titreSortie">Sortie</h1>
 
-    <table class="table">
-        <tbody class="cards">
+            <table class="table">
+                <tbody class="cards">
 
-            <tr class="card">
-                <th>Nom de la sortie :</th>
-                <td>{{ sortie.nom }}</td>
-            </tr>
-            <tr class="card">
-                <th>Date et heure de la sortie :</th>
-                <td>{{ sortie.dateHeureDebut ? sortie.dateHeureDebut|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
-            <tr class="card">
-                <th>Durée :</th>
-                <td>{{ sortie.duree ? sortie.duree|date('H:i:s') : '' }} minutes</td>
-            </tr>
-            <tr class="card">
-                <th>Date limite d'inscription :</th>
-                <td>{{ sortie.dateLimiteInscription ? sortie.dateLimiteInscription|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
-            <tr class="card">
-                <th>Nombre de places :</th>
-                <td>{{ sortie.nbInscriptionMax }}</td>
-            </tr>
-            <tr class="card">
-                <th>Description et informations :</th>
-                <td>{{ sortie.infoSortie }}</td>
-            </tr>
-            <tr class="card">
-                <th>Campus :</th>
-                <td>{{ sortie.campus.nom }}</td>
-            </tr>
-            <tr class="card">
-                <th>Lieu :</th>
-                <td>{{ sortie.lieu.nom }}</td>
-            </tr>
-            <tr class="card">
-                <th>Rue :</th>
-                <td>{{ sortie.lieu.rue }}</td>
-            </tr>
-            <tr class="card">
-                <th>Code postal :</th>
-                {% for ville in villes %}
-                    <td>{{ ville.codePostal }}</td>
-                {% endfor %}
-            </tr>
-        </tbody>
-    </table>
-    <div class="boutonsShow">
-        <button><a href="{{ path('app_sortie_index') }}">Retour à la liste</a></button>
-        <button><a href="{{ path('app_sortie_edit', {'id': sortie.id}) }}">Modifier</a></button>
-    </div>
+                <tr class="card">
+                    <th>Nom de la sortie :</th>
+                    <td>{{ sortie.nom }}</td>
+                </tr>
+                <tr class="card">
+                    <th>Date et heure de la sortie :</th>
+                    <td>{{ sortie.dateHeureDebut ? sortie.dateHeureDebut|date('Y-m-d H:i:s') : '' }}</td>
+                </tr>
+                <tr class="card">
+                    <th>Durée :</th>
+                    <td>{{ sortie.duree ? sortie.duree|date('H:i:s') : '' }} minutes</td>
+                </tr>
+                <tr class="card">
+                    <th>Date limite d'inscription :</th>
+                    <td>{{ sortie.dateLimiteInscription ? sortie.dateLimiteInscription|date('Y-m-d H:i:s') : '' }}</td>
+                </tr>
+                <tr class="card">
+                    <th>Nombre de places :</th>
+                    <td>{{ sortie.nbInscriptionMax }}</td>
+                </tr>
+                <tr class="card">
+                    <th>Description et informations :</th>
+                    <td>{{ sortie.infoSortie }}</td>
+                </tr>
+                <tr class="card">
+                    <th>Campus :</th>
+                    <td>{{ sortie.campus.nom }}</td>
+                </tr>
+                <tr class="card">
+                    <th>Lieu :</th>
+                    <td>{{ sortie.lieu.nom }}</td>
+                </tr>
+                <tr class="card">
+                    <th>Rue :</th>
+                    <td>{{ sortie.lieu.rue }}</td>
+                </tr>
+                <tr class="card">
+                    <th>Code postal :</th>
+                    {% for ville in villes %}
+                        <td>{{ ville.codePostal }}</td>
+                    {% endfor %}
+                </tr>
+                </tbody>
+            </table>
+            <div class="boutonsShow">
+                <button><a href="{{ path('app_sortie_index') }}">Retour à la liste</a></button>
+                <button><a href="{{ path('app_sortie_edit', {'id': sortie.id}) }}">Modifier</a></button>
+            </div>
 
+            {{ include('sortie/_delete_form.html.twig') }}
+        {% endif %}
 
-    {{ include('sortie/_delete_form.html.twig') }}
+    {% endfor %}
+
 {% endblock %}

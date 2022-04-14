@@ -61,6 +61,7 @@ class SortieRepository extends ServiceEntityRepository
                 ->getResult();
     }
 
+
     public function modifEtat(Sortie $sortie,bool $flush = true){
         $sortie->setEtat($sortie->getEtat());
         if($flush){
@@ -88,6 +89,13 @@ class SortieRepository extends ServiceEntityRepository
             $this->_em->flush();
         }
     }
+
+    public function modifEtatAnn(Sortie $sortieAnn,Etat $etat,bool $flush = true){
+      $sortieAnn->setEtat($etat);
+      if($flush){
+          $this->_em->flush();
+      }
+  }
 
     // /**
     //  * @return Sortie[] Returns an array of Sortie objects

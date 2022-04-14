@@ -90,12 +90,14 @@ class SortieController extends AbstractController
     }
 
     #[Route('sortie/{id}', name: 'app_sortie_show', methods: ['GET'])]
-    public function show(Sortie $sortie, VilleRepository $villeRepository): Response
+    public function show(Sortie $sortie, VilleRepository $villeRepository, SortieRepository $sortieRepository): Response
     {
+//        $sorties = $sortieRepository->findBy(['id' => '1']);
         $ville = $villeRepository->findAll();
         return $this->render('sortie/show.html.twig', [
-            'sortie' => $sortie,
-            'villes' => $ville
+            'sorties' => $sortie,
+            'villes' => $ville,
+//            'sorties' => $sorties
         ]);
     }
 
@@ -103,7 +105,9 @@ class SortieController extends AbstractController
     public function edit(Request $request, Sortie $sortie,
                          SortieRepository $sortieRepository,
                          VilleRepository $villeRepository,
-                         LieuRepository $lieuRepository
+                         LieuRepository $lieuRepository,
+                        EtatRepository $etatRepository
+
     ): Response
     {
         $formAnnul = $this->createForm(SortieAnnulType::class, $sortie);
@@ -113,6 +117,11 @@ class SortieController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $sortieRepository->add($sortie);
+            return $this->redirectToRoute('app_sortie_index', [], Response::HTTP_SEE_OTHER);
+        }
+        if ($formAnnul->isSubmitted() && $formAnnul->isValid()) {
+            $etat = $etatRepository->findOneBy(['id' => '5']);
+            $sortieRepository->modifEtatAnn($sortie, $etat);
             return $this->redirectToRoute('app_sortie_index', [], Response::HTTP_SEE_OTHER);
         }
         $lieu = $lieuRepository->findAll();
