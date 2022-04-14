@@ -56,6 +56,15 @@ class ParticipantController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $image = $form->get('photoProfil')->getData();
+            if($image){
+                $fichier = md5(uniqid()). '.'.$image->guessExtension();
+                $image->move(
+                    $this->getParameter('images_directory'),
+                    $fichier
+                );
+                $participant->setPhotoProfil($fichier);
+            }
             $participantRepository->add($participant);
             return $this->redirectToRoute('app_participant_index', [], Response::HTTP_SEE_OTHER);
         }
