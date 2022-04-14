@@ -75,7 +75,6 @@
 
                                 {% if sortie.inscrits.count > 0 and app.user.id != sortie.organisateur.id %}
                                     {% for inscrit in sortie.inscrits %}
-                                        {{ dump(inscrit) }}
                                         {% if app.user.id == inscrit.id %}
                                             <a>-</a>
                                             <a href="{{ path('app_sortie_desister',{'id': sortie.id}) }}">Se désister</a>
