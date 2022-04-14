@@ -88,14 +88,27 @@ class SortieController extends AbstractController
     }
 
     #[Route('sortie/{id}', name: 'app_sortie_show', methods: ['GET'])]
-    public function show(Sortie $sortie, VilleRepository $villeRepository, SortieRepository $sortieRepository): Response
+    public function show(Sortie $sortie, VilleRepository $villeRepository, SortieRepository $sortieRepository,
+                         Request $request, EtatRepository $etatRepository,
+                         LieuRepository $lieuRepository): Response
     {
+
+        $formAnnul = $this->createForm(SortieAnnulType::class, $sortie);
+        $formAnnul->handleRequest($request);
+        if ($formAnnul->isSubmitted() && $formAnnul->isValid()) {
+            $etat = $etatRepository->findOneBy(['id' => '5']);
+            $sortieRepository->modifEtatAnn($sortie, $etat);
+            return $this->redirectToRoute('app_sortie_index', [], Response::HTTP_SEE_OTHER);
+        }
+        $lieu = $lieuRepository->findAll();
         $sorties = $sortieRepository->findOneBy(['id' => $sortie->getId()]);
         $ville = $villeRepository->findAll();
-        return $this->render('sortie/show.html.twig', [
+        return $this->renderForm('sortie/show.html.twig', [
             'sortie' => $sortie,
             'villes' => $ville,
-            'sorties' => $sorties
+            'sorties' => $sorties,
+            'formAnnul'=>$formAnnul,
+            'lieux' => $lieu,
         ]);
     }
 
@@ -104,22 +117,23 @@ class SortieController extends AbstractController
                          SortieRepository $sortieRepository,
                          VilleRepository $villeRepository,
                          LieuRepository $lieuRepository,
-                        EtatRepository $etatRepository
+                         EtatRepository $etatRepository
+
 
     ): Response
     {
-        $formAnnul = $this->createForm(SortieAnnulType::class, $sortie);
-        $formAnnul->handleRequest($request);
+
         $form = $this->createForm(SortieType::class, $sortie);
         $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $sortieRepository->add($sortie);
-            return $this->redirectToRoute('app_sortie_index', [], Response::HTTP_SEE_OTHER);
-        }
+     /*   $formAnnul = $this->createForm(SortieAnnulType::class, $sortie);
+        $formAnnul->handleRequest($request);
         if ($formAnnul->isSubmitted() && $formAnnul->isValid()) {
             $etat = $etatRepository->findOneBy(['id' => '5']);
             $sortieRepository->modifEtatAnn($sortie, $etat);
+            return $this->redirectToRoute('app_sortie_index', [], Response::HTTP_SEE_OTHER);
+        }*/
+        if ($form->isSubmitted() && $form->isValid()) {
+            $sortieRepository->add($sortie);
             return $this->redirectToRoute('app_sortie_index', [], Response::HTTP_SEE_OTHER);
         }
         $lieu = $lieuRepository->findAll();
@@ -129,7 +143,8 @@ class SortieController extends AbstractController
             'form' => $form,
             'villes' => $ville,
             'lieux' => $lieu,
-            'formAnnul'=>$formAnnul
+//            'formAnnul'=>$formAnnul,
+
         ]);
     }
 
