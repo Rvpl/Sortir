@@ -21,7 +21,7 @@
      </div>
      <button class="btn">{{ button_label|default('Enregistrer') }}</button>
      <button class="btn">{{ button_label|default('Publier ton événement') }}</button>
-     <button class="btn">{{ button_label|default('Annuler') }}</button>
+     <button class="btn"><a href="{{ path('app_sortie_index') }}">Annuler</a></button>
      {{ form_end(form) }}
 
  </div>
