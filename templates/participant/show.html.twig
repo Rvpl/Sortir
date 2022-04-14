@@ -13,12 +13,12 @@
             <p>Campus : {{ participant.campus.nom }}</p>
     </div>
 
+    {% if app.user.id == participant.id %}
+        <a href="{{ path('app_participant_edit', {'id': participant.id}) }}">
+            <button class="btn btn-warning">Modifier</button>
+        </a>
+    {% endif %}
     <a href="{{ path('app_sortie_index') }}">
         <button class="btn btn-danger">Retour</button>
     </a>
-
-    <a href="{{ path('app_participant_edit', {'id': participant.id}) }}">
-        <button class="btn btn-warning">Modifier</button>
-    </a>
-
 {% endblock %}
