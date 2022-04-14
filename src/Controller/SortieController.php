@@ -145,10 +145,19 @@ class SortieController extends AbstractController
     }
 
     #[Route('sortie/activite/inscription/{id}', name: 'app_sortie_inscription', methods: ['POST','GET'])]
-    public function inscription(Sortie $sortie, ParticipantRepository $participantRepository, SortieRepository $sortieRepository):Response{
+    public function inscription(Sortie $sortie, ParticipantRepository $participantRepository,EtatRepository $etatRepository, SortieRepository $sortieRepository):Response{
         $userVide = $this->getUser()->getUserIdentifier();
+        $etat = $etatRepository->findOneBy(['id' => 6]);
         $user = $participantRepository->findOneBy(['email' => $userVide]);
-        $sortieRepository->ajoutInscrit($sortie,$user);
+        $sortieRepository->ajoutInscrit($sortie,$user,$etat);
+        return $this->redirectToRoute('app_sortie_index', [], Response::HTTP_SEE_OTHER);
+    }
+    #[Route('sortie/activite/desister/{id}', name: 'app_sortie_desister', methods: ['POST','GET'])]
+    public function desister(Sortie $sortie, ParticipantRepository $participantRepository,EtatRepository $etatRepository, SortieRepository $sortieRepository):Response{
+        $userVide = $this->getUser()->getUserIdentifier();
+        $etat = $etatRepository->findOneBy(['id' => 2]);
+        $user = $participantRepository->findOneBy(['email' => $userVide]);
+        $sortieRepository->removeInscrit($sortie,$user,$etat);
         return $this->redirectToRoute('app_sortie_index', [], Response::HTTP_SEE_OTHER);
     }
 }
