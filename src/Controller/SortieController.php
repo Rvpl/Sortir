@@ -148,7 +148,7 @@ class SortieController extends AbstractController
     public function inscription(Sortie $sortie, ParticipantRepository $participantRepository,EtatRepository $etatRepository, SortieRepository $sortieRepository):Response{
         $userVide = $this->getUser()->getUserIdentifier();
         $etat = $etatRepository->findOneBy(['id' => 6]);
-        $user = $participantRepository->findOneBy(['email' => $userVide]);
+        $user = $participantRepository->findOneBy(['pseudo' => $userVide]);
         $sortieRepository->ajoutInscrit($sortie,$user,$etat);
         return $this->redirectToRoute('app_sortie_index', [], Response::HTTP_SEE_OTHER);
     }
@@ -156,7 +156,7 @@ class SortieController extends AbstractController
     public function desister(Sortie $sortie, ParticipantRepository $participantRepository,EtatRepository $etatRepository, SortieRepository $sortieRepository):Response{
         $userVide = $this->getUser()->getUserIdentifier();
         $etat = $etatRepository->findOneBy(['id' => 2]);
-        $user = $participantRepository->findOneBy(['email' => $userVide]);
+        $user = $participantRepository->findOneBy(['pseudo' => $userVide]);
         $sortieRepository->removeInscrit($sortie,$user,$etat);
         return $this->redirectToRoute('app_sortie_index', [], Response::HTTP_SEE_OTHER);
     }
