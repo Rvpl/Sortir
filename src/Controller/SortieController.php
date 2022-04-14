@@ -90,12 +90,12 @@ class SortieController extends AbstractController
     #[Route('sortie/{id}', name: 'app_sortie_show', methods: ['GET'])]
     public function show(Sortie $sortie, VilleRepository $villeRepository, SortieRepository $sortieRepository): Response
     {
-//        $sorties = $sortieRepository->findBy(['id' => '1']);
+        $sorties = $sortieRepository->findOneBy(['id' => $sortie->getId()]);
         $ville = $villeRepository->findAll();
         return $this->render('sortie/show.html.twig', [
-            'sorties' => $sortie,
+            'sortie' => $sortie,
             'villes' => $ville,
-//            'sorties' => $sorties
+            'sorties' => $sorties
         ]);
     }
 
