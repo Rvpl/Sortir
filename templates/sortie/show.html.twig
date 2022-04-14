@@ -55,6 +55,21 @@
                 </tr>
                 </tbody>
             </table>
+            <h4>Liste des participants inscrits :</h4>
+                <table>
+                    <tr>
+                        <th>Pseudo :</th>
+                        {% for inscrit in sortie.inscrits %}
+                        <td>{{ inscrit.pseudo }}</td>
+                        {% endfor %}
+                    </tr>
+                    <tr>
+                        <th>Nom :</th>
+                        {% for inscrit in sortie.inscrits %}
+                        <td>{{ inscrit.prenom }} {{ inscrit.nom }}</td>
+                        {% endfor %}
+                    </tr>
+                </table>
             <div class="boutonsShow">
                 <button><a href="{{ path('app_sortie_index') }}">Retour à la liste</a></button>
                 <button><a href="{{ path('app_sortie_edit', {'id': sortie.id}) }}">Modifier</a></button>
