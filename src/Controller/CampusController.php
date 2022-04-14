@@ -6,7 +6,9 @@ use App\Entity\Campus;
 use App\Form\CampusType;
 use App\Form\RechercherCampusType;
 use App\Repository\CampusRepository;
+use App\Repository\ParticipantRepository;
 use Doctrine\DBAL\Types\TextType;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
@@ -17,17 +19,28 @@ use Symfony\Component\Routing\Annotation\Route;
 class CampusController extends AbstractController
 {
     #[Route('/', name: 'app_campus_index', methods: ['GET','POST'])]
-    public function index(Request $request,CampusRepository $campusRepository): Response
+    public function index(Request $request,CampusRepository $campusRepository, ParticipantRepository $participantRepository): Response
     {
         $campuses=[];
         $campus = new Campus();
         $campusRecherche= new Campus();
+        $userVide = $this->getUser()->getUserIdentifier();
+        $user = $participantRepository->findOneBy(['pseudo' => $userVide]);
+        $role=$user->getRole();
         $formCampus = $this->createForm(CampusType::class, $campus);
         $formCampus->handleRequest($request);
         $formRecherche= $this->createForm(RechercherCampusType::class, $campuses);
         $formRecherche->handleRequest($request);
 
-        if ($formRecherche->isSubmitted() && $formRecherche->isValid()){
+        foreach ($role as $roles){
+          if($role!=['ROLES_ADMIN']){
+              return $this->redirectToRoute('app_sortie_index', [], Response::HTTP_SEE_OTHER);
+
+          }
+    }
+
+
+         if ($formRecherche->isSubmitted() && $formRecherche->isValid()){
             $campusRecherche->setNom($formRecherche['campus']->getData());
             $campuses = $campusRepository->recherche($campusRecherche);
 

@@ -6,18 +6,21 @@ use App\Entity\Ville;
 use App\Form\RechercheType;
 use App\Form\RechercheVilleType;
 use App\Form\VilleType;
+use App\Repository\ParticipantRepository;
 use App\Repository\VilleRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 #[Route('/ville')]
+
 class VilleController extends AbstractController
 {
     #[Route('/', name: 'app_ville_index', methods: ['GET','POST'])]
-    public function index(Request $request, VilleRepository $villeRepository): Response
+    public function index(Request $request, VilleRepository $villeRepository,ParticipantRepository $participantRepository): Response
     {
         $villes= [];
         $ville = new Ville();
@@ -28,6 +31,17 @@ class VilleController extends AbstractController
 
         $formRecherche= $this->createForm(RechercheVilleType::class, $villes);
         $formRecherche->handleRequest($request);
+
+        $userVide = $this->getUser()->getUserIdentifier();
+        $user = $participantRepository->findOneBy(['pseudo' => $userVide]);
+        $role=$user->getRole();
+
+        foreach ($role as $roles){
+            if($role!=['ROLES_ADMIN']){
+                return $this->redirectToRoute('app_sortie_index', [], Response::HTTP_SEE_OTHER);
+
+            }
+        }
 
         if ($formRecherche->isSubmitted() && $formRecherche->isValid()){
             $villeRecherche->setNom($formRecherche['ville']->getData());
