@@ -49,7 +49,7 @@
                 {% endif %}
                 <td>
                     {% if app.user %}
-                    <a href="{{ path('app_participant_edit', {'id': sortie.organisateur.id}) }}">
+                    <a href="{{ path('app_participant_show', {'id': sortie.organisateur.id}) }}">
                         {{ sortie.organisateur.prenom }} {{ sortie.organisateur.nom | slice(0,1)}}.
                     </a>
                     {% else %}

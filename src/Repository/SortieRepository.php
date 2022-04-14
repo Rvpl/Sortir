@@ -53,6 +53,7 @@ class SortieRepository extends ServiceEntityRepository
             ->andWhere('s.dateHeureDebut = :dateDebut')
             ->andWhere('s.dateLimiteInscription = :dateLim')
             ->andWhere('s.campus = :campus')
+            ->andWhere('DATE_DIFF(CURRENT_DATE(),s.dateLimiteInscription) < 30')
             ->setParameter('nom','%'.$sortie->getNom().'%')
             ->setParameter('dateDebut',$sortie->getDateHeureDebut())
             ->setParameter('dateLim',$sortie->getDateLimiteInscription())
@@ -95,7 +96,14 @@ class SortieRepository extends ServiceEntityRepository
       if($flush){
           $this->_em->flush();
       }
-  }
+    }
+
+    public function findAllFiltre(){
+        $qb = $this->createQueryBuilder('s')
+            ->where('DATE_DIFF(CURRENT_DATE(),s.dateLimiteInscription) < 30');
+        return $qb->getQuery()
+            ->getResult();
+    }
 
     // /**
     //  * @return Sortie[] Returns an array of Sortie objects
