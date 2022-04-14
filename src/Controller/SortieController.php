@@ -45,8 +45,6 @@ class SortieController extends AbstractController
                 'formRecherche' => $form,
                 'sorties' => $sorties,
                 'participants' => $participantRepository->findAll(),
-
-
             ]);
         }else{
 
