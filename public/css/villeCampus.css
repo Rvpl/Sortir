@@ -1,0 +1,16 @@
+
+.scroller{
+    overflow:scroll;
+    border:#000000 1px solid;
+    height: 400px;
+    width: 100%;
+    scrollbar-width: thin;
+
+}
+
+.enteteListe{
+    background: white;
+    position: sticky;
+    top: 0;
+
+}

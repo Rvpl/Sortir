@@ -16,7 +16,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 #[Route('/ville')]
-
+#[isGranted('USER_ADMIN')]
 class VilleController extends AbstractController
 {
     #[Route('/', name: 'app_ville_index', methods: ['GET','POST'])]
@@ -32,16 +32,7 @@ class VilleController extends AbstractController
         $formRecherche= $this->createForm(RechercheVilleType::class, $villes);
         $formRecherche->handleRequest($request);
 
-        $userVide = $this->getUser()->getUserIdentifier();
-        $user = $participantRepository->findOneBy(['pseudo' => $userVide]);
-        $role=$user->getRole();
 
-        foreach ($role as $roles){
-            if($role!=['ROLES_ADMIN']){
-                return $this->redirectToRoute('app_sortie_index', [], Response::HTTP_SEE_OTHER);
-
-            }
-        }
 
         if ($formRecherche->isSubmitted() && $formRecherche->isValid()){
             $villeRecherche->setNom($formRecherche['ville']->getData());

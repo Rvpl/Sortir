@@ -3,6 +3,7 @@
 {% block title %}Campus index{% endblock %}
 
 {% block body %}
+    <link rel="stylesheet" href="{{ asset("css/villeCampus.css") }}">
     <h1>Campus index</h1>
     <div>
         <h5>Filter les campus</h5>
@@ -15,8 +16,9 @@
         {{ form_end(formRecherche) }}
     </div>
     <a href="{{ path('app_campus_index') }}">Retour à la liste</a>
+    <div class="scroller">
     <table class="table">
-        <thead>
+        <thead class="enteteListe">
             <tr>
 
                 <th>Nom</th>
@@ -39,6 +41,7 @@
         {% endfor %}
         </tbody>
     </table>
+    </div>
 
     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@getbootstrap">Ajouter un campus</button>
 
