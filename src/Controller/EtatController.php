@@ -5,12 +5,14 @@ namespace App\Controller;
 use App\Entity\Etat;
 use App\Form\EtatType;
 use App\Repository\EtatRepository;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 #[Route('/etat')]
+#[IsGranted("ROLE_ADMIN")]
 class EtatController extends AbstractController
 {
     #[Route('/', name: 'app_etat_index', methods: ['GET'])]

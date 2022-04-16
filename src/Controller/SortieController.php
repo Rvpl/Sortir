@@ -144,10 +144,13 @@ class SortieController extends AbstractController
                          SortieRepository $sortieRepository,
                          VilleRepository $villeRepository,
                          LieuRepository $lieuRepository,
-
-
+                         ParticipantRepository $participantRepository,
     ): Response
     {
+        $user = $participantRepository->findOneBy(['pseudo' => $this->getUser()->getUserIdentifier()]);
+        if ($sortie->getOrganisateur() !== $user){
+            throw $this->createAccessDeniedException();
+        }
 
         $form = $this->createForm(SortieType::class, $sortie);
         $form->handleRequest($request);
