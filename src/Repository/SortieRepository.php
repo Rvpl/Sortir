@@ -53,7 +53,7 @@ class SortieRepository extends ServiceEntityRepository
             ->andWhere('s.dateHeureDebut = :dateDebut')
             ->andWhere('s.dateLimiteInscription = :dateLim')
             ->andWhere('s.campus = :campus')
-            ->andWhere('DATE_DIFF(CURRENT_DATE(),s.dateLimiteInscription) < 30')
+            ->andWhere('DATE_DIFF(CURRENT_DATE(),s.dateLimiteInscription) > 30')
             ->setParameter('nom','%'.$sortie->getNom().'%')
             ->setParameter('dateDebut',$sortie->getDateHeureDebut())
             ->setParameter('dateLim',$sortie->getDateLimiteInscription())
@@ -61,6 +61,25 @@ class SortieRepository extends ServiceEntityRepository
             return $qb->getQuery()
                 ->getResult();
     }
+
+    public function rechercheOrganisateur(Sortie $sortie,Participant $user){
+        $qb = $this->createQueryBuilder('s')
+            ->where('s.nom LIKE :nom')
+            ->andWhere('s.dateHeureDebut = :dateDebut')
+            ->andWhere('s.dateLimiteInscription = :dateLim')
+            ->andWhere('s.campus = :campus')
+            ->andWhere('s.organisateur = :orga')
+            ->andWhere('DATE_DIFF(CURRENT_DATE(),s.dateLimiteInscription) < 30')
+            ->setParameter('nom','%'.$sortie->getNom().'%')
+            ->setParameter('dateDebut',$sortie->getDateHeureDebut())
+            ->setParameter('dateLim',$sortie->getDateLimiteInscription())
+            ->setParameter('campus',$sortie->getCampus()->getId())
+            ->setParameter('orga',$user->getId());
+        return $qb->getQuery()
+            ->getResult();
+    }
+
+
 
 
     public function modifEtat(Sortie $sortie,bool $flush = true){

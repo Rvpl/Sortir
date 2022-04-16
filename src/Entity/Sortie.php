@@ -54,6 +54,8 @@ class Sortie
     public function __construct()
     {
         $this->inscrits = new ArrayCollection();
+        $this->dateLimiteInscription = new \DateTime("now");
+        $this->dateHeureDebut = new \DateTime("now");
     }
 
 

@@ -15,6 +15,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\TimeType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\Date;
 
 class SortieType extends AbstractType
 {
@@ -30,7 +31,7 @@ class SortieType extends AbstractType
             ->add('duree', TimeType::class, [
                 "label" => "Durée :"
             ])
-            ->add('dateLimiteInscription',DateType::class, [
+            ->add('dateLimiteInscription',DateTimeType::class, [
                 "label" => "Date limite d'inscription : "
             ])
             ->add('nbInscriptionMax', IntegerType::class, [
