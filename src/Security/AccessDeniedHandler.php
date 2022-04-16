@@ -13,9 +13,9 @@ class AccessDeniedHandler implements AccessDeniedHandlerInterface
 {
     public function handle(Request $request, AccessDeniedException $accessDeniedException): ?Response
     {
+        $content ="La page que vous essayez d'afficher n'est pas de votre ressort, veuillez rester à votre place :-)";
 
-    $content="CHEH";
-        return new Response($content, 403);
+        return new Response($content,404);
 
     }
 }
