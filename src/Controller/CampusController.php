@@ -16,7 +16,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 #[Route('/campus')]
-#[isGranted('USER_ADMIN')]
+#[IsGranted("ROLE_ADMIN")]
 class CampusController extends AbstractController
 {
     #[Route('/', name: 'app_campus_index', methods: ['GET','POST'])]
@@ -25,13 +25,10 @@ class CampusController extends AbstractController
         $campuses=[];
         $campus = new Campus();
         $campusRecherche= new Campus();
-
         $formCampus = $this->createForm(CampusType::class, $campus);
         $formCampus->handleRequest($request);
         $formRecherche= $this->createForm(RechercherCampusType::class, $campuses);
         $formRecherche->handleRequest($request);
-
-
 
 
          if ($formRecherche->isSubmitted() && $formRecherche->isValid()){
