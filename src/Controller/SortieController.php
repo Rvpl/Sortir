@@ -14,11 +14,12 @@ use App\Repository\LieuRepository;
 use App\Repository\ParticipantRepository;
 use App\Repository\SortieRepository;
 use App\Repository\VilleRepository;
-use http\Client\Curl\User;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[Route('/')]
 class SortieController extends AbstractController
@@ -71,19 +72,45 @@ class SortieController extends AbstractController
         $form = $this->createForm(SortieType::class, $sortie);
         $form->handleRequest($request);
 
+
+
         if ($form->isSubmitted() && $form->isValid()) {
-            $sortie->setEtat($etatRepository->findAll()[0]);
-            $sortie->setOrganisateur($this->getUser());
-            $sortie->setCampus($form['campus']->getData());
-            $sortieRepository->add($sortie);
-            return $this->redirectToRoute('app_sortie_index', [], Response::HTTP_SEE_OTHER);
+            $messages = array();
+            if ($form['dateHeureDebut']->getData() < new \DateTime("now")) {
+                $this->addFlash('error','La date de début de l\'activité ne peut être inférieure à la date/heure du jour');
+            }
+            if ($form['dateLimiteInscription']->getData() < new \DateTime("now")) {
+                $this->addFlash('error','La date limite d\'inscription ne peut être inférieure à la date/heure du jour');
+            }
+            if ($form['dateLimiteInscription']->getData() > $form['dateHeureDebut']->getData()) {
+                $this->addFlash('error','La date limite d\'inscription ne peut être supérieure à la date de début de l\'actitivé');
+            }
+
+
+            if ($form['dateHeureDebut']->getData() > new \DateTime("now") && $form['dateLimiteInscription']->getData() > new \DateTime("now") && $form['dateHeureDebut']->getData() > $form['dateLimiteInscription']->getData()) {
+                $sortie->setEtat($etatRepository->findAll()[0]);
+                $sortie->setOrganisateur($this->getUser());
+                $sortie->setCampus($form['campus']->getData());
+                $sortieRepository->add($sortie);
+                $this->addFlash('success','La sortie a bien été créée');
+                return $this->redirectToRoute('app_sortie_index', [], Response::HTTP_SEE_OTHER);
+            } else {
+                return $this->renderForm('sortie/new.html.twig', [
+                    'sortie' => $sortie,
+                    'form' => $form,
+                    'villes' => $ville,
+                    'lieux' => $lieu,
+                ]);
+            }
         }
+
 
         return $this->renderForm('sortie/new.html.twig',[
             'sortie' => $sortie,
             'form' => $form,
             'villes' => $ville,
-            'lieux' => $lieu
+            'lieux' => $lieu,
+
         ]);
     }
 
