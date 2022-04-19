@@ -16,7 +16,7 @@
         <br>
     </div>
     {% for message in app.flashes('success') %}
-        <div class="alert alert-sucess">
+        <div class="alert alert-success">
             {{ message }}
         </div>
     {% endfor %}
@@ -112,5 +112,9 @@
     </a>
 
     {% endif %}
+    {% if is_granted('ROLE_ADMIN') %}
+        <a href="{{ path('app_campus_index') }}">Gestion des campus</a>
+        <a href="{{ path('app_ville_index') }}">Gestion des villes</a>
+    {%endif%}
 
 {% endblock %}

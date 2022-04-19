@@ -55,6 +55,10 @@ class ParticipantController extends AbstractController
     #[Route('/{id}/edit', name: 'app_participant_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Participant $participant, ParticipantRepository $participantRepository): Response
     {
+        $user = $participantRepository->findOneBy(['pseudo' => $this->getUser()->getUserIdentifier()]);
+        if ($participant !== $user){
+            throw $this->createAccessDeniedException();
+        }
         $form = $this->createForm(ParticipantType::class, $participant);
         $form->handleRequest($request);
 

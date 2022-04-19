@@ -16,6 +16,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 #[Route('/campus')]
+#[IsGranted("ROLE_ADMIN")]
 class CampusController extends AbstractController
 {
     #[Route('/', name: 'app_campus_index', methods: ['GET','POST'])]
@@ -24,21 +25,11 @@ class CampusController extends AbstractController
         $campuses=[];
         $campus = new Campus();
         $campusRecherche= new Campus();
-        $userVide = $this->getUser()->getUserIdentifier();
-        $user = $participantRepository->findOneBy(['pseudo' => $userVide]);
-        $role=$user->getRole();
         $formCampus = $this->createForm(CampusType::class, $campus);
         $formCampus->handleRequest($request);
         $formRecherche= $this->createForm(RechercherCampusType::class, $campuses);
         $formRecherche->handleRequest($request);
-
-        foreach ($role as $roles){
-          if($role!=['ROLES_ADMIN']){
-              return $this->redirectToRoute('app_sortie_index', [], Response::HTTP_SEE_OTHER);
-
-          }
-    }
-
+        
 
          if ($formRecherche->isSubmitted() && $formRecherche->isValid()){
             $campusRecherche->setNom($formRecherche['campus']->getData());
@@ -54,7 +45,6 @@ class CampusController extends AbstractController
             $campusRepository->add($campus);
             return $this->redirectToRoute('app_campus_index', [], Response::HTTP_SEE_OTHER);
         }
-
         return $this->renderForm('campus/index.html.twig', [
             'campuses' => $campusRepository->findAll(),
             'campus' => $campus,
@@ -63,7 +53,12 @@ class CampusController extends AbstractController
         ]);
 
 
+
+
+
+
     }
+
 
 
 

@@ -3,6 +3,7 @@
 {% block title %}Ville index{% endblock %}
 
 {% block body %}
+    <link rel="stylesheet" href="{{ asset("css/villeCampus.css") }}">
     <h1>Gérer les villes</h1>
     <div>
         <h5>Filter les villes</h5>
@@ -14,9 +15,10 @@
         {{ form_end(formRecherche) }}
     </div>
     <a href="{{ path('app_ville_index') }}">Retour à la liste</a>
-    <table class="table">
-        <thead>
-            <tr>
+    <div class="scroller">
+    <table class="table" >
+        <thead class="enteteListe">
+            <tr >
                 <th>Ville</th>
                 <th>Code Postal</th>
                 <th>Actions</th>
@@ -45,6 +47,7 @@
 
         </tbody>
     </table>
+    </div>
     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@getbootstrap">Ajouter une ville</button>
 
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">

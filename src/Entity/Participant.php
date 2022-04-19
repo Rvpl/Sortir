@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: ParticipantRepository::class)]
 #[UniqueEntity(fields: ['email'], message: 'Cet email appartient déjà à un compte, s\'il s\'agit du votre veuillez vous connecter ou réinitialiser votre mot de passe si perdu')]
@@ -27,16 +28,20 @@ class Participant implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: 'json')]
     private $roles = [];
 
+    #[Assert\NotBlank]
     #[ORM\Column(type: 'string')]
     private $password;
 
+    #[Assert\NotBlank]
     #[ORM\Column(type: 'string', length: 30)]
     private $nom;
 
+    #[Assert\NotBlank]
     #[ORM\Column(type: 'string', length: 30)]
     private $prenom;
 
-    #[ORM\Column(type: 'string', length: 10)]
+    #[Assert\NotBlank]
+    #[ORM\Column(type: 'string', length: 10,unique: true)]
     private $telephone;
 
     #[ORM\Column(type: 'boolean')]
@@ -54,7 +59,13 @@ class Participant implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\ManyToMany(targetEntity: Sortie::class, mappedBy: 'inscrits')]
     private $sortiesInscrit;
 
-    #[ORM\Column(type: 'string', length: 20)]
+    #[ORM\Column(type: 'string', length: 20,unique: true)]
+    #[Assert\Regex(
+    pattern: '/^[a-z]+$/i',
+    htmlPattern: '^[a-zA-Z]+$',
+        message: 'Le pseudo ne peut contenir que des lettres',
+    )]
+    #[Assert\NotBlank]
     private $pseudo;
 
     #[ORM\Column(type: 'string', length: 20, nullable: true)]
