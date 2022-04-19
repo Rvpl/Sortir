@@ -4,11 +4,9 @@
 
 {% block body %}
     {% for message in app.flashes('error') %}
-        <div class="alert alert-danger">
-            {{ message }}
+        <div class=" alert alert-danger">
+            <p>{{ message }}</p>
         </div>
     {% endfor %}
-    <h1>Créer son événement</h1>
     {{ include('sortie/_form.html.twig') }}
-    <button><a href="{{ path('app_sortie_index') }}">back to list</a></button>
 {% endblock %}

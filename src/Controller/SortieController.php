@@ -76,6 +76,7 @@ class SortieController extends AbstractController
 
     ): Response
     {
+
         $sortie = new Sortie();
         $user = $participantRepository->findOneBy(['pseudo' => $this->getUser()->getUserIdentifier()]);
         $sortie->setCampus($user->getCampus());

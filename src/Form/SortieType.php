@@ -27,6 +27,7 @@ class SortieType extends AbstractType
     private $security;
     private $participantRepository;
     private $user;
+
     public function __construct(Security $security,ParticipantRepository $participantRepository)
     {
         $this->security = $security;
@@ -39,43 +40,54 @@ class SortieType extends AbstractType
     {
         $builder
             ->add('nom', TextType::class, [
-                "label" => "Nom de la sortie : "
+                "label" => "Nom de la sortie : ",
+                "attr"=>['placeholder' => 'Nommez votre sortie']
             ])
             ->add('dateHeureDebut', DateTimeType::class, [
                 "label" => "Date et heure de la sortie : ",
-                'data' => new \DateTime()
+                'data' => new \DateTime(),
+                "widget" => "single_text"
             ])
             ->add('duree', TimeType::class, [
-                "label" => "Durée :"
+                "label" => "Durée de l'événement :",
+                "widget" => "single_text",
             ])
             ->add('dateLimiteInscription',DateTimeType::class, [
                 "label" => "Date limite d'inscription : ",
-                'data' => new \DateTime()
+                'data' => new \DateTime(),
+                "widget" => "single_text"
             ])
             ->add('nbInscriptionMax', IntegerType::class, [
-                "label" => "Nombre de places :"
+                "label" => "Nombre de places : ",
+                "attr"=>['placeholder' => 'Nombre de participants maximum']
             ])
             ->add('infoSortie', TextareaType::class, [
-                "label" => "Description et informations : "
+                "label" => "Description et informations : ",
+                "attr"=>['placeholder' => 'Description de la sortie...'],
+                'label_attr' => ['class' => 'form-descrip']
+
             ])
 
             ->add('ville',EntityType::class,[
                 'class' => Ville::class,
                 'choice_label' => 'nom',
-                'placeholder' => 'veuillez sélectionner une ville',
+                "label"=>"Ville :",
+                'placeholder' => 'Veuillez sélectionner une ville',
             ])
             ->add('cp',TextType::class,[
-                'label' => 'Code Postal',
+                'label' => 'Code Postal :',
+                "attr"=>['placeholder' => "Code postal de la ville choisi"],
                 'disabled' => true,
                 'mapped' => false
             ])
             ->add('lieu',EntityType::class,[
-                'placeholder' => 'Veuillez choisiri un lieu',
+                'placeholder' => 'Veuillez sélectionner un lieu',
                 'class' => Lieu::class,
-                'label' => 'Choisir un lieu'
+               'label' => 'Choisir un lieu :'
             ])
             ->add('rue',TextType::class,[
-                'label' => 'Rue',
+                'label' => 'Rue :',
+                "attr"=>['placeholder' => 'Nom de la rue...'],
                 'mapped' => false
             ]);
 
