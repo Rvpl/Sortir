@@ -77,6 +77,9 @@ class SortieController extends AbstractController
     ): Response
     {
         $sortie = new Sortie();
+        $user = $participantRepository->findOneBy(['pseudo' => $this->getUser()->getUserIdentifier()]);
+        $sortie->setCampus($user->getCampus());
+        $form = $this->createForm(SortieType::class,$sortie);
         $lieu = $lieuRepository->findAll();
         $ville = $villeRepository->findAll();
          $form = $this->createForm(SortieType::class);
@@ -101,12 +104,7 @@ class SortieController extends AbstractController
                 $sortie->setEtat($etatRepository->findAll()[0]);
                 $sortie->setOrganisateur($this->getUser());
                 $sortie->setCampus($user->getCampus());
-                $sortie->setNom($form['nom']->getData());
-                $sortie->setDateHeureDebut($form['dateHeureDebut']->getData());
-                $sortie->setDuree($form['duree']->getData());
-                $sortie->setDateLimiteInscription($form['dateLimiteInscription']->getData());
-                $sortie->setNbInscriptionMax($form['nbInscriptionMax']->getData());
-                $sortie->setInfoSortie($form['infoSortie']->getData());
+                $sortie->setLieu($form['lieu']->getData());
                 $sortieRepository->add($sortie);
                 $this->addFlash('success','La sortie a bien été créée');
                 return $this->redirectToRoute('app_sortie_index', [], Response::HTTP_SEE_OTHER);
@@ -119,8 +117,6 @@ class SortieController extends AbstractController
                 ]);
             }
         }
-
-
         return $this->renderForm('sortie/new.html.twig',[
             'sortie' => $sortie,
             'form' => $form,
@@ -133,8 +129,12 @@ class SortieController extends AbstractController
     #[Route('sortie/{id}', name: 'app_sortie_show', methods: ['GET', 'POST'])]
     public function show(Sortie $sortie, VilleRepository $villeRepository, SortieRepository $sortieRepository,
                          Request $request, EtatRepository $etatRepository,
-                         LieuRepository $lieuRepository): Response
+                         LieuRepository $lieuRepository,ParticipantRepository $participantRepository): Response
     {
+        $user = $participantRepository->findOneBy(['pseudo' => $this->getUser()->getUserIdentifier()]);
+        if ($sortie->getOrganisateur() !== $user){
+            throw $this->createAccessDeniedException();
+        }
 
         $formAnnul = $this->createForm(SortieAnnulType::class, $sortie);
         $formAnnul->handleRequest($request);

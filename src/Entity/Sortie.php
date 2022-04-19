@@ -54,7 +54,6 @@ class Sortie
     #[ORM\ManyToOne(targetEntity: Ville::class, inversedBy: 'sorties')]
     private $ville;
 
-
     public function __construct()
     {
         $this->inscrits = new ArrayCollection();
@@ -83,7 +82,8 @@ class Sortie
         return $this->dateHeureDebut;
     }
 
-    public function setDateHeureDebut( $dateHeureDebut): self
+    public function setDateHeureDebut($dateHeureDebut): self
+
     {
          $this->dateHeureDebut = $dateHeureDebut;
         return $this;
@@ -220,7 +220,4 @@ class Sortie
 
         return $this;
     }
-
-
-
 }

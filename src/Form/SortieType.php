@@ -72,7 +72,7 @@ class SortieType extends AbstractType
             ->add('lieu',EntityType::class,[
                 'placeholder' => 'Veuillez choisiri un lieu',
                 'class' => Lieu::class,
-               'label' => 'Choisir un lieu'
+                'label' => 'Choisir un lieu'
             ])
             ->add('rue',TextType::class,[
                 'label' => 'Rue',
@@ -81,7 +81,8 @@ class SortieType extends AbstractType
 
         $builder->get('ville')->addEventListener(FormEvents::POST_SUBMIT,
             function (FormEvent $event) {
-            $form = $event->getForm();
+                $form = $event->getForm();
+
                 $this->addCp($form->getParent(),$form->getData());
                 $this->addLieuField($form->getParent(),$form->getData());
             });
@@ -102,7 +103,8 @@ class SortieType extends AbstractType
                 'auto_initialize' => false,
                 'label' => 'Code Postal',
                 'disabled' =>true,
-                ]);
+            ]);
+
         $form->add($builder->getForm());
     }
 
@@ -118,15 +120,16 @@ class SortieType extends AbstractType
             ]);
         $builder->addEventListener(FormEvents::POST_SUBMIT,
             function (FormEvent $event){
-            $form = $event->getForm();
-            if(!$form->getData()){
-                $lieu = new Lieu($form->getData());
+                $form = $event->getForm();
+                if(!$form->getData()){
+                    $lieu = new Lieu($form->getData());
 
-            }else{
-                $lieu = $form->getData();
-            }
+                }else{
+                    $lieu = $form->getData();
+                }
                 $this->addRueField($form->getParent(),$lieu);
-        });
+            });
+
 
         $form->add($builder->getForm());
     }
