@@ -9,3 +9,7 @@
 /vendor/
 ###< symfony/framework-bundle ###
 .php-version
+###> phpunit/phpunit ###
+/phpunit.xml
+.phpunit.result.cache
+###< phpunit/phpunit ###
