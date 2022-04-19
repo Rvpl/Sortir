@@ -3,8 +3,10 @@
 namespace App\Controller;
 
 use App\Entity\Campus;
+use App\Entity\Lieu;
 use App\Entity\Participant;
 use App\Entity\Sortie;
+use App\Entity\Ville;
 use App\Form\RechercheType;
 use App\Form\SortieAnnulType;
 use App\Form\SortieType;
@@ -14,25 +16,32 @@ use App\Repository\LieuRepository;
 use App\Repository\ParticipantRepository;
 use App\Repository\SortieRepository;
 use App\Repository\VilleRepository;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\TimeType;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Validator\Constraints as Assert;
 
 #[Route('/')]
 class SortieController extends AbstractController
 {
     #[Route('/', name: 'app_sortie_index', methods: ['GET', 'POST'])]
     public function index(Request $request,SortieRepository $sortieRepository,CampusRepository $campusRepository,
-                          ParticipantRepository $participantRepository): Response
+                          ParticipantRepository $participantRepository,VilleRepository $villeRepository,LieuRepository $lieuRepository): Response
     {
         $sorties = [];
         $campus = new Campus();
         $sortieCherche = new Sortie();
         $form = $this->createForm(RechercheType::class);
         $form->handleRequest($request);
+
         if ($form->isSubmitted() && $form->isValid()) {
             $campus = $campusRepository->findBy(['id'=> $form['campus']->getData()]);
             $sortieCherche->setNom($form['nom']->getData());
@@ -63,15 +72,16 @@ class SortieController extends AbstractController
                         VilleRepository $villeRepository,
                         LieuRepository $lieuRepository,
                         EtatRepository $etatRepository,
+                        ParticipantRepository $participantRepository,
 
     ): Response
     {
         $sortie = new Sortie();
         $lieu = $lieuRepository->findAll();
         $ville = $villeRepository->findAll();
-        $form = $this->createForm(SortieType::class, $sortie);
+         $form = $this->createForm(SortieType::class);
+        $user = $participantRepository->findOneBy(['pseudo' => $this->getUser()->getUserIdentifier()]);
         $form->handleRequest($request);
-
 
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -90,7 +100,13 @@ class SortieController extends AbstractController
             if ($form['dateHeureDebut']->getData() > new \DateTime("now") && $form['dateLimiteInscription']->getData() > new \DateTime("now") && $form['dateHeureDebut']->getData() > $form['dateLimiteInscription']->getData()) {
                 $sortie->setEtat($etatRepository->findAll()[0]);
                 $sortie->setOrganisateur($this->getUser());
-                $sortie->setCampus($form['campus']->getData());
+                $sortie->setCampus($user->getCampus());
+                $sortie->setNom($form['nom']->getData());
+                $sortie->setDateHeureDebut($form['dateHeureDebut']->getData());
+                $sortie->setDuree($form['duree']->getData());
+                $sortie->setDateLimiteInscription($form['dateLimiteInscription']->getData());
+                $sortie->setNbInscriptionMax($form['nbInscriptionMax']->getData());
+                $sortie->setInfoSortie($form['infoSortie']->getData());
                 $sortieRepository->add($sortie);
                 $this->addFlash('success','La sortie a bien été créée');
                 return $this->redirectToRoute('app_sortie_index', [], Response::HTTP_SEE_OTHER);

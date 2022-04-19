@@ -27,11 +27,11 @@ class Lieu
     #[ORM\Column(type: 'float')]
     private $longitude;
 
-    #[ORM\ManyToOne(targetEntity: Ville::class, inversedBy: 'lieu')]
-    private $ville;
-
     #[ORM\OneToMany(mappedBy: 'lieu', targetEntity: Sortie::class)]
     private $sorties;
+
+    #[ORM\ManyToOne(targetEntity: Ville::class, inversedBy: 'lieu')]
+    private $ville;
 
     public function __construct()
     {
@@ -91,18 +91,6 @@ class Lieu
         return $this;
     }
 
-    public function getVille(): ?Ville
-    {
-        return $this->ville;
-    }
-
-    public function setVille(?Ville $ville): self
-    {
-        $this->ville = $ville;
-
-        return $this;
-    }
-
     /**
      * @return Collection<int, Sortie>
      */
@@ -131,5 +119,22 @@ class Lieu
         }
 
         return $this;
+    }
+
+    public function getVille(): ?Ville
+    {
+        return $this->ville;
+    }
+
+    public function setVille(?Ville $ville): self
+    {
+        $this->ville = $ville;
+
+        return $this;
+    }
+
+    public function __toString(): string
+    {
+        return $this->getNom();
     }
 }

@@ -18,15 +18,20 @@ class Ville
     #[ORM\Column(type: 'string', length: 30)]
     private $nom;
 
-    #[ORM\Column(type: 'string', length: 10)]
+    #[ORM\Column(type: 'string', length: 10,unique: true)]
     private $codePostal;
+
+    #[ORM\OneToMany(mappedBy: 'ville', targetEntity: Sortie::class)]
+    private $sorties;
 
     #[ORM\OneToMany(mappedBy: 'ville', targetEntity: Lieu::class)]
     private $lieu;
 
+
     public function __construct()
     {
         $this->lieu = new ArrayCollection();
+        $this->sorties = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -54,6 +59,36 @@ class Ville
     public function setCodePostal(string $codePostal): self
     {
         $this->codePostal = $codePostal;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Sortie>
+     */
+    public function getSorties(): Collection
+    {
+        return $this->sorties;
+    }
+
+    public function addSorty(Sortie $sorty): self
+    {
+        if (!$this->sorties->contains($sorty)) {
+            $this->sorties[] = $sorty;
+            $sorty->setVille($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSorty(Sortie $sorty): self
+    {
+        if ($this->sorties->removeElement($sorty)) {
+            // set the owning side to null (unless already changed)
+            if ($sorty->getVille() === $this) {
+                $sorty->setVille(null);
+            }
+        }
 
         return $this;
     }
@@ -87,4 +122,5 @@ class Ville
 
         return $this;
     }
+
 }
