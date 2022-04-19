@@ -18,15 +18,14 @@ class Ville
     #[ORM\Column(type: 'string', length: 30)]
     private $nom;
 
-    #[ORM\Column(type: 'string', length: 10,unique: true)]
+    #[ORM\Column(type: 'string', length: 10)]
     private $codePostal;
-
-    #[ORM\OneToMany(mappedBy: 'ville', targetEntity: Sortie::class)]
-    private $sorties;
 
     #[ORM\OneToMany(mappedBy: 'ville', targetEntity: Lieu::class)]
     private $lieu;
 
+    #[ORM\OneToMany(mappedBy: 'ville', targetEntity: Sortie::class)]
+    private $sorties;
 
     public function __construct()
     {
@@ -64,36 +63,6 @@ class Ville
     }
 
     /**
-     * @return Collection<int, Sortie>
-     */
-    public function getSorties(): Collection
-    {
-        return $this->sorties;
-    }
-
-    public function addSorty(Sortie $sorty): self
-    {
-        if (!$this->sorties->contains($sorty)) {
-            $this->sorties[] = $sorty;
-            $sorty->setVille($this);
-        }
-
-        return $this;
-    }
-
-    public function removeSorty(Sortie $sorty): self
-    {
-        if ($this->sorties->removeElement($sorty)) {
-            // set the owning side to null (unless already changed)
-            if ($sorty->getVille() === $this) {
-                $sorty->setVille(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
      * @return Collection<int, Lieu>
      */
     public function getLieu(): Collection
@@ -123,6 +92,33 @@ class Ville
         return $this;
     }
 
+    /**
+     * @return Collection<int, Sortie>
+     */
+    public function getSorties(): Collection
+    {
+        return $this->sorties;
+    }
 
+    public function addSorty(Sortie $sorty): self
+    {
+        if (!$this->sorties->contains($sorty)) {
+            $this->sorties[] = $sorty;
+            $sorty->setVille($this);
+        }
 
+        return $this;
+    }
+
+    public function removeSorty(Sortie $sorty): self
+    {
+        if ($this->sorties->removeElement($sorty)) {
+            // set the owning side to null (unless already changed)
+            if ($sorty->getVille() === $this) {
+                $sorty->setVille(null);
+            }
+        }
+
+        return $this;
+    }
 }

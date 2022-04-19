@@ -1,0 +1,71 @@
+<div class="container-formSor">
+    {{ form_start(form) }}
+    <div class="grids">
+        <div class="grid">{{ form_row(form.nom) }}</div>
+        <div class="grid">
+            <label for="Campus">Campus</label>
+            {{ app.user.campus.nom}}</div>
+        <div class="grid">{{ form_row(form.dateHeureDebut) }}</div>
+        <div class="grid">{{ form_row(form.ville) }}</div>
+        <div class="grid">{{ form_row(form.dateLimiteInscription) }}</div>
+        <div class="grid">{{ form_row(form.lieu) }}</div>
+        <div class="grid">{{ form_row(form.nbInscriptionMax) }}</div>
+        <div class="grid">{{ form_row(form.rue) }}</div>
+        <div class="grid">{{ form_row(form.duree) }}</div>
+        <div class="grid">{{ form_row(form.cp) }}</div>
+        <div class="grid">{{ form_row(form.infoSortie) }}</div>
+    </div>
+    <button class="btn">{{ button_label|default('Enregistrer') }}</button>
+    <button class="btn">{{ button_label|default('Publier ton événement') }}</button>
+    <button class="btn"><a href="{{ path('app_sortie_index') }}">Annuler</a></button>
+    {{ form_end(form) }}
+
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+<script>
+    let $token = $('#sortie_modif__token')
+
+    $(document).on('change','#sortie_modif_ville',function(){
+        let $villeFiled = $('#sortie_modif_ville')
+        let $form = $villeFiled.closest('form')
+
+        let data = {}
+        data[$villeFiled.attr('name')] = $villeFiled.val()
+        data[$token.attr('name')] = $token.val()
+
+        $.post($form.attr('action'),data).then(function(response){
+            let $input = $(response).find('#sortie_modif_lieu')
+            $('#sortie_modif_lieu').replaceWith($input)
+
+            let $input2 = $(response).find('#sortie_modif_cp')
+            $('#sortie_modif_cp').replaceWith($input2)
+
+        })
+    })
+
+
+    $(document).on('change','#sortie_modif_lieu',function (){
+        let $lieuFiled = $('#sortie_modif_lieu')
+
+        let $villeFiled = $('#sortie_modif_ville')
+        console.log($lieuFiled.attr('id'))
+        let $form = $lieuFiled.closest('form')
+
+        let data = {}
+        data[$villeFiled.attr('name')] = $villeFiled.val()
+        data[$lieuFiled.attr('name')] = $lieuFiled.val()
+        data[$token.attr('name')] = $token.val()
+
+        $.post($form.attr('action'),data).then(function(response){
+            let $input = $(response).find('#sortie_modif_rue')
+            $('#sortie_modif_rue').replaceWith($input)
+        })
+    })
+
+
+
+
+
+
+</script>

@@ -28,16 +28,13 @@
                                 </li>
                             {% endif %}
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ path('app_ville_index') }}">Villes</a>
-                            </li>
-                            <li class="nav-item">
                                 <a class="nav-link" href="{{ path('app_participant_show', {'id': app.user.id}) }}">Mon profil</a>
                             </li>
                             <li class="nav-item ">
                                 <a href="{{ path('app_logout') }}" class="nav-link">Se déconnecter</a>
                             </li>
 
-{#                        {% else %}#}
+                     {% else %}
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ path('app_sortie_index') }}">Accueil</a>
                             </li>
@@ -48,27 +45,6 @@
                                 <a href="{{ path('app_login') }}" class="nav-link">Se connecter</a>
                             </li>
                         {% endif %}
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ path('app_sortie_index') }}">Accueil</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ path('app_participant_show', {'id': app.user.id}) }}">Mon profil</a>
-                        </li>
-                        <li class="nav-item ">
-                            <a href="{{ path('app_logout') }}" class="nav-link">Se déconnecter</a>
-                        </li>
-
-{#                    {% else %}#}
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ path('app_sortie_index') }}">Accueil</a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{{ path('app_register') }}" class="nav-link">S'inscrire</a>
-                        </li>
-                        <li class="nav-item" >
-                            <a href="{{ path('app_login') }}" class="nav-link">Se connecter</a>
-                        </li>
-{#                    {% endif %}#}
                 </ul>
             </div>
         </div>
