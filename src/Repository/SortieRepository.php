@@ -124,6 +124,7 @@ class SortieRepository extends ServiceEntityRepository
             ->getResult();
     }
 
+
     // /**
     //  * @return Sortie[] Returns an array of Sortie objects
     //  */

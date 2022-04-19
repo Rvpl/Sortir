@@ -7,12 +7,11 @@ use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-
+use Symfony\Component\Validator\Constraints as Assert;
 #[ORM\Entity(repositoryClass: SortieRepository::class)]
 class Sortie
 {
 
-    #[Assert\DateTime]
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
@@ -21,12 +20,15 @@ class Sortie
     #[ORM\Column(type: 'string', length: 50)]
     private $nom;
 
+    #[Assert\Type("DateTimeInterface")]
     #[ORM\Column(type: 'datetime')]
     private $dateHeureDebut;
 
+    #[Assert\Type("DateTimeInterface")]
     #[ORM\Column(type: 'time')]
     private $duree;
 
+    #[Assert\Type("DateTimeInterface")]
     #[ORM\Column(type: 'datetime')]
     private $dateLimiteInscription;
 
@@ -70,7 +72,7 @@ class Sortie
         return $this->nom;
     }
 
-    public function setNom(string $nom): self
+    public function setNom(?string $nom): self
     {
         $this->nom = $nom;
 
@@ -82,7 +84,7 @@ class Sortie
         return $this->dateHeureDebut;
     }
 
-    public function setDateHeureDebut($dateHeureDebut): self
+    public function setDateHeureDebut(?\DateTimeInterface $dateHeureDebut): self
 
     {
          $this->dateHeureDebut = $dateHeureDebut;
@@ -94,7 +96,7 @@ class Sortie
         return $this->duree;
     }
 
-    public function setDuree($duree): self
+    public function setDuree(?\DateTimeInterface $duree): self
     {
         $this->duree = $duree;
 
@@ -106,7 +108,7 @@ class Sortie
         return $this->dateLimiteInscription;
     }
 
-    public function setDateLimiteInscription($dateLimiteInscription): self
+    public function setDateLimiteInscription(?\DateTimeInterface $dateLimiteInscription): self
     {
         $this->dateLimiteInscription = $dateLimiteInscription;
 
@@ -118,7 +120,7 @@ class Sortie
         return $this->nbInscriptionMax;
     }
 
-    public function setNbInscriptionMax(int $nbInscriptionMax): self
+    public function setNbInscriptionMax(?int $nbInscriptionMax): self
     {
         $this->nbInscriptionMax = $nbInscriptionMax;
 
@@ -130,7 +132,7 @@ class Sortie
         return $this->infoSortie;
     }
 
-    public function setInfoSortie(string $infoSortie): self
+    public function setInfoSortie(?string $infoSortie): self
     {
         $this->infoSortie = $infoSortie;
 
