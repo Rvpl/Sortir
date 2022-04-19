@@ -29,7 +29,7 @@ class CampusController extends AbstractController
         $formCampus->handleRequest($request);
         $formRecherche= $this->createForm(RechercherCampusType::class, $campuses);
         $formRecherche->handleRequest($request);
-
+        
 
          if ($formRecherche->isSubmitted() && $formRecherche->isValid()){
             $campusRecherche->setNom($formRecherche['campus']->getData());
@@ -45,7 +45,6 @@ class CampusController extends AbstractController
             $campusRepository->add($campus);
             return $this->redirectToRoute('app_campus_index', [], Response::HTTP_SEE_OTHER);
         }
-
         return $this->renderForm('campus/index.html.twig', [
             'campuses' => $campusRepository->findAll(),
             'campus' => $campus,
@@ -54,7 +53,12 @@ class CampusController extends AbstractController
         ]);
 
 
+
+
+
+
     }
+
 
 
 
