@@ -17,7 +17,10 @@ security:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
+
         main:
+            entry_point: App\Security\AuthenticationEntryPoint
+            access_denied_handler: App\Security\AccessDeniedHandler
             lazy: true
             provider: app_user_provider
             custom_authenticator: App\Security\ParticipantAuthenticator

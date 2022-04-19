@@ -1,27 +1,71 @@
- <div class="container-formSor">
-     {{ form_start(form) }}
-     <div class="grids">
-         <div class="grid">{{ form_row(form.nom) }}</div>
-         <div class="grid">{{ form_row(form.dateHeureDebut) }}</div>
-         <div class="grid">{{ form_row(form.duree) }}</div>
-         <div class="grid">{{ form_row(form.dateLimiteInscription) }}</div>
-         <div class="grid">{{ form_row(form.nbInscriptionMax) }}</div>
-         <div class="grid">{{ form_row(form.infoSortie) }}</div>
-         {% for ville in villes %}
-             <div class="grid"><p>Ville : {{ ville.nom }}</p></div>
-         {% endfor %}
-         <div class="grid">{{ form_row(form.campus) }}</div>
-         <div class="grid">{{ form_row(form.lieu) }}</div>
-         {% for ville in villes %}
-             <div class="grid"><p>Code postal : {{ ville.codePostal }}</p></div>
-         {% endfor %}
-         {% for lieu in lieux %}
-             <div class="grid"><p>Rue : {{ lieu.rue }}</p></div>
-         {% endfor %}
-     </div>
-     <button class="btn">{{ button_label|default('Enregistrer') }}</button>
-     <button class="btn">{{ button_label|default('Publier ton événement') }}</button>
-     <button class="btn"><a href="{{ path('app_sortie_index') }}">Annuler</a></button>
-     {{ form_end(form) }}
+<div class="container-formSor">
+    {{ form_start(form) }}
+    <div class="grids">
+        <div class="grid">{{ form_row(form.nom) }}</div>
+        <div class="grid">
+            <label for="Campus">Campus</label>
+            {{ app.user.campus.nom}}</div>
+        <div class="grid">{{ form_row(form.dateHeureDebut) }}</div>
+        <div class="grid">{{ form_row(form.ville) }}</div>
+        <div class="grid">{{ form_row(form.dateLimiteInscription) }}</div>
+        <div class="grid">{{ form_row(form.lieu) }}</div>
+        <div class="grid">{{ form_row(form.nbInscriptionMax) }}</div>
+        <div class="grid">{{ form_row(form.rue) }}</div>
+        <div class="grid">{{ form_row(form.duree) }}</div>
+        <div class="grid">{{ form_row(form.cp) }}</div>
+        <div class="grid">{{ form_row(form.infoSortie) }}</div>
+    </div>
+    <button class="btn">{{ button_label|default('Enregistrer') }}</button>
+    <button class="btn">{{ button_label|default('Publier ton événement') }}</button>
+    <button class="btn"><a href="{{ path('app_sortie_index') }}">Annuler</a></button>
+    {{ form_end(form) }}
 
- </div>
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+<script>
+    let $token = $('#sortie__token')
+
+    $(document).on('change','#sortie_ville',function(){
+        let $villeFiled = $('#sortie_ville')
+        let $form = $villeFiled.closest('form')
+
+        let data = {}
+        data[$villeFiled.attr('name')] = $villeFiled.val()
+        data[$token.attr('name')] = $token.val()
+
+        $.post($form.attr('action'),data).then(function(response){
+            let $input = $(response).find('#sortie_lieu')
+            $('#sortie_lieu').replaceWith($input)
+
+            let $input2 = $(response).find('#sortie_cp')
+            $('#sortie_cp').replaceWith($input2)
+
+        })
+    })
+
+
+    $(document).on('change','#sortie_lieu',function (){
+        let $lieuFiled = $('#sortie_lieu')
+
+        let $villeFiled = $('#sortie_ville')
+        console.log($lieuFiled.attr('id'))
+        let $form = $lieuFiled.closest('form')
+
+        let data = {}
+        data[$villeFiled.attr('name')] = $villeFiled.val()
+        data[$lieuFiled.attr('name')] = $lieuFiled.val()
+        data[$token.attr('name')] = $token.val()
+
+        $.post($form.attr('action'),data).then(function(response){
+            let $input = $(response).find('#sortie_rue')
+            $('#sortie_rue').replaceWith($input)
+        })
+    })
+
+
+
+
+
+
+</script>

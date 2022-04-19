@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Participant;
 use App\Form\ParticipantType;
 use App\Repository\ParticipantRepository;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -14,6 +15,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class ParticipantController extends AbstractController
 {
     #[Route('/', name: 'app_participant_index', methods: ['GET'])]
+    #[IsGranted("ROLE_ADMIN")]
     public function index(ParticipantRepository $participantRepository): Response
     {
         return $this->render('participant/index.html.twig', [
@@ -22,6 +24,7 @@ class ParticipantController extends AbstractController
     }
 
     #[Route('/new', name: 'app_participant_new', methods: ['GET', 'POST'])]
+    #[IsGranted("ROLE_ADMIN")]
     public function new(Request $request, ParticipantRepository $participantRepository): Response
     {
         $participant = new Participant();

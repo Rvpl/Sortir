@@ -11,7 +11,9 @@ use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 #[ORM\Entity(repositoryClass: ParticipantRepository::class)]
-#[UniqueEntity(fields: ['email'], message: 'There is already an account with this email')]
+#[UniqueEntity(fields: ['email'], message: 'Cet email appartient déjà à un compte, s\'il s\'agit du votre veuillez vous connecter ou réinitialiser votre mot de passe si perdu')]
+#[UniqueEntity(fields: ['telephone'], message: 'Ce numéro est déjà associé à un compte')]
+#[UniqueEntity(fields: ['pseudo'], message: 'Pseudo déjà utilisé veuillez en choisir un autre')]
 class Participant implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]

@@ -51,6 +51,9 @@ class Sortie
     #[ORM\ManyToMany(targetEntity: Participant::class, inversedBy: 'sortiesInscrit')]
     private $inscrits;
 
+    #[ORM\ManyToOne(targetEntity: Ville::class, inversedBy: 'sorties')]
+    private $ville;
+
     public function __construct()
     {
         $this->inscrits = new ArrayCollection();
@@ -81,7 +84,7 @@ class Sortie
         return $this->dateHeureDebut;
     }
 
-    public function setDateHeureDebut(DateTimeInterface $dateHeureDebut): self
+    public function setDateHeureDebut($dateHeureDebut): self
     {
          $this->dateHeureDebut = $dateHeureDebut;
         return $this;
@@ -92,7 +95,7 @@ class Sortie
         return $this->duree;
     }
 
-    public function setDuree(DateTimeInterface $duree): self
+    public function setDuree($duree): self
     {
         $this->duree = $duree;
 
@@ -104,7 +107,7 @@ class Sortie
         return $this->dateLimiteInscription;
     }
 
-    public function setDateLimiteInscription(DateTimeInterface $dateLimiteInscription): self
+    public function setDateLimiteInscription($dateLimiteInscription): self
     {
         $this->dateLimiteInscription = $dateLimiteInscription;
 
@@ -203,6 +206,18 @@ class Sortie
     public function removeInscrit(Participant $inscrit): self
     {
         $this->inscrits->removeElement($inscrit);
+
+        return $this;
+    }
+
+    public function getVille(): ?Ville
+    {
+        return $this->ville;
+    }
+
+    public function setVille(?Ville $ville): self
+    {
+        $this->ville = $ville;
 
         return $this;
     }
