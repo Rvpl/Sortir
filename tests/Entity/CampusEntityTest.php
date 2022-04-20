@@ -2,12 +2,16 @@
 
 namespace App\Tests\Entity;
 
+use App\Entity\Campus;
 use PHPUnit\Framework\TestCase;
 
 class CampusEntityTest extends TestCase
 {
-    public function testSomething(): void
+    public function test(): void
     {
-        $this->assertTrue(true);
+        $category = (new Campus())
+            ->setNom("jesaispas");
+        $this->assertEquals("jesaispas", $category->getNom());
+        $this->assertNull($category->getId());
     }
 }
