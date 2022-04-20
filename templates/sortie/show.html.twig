@@ -3,98 +3,122 @@
 {% block title %}Sortie{% endblock %}
 
 {% block body %}
-        {% if sorties.etat.id == 5 %}
+    <div class="container" style="margin-top: 100px">
+        {% if sorties.etat.id == 5 and sortie.organisateur != app.user%}
             <div> {{ sortie.nom }} {{ sortie.infoSortie }}</div>
         {% else %}
-            <h1 class="titreSortie">Sortie</h1>
-
-            <table class="table">
-                <tbody class="cards">
-
-                <tr class="card">
-                    <th>Nom de la sortie :</th>
-                    <td>{{ sortie.nom }}</td>
-                </tr>
-                <tr class="card">
-                    <th>Date et heure de la sortie :</th>
-                    <td>{{ sortie.dateHeureDebut ? sortie.dateHeureDebut|date('Y-m-d H:i:s') : '' }}</td>
-                </tr>
-                <tr class="card">
-                    <th>Durée :</th>
-                    <td>{{ sortie.duree ? sortie.duree|date('H:i:s') : '' }} minutes</td>
-                </tr>
-                <tr class="card">
-                    <th>Date limite d'inscription :</th>
-                    <td>{{ sortie.dateLimiteInscription ? sortie.dateLimiteInscription|date('Y-m-d H:i:s') : '' }}</td>
-                </tr>
-                <tr class="card">
-                    <th>Nombre de places :</th>
-                    <td>{{ sortie.nbInscriptionMax }}</td>
-                </tr>
-                <tr class="card">
-                    <th>Description et informations :</th>
-                    <td>{{ sortie.infoSortie }}</td>
-                </tr>
-                <tr class="card">
-                    <th>Campus :</th>
-                    <td>{{ sortie.campus.nom }}</td>
-                </tr>
-                <tr class="card">
-                    <th>Lieu :</th>
-                    <td>{{ sortie.lieu.nom }}</td>
-                </tr>
-                <tr class="card">
-                    <th>Rue :</th>
-                    <td>{{ sortie.lieu.rue }}</td>
-                </tr>
-                <tr class="card">
-                    <th>Code postal :</th>
-                    {% for ville in villes %}
-                        <td>{{ ville.codePostal }}</td>
-                    {% endfor %}
-                </tr>
-                </tbody>
-            </table>
-            <h4>Liste des participants inscrits :</h4>
-                <table>
-                    <tr>
-                        <th>Pseudo :</th>
-                        {% for inscrit in sortie.inscrits %}
-                        <td>{{ inscrit.pseudo }}</td>
-                        {% endfor %}
-                    </tr>
-                    <tr>
-                        <th>Nom :</th>
-                        {% for inscrit in sortie.inscrits %}
-                        <td>{{ inscrit.prenom }} {{ inscrit.nom }}</td>
-                        {% endfor %}
-                    </tr>
-                </table>
-            <div class="boutonsShow">
-                <button><a href="{{ path('app_sortie_index') }}">Retour à la liste</a></button>
-                <button><a href="{{ path('app_sortie_edit', {'id': sortie.id}) }}">Modifier</a></button>
-            </div>
-    {% if app.user %}
-        {% if sortie.organisateur == app.user%}
-                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@getbootstrap">Annuler un événement</button>
-
-                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLabel">Annulation</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body">
-                                {{ include('sortie/_formAnnul.html.twig') }}
-                            </div>
-                        </div>
-                    </div>
+            <h1>Informations sur la sortie</h1>
+            <div class="row">
+                <div class="col-6">
+                    <b>Nom de la sortie :</b> {{ sortie.nom }}
                 </div>
-        {% endif %}
-    {% endif %}
-            {{ include('sortie/_delete_form.html.twig') }}
-        {% endif %}
+                <div class="col-6">
+                    <b>Campus :</b> {{ sortie.campus.nom }}
+                </div>
+                <div class="col-6">
+                    <b>Date  et heure de la sortie:</b> {{ sortie.dateHeureDebut|format_datetime('medium', 'short', locale='fr') }}
+                </div>
+                <div class="col-6">
+                    <b>Lieu:</b> {{ sortie.lieu.nom }}
+                </div>
+                <div class="col-6">
+                    <b>Date limie d'inscription</b> {{ sortie.dateLimiteInscription|format_datetime('medium', 'short', locale='fr') }}
+                </div>
+                <div class="col-6">
+                    <b>Rue:</b> {{ sortie.lieu.rue }}
+                </div>
+                <div class="col-6">
+                    <b>Nombre de place:</b> {{ sortie.nbInscriptionMax }} place(s)
+                </div>
+                <div class="col-6">
+                    <b>Code postal:</b> {{ sortie.ville.codePostal }}
+                </div>
+                <div class="col-6">
+                    <b>Durée:</b> {{ sortie.duree|date('H:i') }}
+                </div>
+                <div class="col-6">
+                    <b>Latitude:</b> {{ sortie.lieu.latitude }}°
+                </div>
+                <div class="col-6">
+                    <b>Longitude:</b> {{ sortie.lieu.longitude}}'
+                </div>
+            </div>
 
+            <br><br><br><br><br>
+
+
+            <div class="container">
+                <h4>Liste des participants inscrits :</h4>
+                <div class="row" id="div_inscrits">
+                    <div class="col-2">
+                        <b>Pseudo</b>
+                    </div>
+                    <div class="col-10">
+                        <b>Nom</b>
+                    </div>
+                    {% for participant in sortie.inscrits %}
+                        <div class="col-2">
+                            {{ participant.pseudo }}
+                        </div>
+                        <div class="col-10">
+                            {{ participant.nom }}
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <br><br><br><br><br>
+
+
+            {% if app.user == sortie.organisateur %}
+                <p>État de la sortie : {{ sortie.etat.libelle }}</p>
+
+                {% if sortie.etat.id != 5 %}
+                    <a href="{{ path('app_sortie_edit',{'id': sortie.id}) }}">
+                        <button>Modifier</button>
+                    </a>
+                    <button type="button" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@getbootstrap">Annuler un événement</button>
+                    {% else %}
+                        <button type="button" data-bs-toggle="modal" data-bs-target="#cheh" data-bs-whatever="@getbootstrap">Réouvrir la sortie</button>
+                {% endif %}
+                <a href="{{ path('app_sortie_delete',{'id':sortie.id}) }}">
+                    <button>Supprimer la sortie</button>
+                </a>
+            {% endif %}
+
+        {% endif %}
+    </div>
+
+
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Annulation</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    {{ include('sortie/_formAnnul.html.twig') }}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="cheh" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">CHEH, il ne fallait pas l'annuler</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <b>Allez, vas en créer une autre </b>
+                    <p>
+                        "¯\_(ツ)_/¯"
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
 
 {% endblock %}
