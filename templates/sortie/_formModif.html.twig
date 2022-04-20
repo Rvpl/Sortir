@@ -15,9 +15,9 @@
         <div class="grid">{{ form_row(form.cp) }}</div>
         <div class="grid">{{ form_row(form.infoSortie) }}</div>
     </div>
-    <button class="btn">{{ button_label|default('Enregistrer') }}</button>
-    <button class="btn">{{ button_label|default('Publier ton événement') }}</button>
-    <button class="btn"><a href="{{ path('app_sortie_index') }}">Annuler</a></button>
+    <a href="{{ path('app_sortie_show',{'id':sortie.id}) }}">
+        <button class="btn btn-dark">Annuler</button>
+    </a>
     {{ form_end(form) }}
 
 </div>
