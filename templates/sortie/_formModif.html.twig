@@ -15,6 +15,7 @@
         <div class="grid">{{ form_row(form.cp) }}</div>
         <div class="grid">{{ form_row(form.infoSortie) }}</div>
     </div>
+    <button class="btn btn-success">{{ button_label|default('Modifier') }}</button>
     <a href="{{ path('app_sortie_show',{'id':sortie.id}) }}">
         <button class="btn btn-dark">Annuler</button>
     </a>
