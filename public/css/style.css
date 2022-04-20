@@ -5,13 +5,13 @@ body{
 }
 .container{
     font-family: monospace;
-    position: absolute;
+    /*position: absolute;*/
 }
 /*////////////////////////////////////////////////////////FORMULAIRE DE SORTIE//////////////////////////////////////////////////////////////////////////:*/
 
 .container-formSor {
     position: absolute;
-    left: 40%;
+    left: 30%;
     font-size: 15px;
     display: flex;
     justify-content: center;
@@ -271,7 +271,7 @@ form{
 
 .container-profil{
     position: absolute;
-    left: 40%;
+    left: 30%;
     font-size: 15px;
     margin: 6em auto;
     font-family: monospace;
@@ -317,7 +317,7 @@ form{
 }
 .h1-profil{
     position: absolute;
-    left: 60%;
+    left: 45%;
     margin-top: 10px;
 
 
