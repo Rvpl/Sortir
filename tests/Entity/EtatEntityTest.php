@@ -9,8 +9,8 @@ class EtatEntityTest extends TestCase
 {
     public function test(): void
     {
-        $category = (new Etat())
+        $etat = (new Etat())
             ->setLibelle("créée");
-        $this->assertEquals("créée", $category->getLibelle());
+        $this->assertEquals("créée", $etat->getLibelle());
     }
 }

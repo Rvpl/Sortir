@@ -17,19 +17,19 @@ class UserEntityTest extends TestCase
         $roles=['ROLE_USER'];
         $nom='poupipapa';
         $prenom='valjean';
-        $utilisateur = (new Participant())
+        $participant = (new Participant())
             ->setEmail($mail)
             ->setPassword($mdp)
             ->setNom($nom)
             ->setPrenom($prenom)
             ->setRoles($roles);
-        $this->assertCount(1, $utilisateur->getRoles());
-        $this->assertEquals($prenom, $utilisateur->getPrenom());
-        $this->assertEquals($mail, $utilisateur->getEmail());
-        $this->assertEquals($mdp, $utilisateur->getPassword());
-        $this->assertCount(1, $utilisateur->getRoles());
-        $this->assertEquals($nom, $utilisateur->getNom());
-        $this->assertNull($utilisateur->getId());
-        $this->assertEquals($nom, $utilisateur->getNom());
+        $this->assertCount(1, $participant->getRoles());
+        $this->assertEquals($prenom, $participant->getPrenom());
+        $this->assertEquals($mail, $participant->getEmail());
+        $this->assertEquals($mdp, $participant->getPassword());
+        $this->assertCount(1, $participant->getRoles());
+        $this->assertEquals($nom, $participant->getNom());
+        $this->assertNull($participant->getId());
+        $this->assertEquals($nom, $participant->getNom());
     }
 }
