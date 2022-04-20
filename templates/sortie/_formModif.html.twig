@@ -1,27 +1,3 @@
-{#<div class="container-formSor">
-    {{ form_start(form) }}
-    <div class="grids">
-        <div class="grid">{{ form_row(form.nom) }}</div>
-        <div class="grid">
-            <label for="Campus">Campus</label>
-            {{ app.user.campus.nom}}</div>
-        <div class="grid">{{ form_row(form.dateHeureDebut) }}</div>
-        <div class="grid">{{ form_row(form.ville) }}</div>
-        <div class="grid">{{ form_row(form.dateLimiteInscription) }}</div>
-        <div class="grid">{{ form_row(form.lieu) }}</div>
-        <div class="grid">{{ form_row(form.nbInscriptionMax) }}</div>
-        <div class="grid">{{ form_row(form.rue) }}</div>
-        <div class="grid">{{ form_row(form.duree) }}</div>
-        <div class="grid">{{ form_row(form.cp) }}</div>
-        <div class="grid">{{ form_row(form.infoSortie) }}</div>
-    </div>
-    <button class="btn btn-success">{{ button_label|default('Modifier') }}</button>
-    <a href="{{ path('app_sortie_show',{'id':sortie.id}) }}">
-        <button class="btn btn-dark">Annuler</button>
-    </a>
-    {{ form_end(form) }}
-
-</div>#}
 <div class="container-formSor">
     {{ form_start(form) }}
     <h1>Modifier sa sortie</h1>
