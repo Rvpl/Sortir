@@ -22,7 +22,9 @@
                 <div class="formInscr">{{ form_row(registrationForm.photoProfil) }}</div>
                 <div class="formInscr">{{ form_row(registrationForm.campus) }}</div>
             </div>
-            <button type="submit" class="btn-formIns">Enregistrer</button>
+        {{ form_row((registrationForm.confirmation)) }}
+
+        <button type="submit" class="btn-formIns">Enregistrer</button>
         {{ form_end(registrationForm) }}
     </div>
 

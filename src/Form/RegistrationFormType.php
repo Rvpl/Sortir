@@ -25,7 +25,6 @@ class RegistrationFormType extends AbstractType
         $builder
             ->add('pseudo', TextType::class, [
                 "label" => "Pseudo : ",
-                "attr"=>['placeholder' => 'Uniquement des lettres']
                 ])
             ->add('prenom', TextType::class, [
                 "label" => "Prénom : "])
