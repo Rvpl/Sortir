@@ -123,11 +123,6 @@ class SortieController extends AbstractController
                          Request $request, EtatRepository $etatRepository,
                          LieuRepository $lieuRepository,ParticipantRepository $participantRepository): Response
     {
-        $user = $participantRepository->findOneBy(['pseudo' => $this->getUser()->getUserIdentifier()]);
-        if ($sortie->getOrganisateur() !== $user){
-            throw $this->createAccessDeniedException();
-        }
-
         $formAnnul = $this->createForm(SortieAnnulType::class, $sortie);
         $formAnnul->handleRequest($request);
         if ($formAnnul->isSubmitted() && $formAnnul->isValid()) {
@@ -139,6 +134,7 @@ class SortieController extends AbstractController
         $sorties = $sortieRepository->findOneBy(['id' => $sortie->getId()]);
         $ville = $villeRepository->findAll();
         return $this->renderForm('sortie/show.html.twig', [
+            'nom' => $sortie->getNom(),
             'sortie' => $sortie,
             'villes' => $ville,
             'sorties' => $sorties,
