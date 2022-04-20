@@ -3,9 +3,11 @@
 {% block title %}Participant{% endblock %}
 
 {% block body %}
-    <h1 class="h1-profil">Votre profil</h1>
     <div class="container-profil">
-        <h1>{{ participant.pseudo }}</h1>
+        <div class="title-profil">
+            <h2>Profil de :</h2>
+            <h3>{{ participant.pseudo }}</h3>
+        </div>
         <img src="{{ asset('img/' ~ participant.photoProfil) }}" alt="">
         <div class="profil">
             <div class="profil-content">Prénom : {{ participant.prenom }}</div>

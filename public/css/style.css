@@ -10,8 +10,8 @@ body{
 /*////////////////////////////////////////////////////////FORMULAIRE DE SORTIE//////////////////////////////////////////////////////////////////////////:*/
 
 .container-formSor {
-    position: absolute;
-    left: 30%;
+    /*position: absolute;*/
+    /*left: 30%;*/
     font-size: 15px;
     display: flex;
     justify-content: center;
@@ -21,7 +21,6 @@ body{
 
 }
 .container-formSor h1 {
-    position: relative;
     font-size: 30px;
     text-align: center;
     padding-bottom: 10px;
@@ -29,8 +28,8 @@ body{
 .container-formSor h1::after{
     content: "";
     display: block;
-    position: relative;
-    width: 100%;
+    margin: 0 auto;
+    width: 45%;
     height: 2px;
     background: black;
     transform: scale(0);
@@ -59,16 +58,37 @@ form{
     border: none;
     outline: none;
     box-sizing: border-box;
-    border-top: 1px dotted black;
-    border-bottom: 2px solid black;
-    border-radius: 6px;
+    /*border-top: 1px dotted black;*/
+    /*border-bottom: 2px solid black;*/
+    border-bottom: 0.5px solid rgba(0, 0, 0, 0.2);
+    border-left: 1px solid black;
+    background-color: rgba(191, 189, 189, 0);
+    border-bottom-left-radius: 3px;
+    box-shadow: 0 0 0 0 black;
+
 }
+@keyframes pulse {
+    to{
+        box-shadow: 0 0 0 5px rgba(0, 0, 0, 0.01);
+    }
+}
+
+
 .formSor input:hover{
-    background-color: rgba(191, 189, 189, 0.2);
-    border-bottom: 3px solid steelblue;
-    border-top: none;
+    /*background-color: rgba(191, 189, 189, 0.2);*/
+    border: none;
+    border-bottom: 2px solid steelblue;
+
     transition: 0.2s;
 
+}
+.formSor input:focus{
+    /*background-color: white;*/
+    background-color: rgba(191, 189, 189, 0.1);
+    border-bottom-left-radius: 2px;
+    border: none;
+    border-bottom: 2px solid black;
+    animation: pulse 1s ease;
 }
 .formSor select{
     display: block;
@@ -81,12 +101,19 @@ form{
     border-top: 1px dotted black;
     border-bottom: 2px solid black;
     border-radius: 6px;
+    box-shadow: 0 0 0 0 black;
 }
 .formSor select:hover{
     background-color: rgba(191, 189, 189, 0.2);
     border-top: none;
     border-bottom: 3px solid steelblue;
     transition: 0.3s;
+}
+.formSor select:focus{
+    background-color: white;
+    border: none;
+    border-bottom: 2px solid black;
+    animation: pulse 1s ease;
 }
 .formSor textarea{
     display: block;
@@ -99,17 +126,25 @@ form{
     border-top: 1px dotted black;
     border-bottom: 2px solid black;
     border-radius: 6px;
+    box-shadow: 0 0 0 0 black;
 }
 .formSor textarea:hover{
-    background-color: rgba(191, 189, 189, 0.2);
+    background-color: rgba(191, 189, 189, 0);
     border-top: none;
     border-bottom: 3px solid steelblue;
     transition: 0.3s;
+}
+.formSor textarea:focus{
+    background-color: white;
+    border: none;
+    border-bottom: 2px solid black;
+    animation: pulse 1s ease;
 }
 .form-descrip {
     display: flex;
     justify-content: center;
 }
+
 .formSor p {
     display: block;
     margin: 10px auto;
@@ -270,8 +305,8 @@ form{
 /*//////////////////////////////////////////////////////////////////////////PROFIL//////////////////////////////////////////////////////////////////*/
 
 .container-profil{
-    position: absolute;
-    left: 30%;
+    /*position: absolute;*/
+    /*left: 30%;*/
     font-size: 15px;
     margin: 6em auto;
     font-family: monospace;
@@ -315,11 +350,15 @@ form{
     font-size: 40px;
     text-align: center;
 }
-.h1-profil{
-    position: absolute;
-    left: 45%;
-    margin-top: 10px;
+/*.h1-profil{
+    !*position: absolute;*!
+    !*left: 45%;*!
+    margin: 0 auto;
 
+
+}*/
+.title-profil{
+    text-align: center;
 
 }
 .h1-profil::after{
