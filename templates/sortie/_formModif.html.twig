@@ -1,4 +1,4 @@
-<div class="container-formSor">
+{#<div class="container-formSor">
     {{ form_start(form) }}
     <div class="grids">
         <div class="grid">{{ form_row(form.nom) }}</div>
@@ -21,7 +21,44 @@
     </a>
     {{ form_end(form) }}
 
+</div>#}
+<div class="container-formSor">
+    {{ form_start(form) }}
+    <h1>Modifier sa sortie</h1>
+    <div class="test">
+        <div class="formSor">{{ form_row(form.nom) }}</div>
+        <div class="formSor"><label for="Campus">Campus :</label>
+            <p>{{ app.user.campus.nom}}</p></div>
+    </div>
+    <div class="test">
+        <div class="formSor">{{ form_row(form.dateHeureDebut) }}</div>
+        <div class="formSor">{{ form_row(form.ville) }}</div>
+    </div>
+    <div class="test">
+        <div class="formSor">{{ form_row(form.dateLimiteInscription) }}</div>
+        <div class="formSor">{{ form_row(form.lieu) }}</div>
+    </div>
+    <div class="test">
+        <div class="formSor">{{ form_row(form.nbInscriptionMax) }}</div>
+        <div class="formSor">{{ form_row(form.rue) }}</div>
+    </div>
+    <div class="test">
+        <div class="formSor">{{ form_row(form.duree) }}</div>
+        <div class="formSor">{{ form_row(form.cp) }}</div>
+    </div>
+    <div class="formSor">{{ form_row(form.infoSortie) }}</div>
+
+    <div class="bouton-formSor">
+        <div class="sub-pub-ann">
+            <button class="btn-form">{{ button_label|default('Modifier') }}</button>
+            <a href="{{ path('app_sortie_show',{'id':sortie.id}) }}">
+                <button class="btn-form-a">Annuler</button>
+            </a>
+        </div>
+    </div>
+    {{ form_end(form) }}
 </div>
+
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
 <script>

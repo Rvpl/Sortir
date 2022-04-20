@@ -1,17 +1,17 @@
 
 body{
     background-image: url("../image/arriere-plan.webp");
+    background-size: cover;
 }
 .container{
     font-family: monospace;
+    position: absolute;
 }
 /*////////////////////////////////////////////////////////FORMULAIRE DE SORTIE//////////////////////////////////////////////////////////////////////////:*/
-.container-formSor h1 {
-    font-size: 30px;
-    text-align: center;
-    padding-bottom: 10px;
-}
+
 .container-formSor {
+    position: absolute;
+    left: 40%;
     font-size: 15px;
     display: flex;
     justify-content: center;
@@ -19,6 +19,25 @@ body{
     margin: 2em auto;
     font-family: monospace;
 
+}
+.container-formSor h1 {
+    position: relative;
+    font-size: 30px;
+    text-align: center;
+    padding-bottom: 10px;
+}
+.container-formSor h1::after{
+    content: "";
+    display: block;
+    position: relative;
+    width: 100%;
+    height: 2px;
+    background: black;
+    transform: scale(0);
+    transition: transform 0.2s ease-in-out;
+}
+.container-formSor h1:hover::after{
+    transform: scale(1);
 }
 form{
     font-weight: bolder;
@@ -48,7 +67,7 @@ form{
     background-color: rgba(191, 189, 189, 0.2);
     border-bottom: 3px solid steelblue;
     border-top: none;
-    transition: 0.3s;
+    transition: 0.2s;
 
 }
 .formSor select{
@@ -251,8 +270,10 @@ form{
 /*//////////////////////////////////////////////////////////////////////////PROFIL//////////////////////////////////////////////////////////////////*/
 
 .container-profil{
+    position: absolute;
+    left: 40%;
     font-size: 15px;
-    margin: 2em auto;
+    margin: 6em auto;
     font-family: monospace;
     font-weight: bolder;
     width: 800px;
@@ -295,8 +316,24 @@ form{
     text-align: center;
 }
 .h1-profil{
-    margin: 20px auto;
-    text-align: center;
+    position: absolute;
+    left: 60%;
+    margin-top: 10px;
+
+
+}
+.h1-profil::after{
+    content: "";
+    display: block;
+    position: relative;
+    width: 100%;
+    height: 2px;
+    background: black;
+    transform: scale(0);
+    transition: transform 0.2s ease-in-out;
+}
+.h1-profil:hover::after{
+    transform: scale(1);
 }
 /*//////////////////////////////////////////////////////////////////////FORMULAIRE MODIF PROFIL///////////////////////////////////////////////////////////////////////////*/
 
@@ -393,4 +430,20 @@ form{
     transition: 1s;
     color: #f1f2f3;
     transform: rotate(360deg);
+}
+button{
+    animation-name: btn;
+    animation-duration: 3s;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+}
+@keyframes btn {
+    0%{
+        transform: rotate(0deg);
+        filter: hue-rotate(0deg);
+    }
+    100%{
+        transform: rotate(360deg);
+        filter: hue-rotate(360deg);
+    }
 }

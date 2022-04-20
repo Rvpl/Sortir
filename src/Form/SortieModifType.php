@@ -44,13 +44,16 @@ class SortieModifType extends AbstractType
             ])
             ->add('dateHeureDebut', DateTimeType::class, [
                 "label" => "Date et heure de la sortie : ",
+                "widget" => "single_text"
             ])
             ->add('duree', TimeType::class, [
                 "label" => "Durée :",
+                "widget" => "single_text"
 
             ])
             ->add('dateLimiteInscription',DateTimeType::class, [
                 "label" => "Date limite d'inscription : ",
+                "widget" => "single_text"
 
             ])
             ->add('nbInscriptionMax', IntegerType::class, [
