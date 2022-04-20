@@ -5,9 +5,7 @@
 body{
 background-image: url("../image/arriere-plan.webp");
 }
-.alert-danger p{
-   margin-top: 50px;
-}
+
 h1 {
     font-size: 30px;
     text-align: center;
@@ -171,4 +169,11 @@ form{
 }
 
 
+
+/** Page nouvelle Sortie**/
+.alert-danger{
+    position: absolute;
+    margin-left: 10px;
+    margin-top: -100px;
+}
 
