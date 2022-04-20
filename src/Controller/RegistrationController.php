@@ -22,7 +22,7 @@ class RegistrationController extends AbstractController
         $form = $this->createForm(RegistrationFormType::class, $user);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() /*&& $form->isValid()*/) {
+        if ($form->isSubmitted() && $form->isValid()) {
             $user->setActif(0);
             $user->setAdministrateur(0);
 
