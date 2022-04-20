@@ -52,7 +52,6 @@
 </header>
 <body>
 <main>
-
     <div class="container">
         {% for label, messages in app.flashes %}
             {% for message in messages %}
@@ -61,6 +60,7 @@
                 </div>
             {% endfor %}
         {% endfor %}
+
         {% block body %}{% endblock %}
         {% block bodyAddEvent %}{% endblock %}
     </div>

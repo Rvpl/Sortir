@@ -3,25 +3,33 @@
 {% block title %}Participant{% endblock %}
 
 {% block body %}
-    <div>
+    <h1 class="h1-profil">Votre profil</h1>
+    <div class="container-profil">
         <h1>{{ participant.pseudo }}</h1>
         <img src="{{ asset('img/' ~ participant.photoProfil) }}" alt="">
-            <p>Prénom : {{ participant.prenom }}</p>
-            <p>Nom : {{ participant.nom }}</p>
-            <p>Téléphone {{ participant.telephone }}</p>
-            <p>Email : {{ participant.email}}</p>
-            <p>Campus : {{ participant.campus.nom }}</p>
-    </div>
-
+        <div class="profil">
+            <div class="profil-content">Prénom : {{ participant.prenom }}</div>
+            <div class="profil-content">Nom : {{ participant.nom }}</div>
+        </div>
+        <div class="profil">
+            <div class="profil-content">Téléphone : {{ participant.telephone }}</div>
+            <div class="profil-content">Email : {{ participant.email}}</div>
+        </div>
+        <div class="profil">
+            <div class="profil-content">Campus : {{ participant.campus.nom }}</div>
+        </div>
+    <div class="btn-profil">
     {% if not app.user %}
         <p>Vous n'êtes pas connecté</p>
 
         {% elseif app.user.id == participant.id %}
             <a href="{{ path('app_participant_edit', {'id': participant.id}) }}">
-                <button class="btn btn-warning">Modifier</button>
+                <button class="btn-profil-mod-ret">Modifier</button>
             </a>
     {% endif %}
     <a href="{{ path('app_sortie_index') }}">
-        <button class="btn btn-danger">Retour</button>
+        <button class="btn-profil-mod-ret">Retour</button>
     </a>
+    </div>
+    </div>
 {% endblock %}
