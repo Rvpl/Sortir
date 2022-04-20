@@ -5,7 +5,7 @@
 body{
 background-image: url("../image/arriere-plan.webp");
 }
-
+/*////////////////////////////////////////////////////////FORMULAIRE DE SORTIE//////////////////////////////////////////////////////////////////////////:*/
 h1 {
     font-size: 30px;
     text-align: center;
@@ -16,7 +16,7 @@ h1 {
     display: flex;
     justify-content: center;
     align-items: center;
-    margin: 10em auto;
+    margin: 2em auto;
     font-family: monospace;
 
 }
@@ -170,10 +170,13 @@ form{
 
 
 
-/** Page nouvelle Sortie**/
-.alert-danger{
-    position: absolute;
-    margin-left: 10px;
-    margin-top: -100px ;
+/*///////////////////////////////////////////////////////////////////////////////* Page nouvelle Sortie///////////////////////////////////////////////////*/
+.flash-error{
+    margin: 1em 2em 0;
+    padding: 16px;
+    font-size: 20px;
+    background-color: rgba(224, 31, 38, 0.7);
+    text-align: center;
+    border-radius: 10px;
 }
 
