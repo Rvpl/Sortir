@@ -1,12 +1,12 @@
-@font-face {
-    font-family: "font-form";
-    src: url("../fonts/Cendre.ttf");
-}
+
 body{
-background-image: url("../image/arriere-plan.webp");
+    background-image: url("../image/arriere-plan.webp");
+}
+.container{
+    font-family: monospace;
 }
 /*////////////////////////////////////////////////////////FORMULAIRE DE SORTIE//////////////////////////////////////////////////////////////////////////:*/
-h1 {
+.container-formSor h1 {
     font-size: 30px;
     text-align: center;
     padding-bottom: 10px;
@@ -22,7 +22,7 @@ h1 {
 }
 form{
     font-weight: bolder;
-    width: 900px;
+    width: 850px;
     padding: 60px;
     box-sizing: border-box;
     border-radius: 10px;
@@ -143,7 +143,6 @@ form{
     transition: background-color 2s, transform 1s;
 }
 
-
 .btn-form-a a:link {
     text-decoration: none;
     color: #f1f2f3;
@@ -179,4 +178,219 @@ form{
     text-align: center;
     border-radius: 10px;
 }
+/*/////////////////////////////////////////////////////////////////////FORMULAIRE INSCRIPTION////////////////////////////////////////////////////////////////////////////*/
 
+.container-formInscr{
+    font-size: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 2em auto;
+    font-family: monospace;
+}
+.formInscrInf{
+    display: flex;
+    justify-content: space-around;
+}
+.formInscr input{
+    display: block;
+    margin: 10px auto;
+    width: 300px;
+    padding: 3px 10px;
+    border: none;
+    outline: none;
+    box-sizing: border-box;
+    border-top: 1px dotted black;
+    border-bottom: 2px solid black;
+    border-radius: 6px;
+    background-color: #f1f2f3;
+}
+.formInscr input:hover{
+    background-color: rgba(191, 189, 189, 0.2);
+    border-bottom: 3px solid steelblue;
+    border-top: none;
+    transition: 0.3s;
+
+}
+.formInscr select{
+    display: block;
+    margin: 10px auto;
+    width: 300px;
+    padding: 5px 10px;
+    outline: none;
+    border: none;
+    box-sizing: border-box;
+    border-top: 1px dotted black;
+    border-bottom: 2px solid black;
+    border-radius: 6px;
+}
+.formInscr select:hover{
+    background-color: rgba(191, 189, 189, 0.2);
+    border-top: none;
+    border-bottom: 3px solid steelblue;
+    transition: 0.3s;
+}
+.btn-formIns{
+    display: block;
+    margin: 10px auto;
+    width: 200px;
+    padding: 5px 10px;
+    box-sizing: border-box;
+    border-radius: 6px;
+    background-color: rgba(30, 131, 247,0.6);
+    color: #f1f2f3;
+    transition: background-color 2s, transform 1s;
+}
+.btn-formIns:hover{
+    background-color:green;
+    font-weight: bold;
+    transition: 1s;
+    transform: rotate(360deg);
+}
+
+/*//////////////////////////////////////////////////////////////////////////PROFIL//////////////////////////////////////////////////////////////////*/
+
+.container-profil{
+    font-size: 15px;
+    margin: 2em auto;
+    font-family: monospace;
+    font-weight: bolder;
+    width: 800px;
+    padding: 60px;
+    box-sizing: border-box;
+    border-radius: 10px;
+    box-shadow: 0px 10px 50px -10px rgba(0,0,0,0.6);
+}
+
+.profil{
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    width: 830px;
+}
+.profil-content{
+    margin: 5px auto;
+    width: 20em;
+    padding: 5px 10px;
+}
+.btn-profil{
+    display: flex;
+    justify-content: center;
+}
+.btn-profil-mod-ret{
+    display: block;
+    margin: 15px 5px;
+    width: 100px;
+    padding: 5px 10px;
+    box-sizing: border-box;
+    border-radius: 6px;
+    background-color: rgba(30, 131, 247,0.6);
+    color: #f1f2f3;
+}
+.btn-profil a{
+    text-decoration: none;
+}
+.container-profil h1{
+    font-size: 40px;
+    text-align: center;
+}
+.h1-profil{
+    margin: 20px auto;
+    text-align: center;
+}
+/*//////////////////////////////////////////////////////////////////////FORMULAIRE MODIF PROFIL///////////////////////////////////////////////////////////////////////////*/
+
+.container-formMofif{
+    font-size: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 2em auto;
+    font-family: monospace;
+}
+.formMofifInf{
+    display: flex;
+    justify-content: space-around;
+}
+.formMofif input{
+    display: block;
+    margin: 10px auto;
+    width: 300px;
+    padding: 3px 10px;
+    border: none;
+    outline: none;
+    box-sizing: border-box;
+    border-top: 1px dotted black;
+    border-bottom: 2px solid black;
+    border-radius: 6px;
+    background-color: #f1f2f3;
+}
+.formMofif input:hover{
+    background-color: rgba(191, 189, 189, 0.2);
+    border-bottom: 3px solid steelblue;
+    border-top: none;
+    transition: 0.3s;
+
+}
+.formMofif select{
+    display: block;
+    margin: 10px auto;
+    width: 300px;
+    padding: 5px 10px;
+    outline: none;
+    border: none;
+    box-sizing: border-box;
+    border-top: 1px dotted black;
+    border-bottom: 2px solid black;
+    border-radius: 6px;
+}
+.formMofif select:hover{
+    background-color: rgba(191, 189, 189, 0.2);
+    border-top: none;
+    border-bottom: 3px solid steelblue;
+    transition: 0.3s;
+}
+.btn-formMofif{
+    display: block;
+    margin: 10px auto;
+    width: 200px;
+    padding: 5px 10px;
+    box-sizing: border-box;
+    border-radius: 6px;
+    background-color: rgba(30, 131, 247,0.6);
+    color: #f1f2f3;
+    transition: background-color 2s, transform 1s;
+}
+.btn-formMofif:hover{
+    background-color:green;
+    font-weight: bold;
+    transition: 1s;
+    transform: rotate(360deg);
+}
+.container-formMofif h1{
+    text-align: center;
+    padding-bottom: 20px;
+    font-size: 40px;
+}
+.delete-form{
+    width: 10px;
+    display: contents;
+
+}
+.delete-form button{
+    margin-left: 40em;
+    border: solid 1.5px black;
+    box-sizing: border-box;
+    border-radius: 6px;
+    background-color: rgba(30, 131, 247,0.7);
+    box-shadow: 0px 0px 50px -10px rgba(0,0,0,0.3);
+    color: #f1f2f3;
+    transition: background-color 2s, transform 1s;
+}
+.delete-form button:hover{
+    background-color: rgba(217, 11, 11, 0.6);
+    font-weight: bold;
+    transition: 1s;
+    color: #f1f2f3;
+    transform: rotate(360deg);
+}

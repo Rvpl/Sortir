@@ -1,7 +1,6 @@
 <div class="container-formSor">
     {{ form_start(form) }}
     <h1>Créer son événement</h1>
-    <div class="grids">
         <div class="test">
             <div class="formSor">{{ form_row(form.nom) }}</div>
             <div class="formSor"><label for="Campus">Campus :</label>
@@ -27,14 +26,12 @@
 
         <div class="bouton-formSor">
             <div class="sub-pub-ann">
-        <button class="btn-form">{{ button_label|default('Enregistrer') }}</button>
-        <button class="btn-form">{{ button_label|default('Publier ton événement') }}</button>
-        <button class="btn-form-a"><a href="{{ path('app_sortie_index') }}">Annuler</a></button>
+                <button class="btn-form">{{ button_label|default('Enregistrer') }}</button>
+                <button class="btn-form">{{ button_label|default('Publier ton événement') }}</button>
+                <button class="btn-form-a"><a href="{{ path('app_sortie_index') }}">Annuler</a></button>
+            </div>
         </div>
-    </div>
-
     {{ form_end(form) }}
-
  </div>
  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
