@@ -3,11 +3,9 @@
 {% block title %}Edit Sortie{% endblock %}
 
 {% block body %}
-    <h1>Edit Sortie</h1>
+    <h1>Modifier la sortie {{ sortie.nom }}</h1>
 
     {{ include('sortie/_formModif.html.twig', {'button_label': 'Update'}) }}
-    <a href="{{ path('app_sortie_index') }}">back to list</a>
-    {{ include('sortie/_delete_form.html.twig') }}
 
 {% endblock %}
 
