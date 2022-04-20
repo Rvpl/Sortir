@@ -217,19 +217,59 @@ class SortieController extends AbstractController
 
     #[Route('sortie/activite/inscription/{id}', name: 'app_sortie_inscription', methods: ['POST','GET'])]
     public function inscription(Sortie $sortie, ParticipantRepository $participantRepository,EtatRepository $etatRepository, SortieRepository $sortieRepository):Response{
-        $userVide = $this->getUser()->getUserIdentifier();
-        $etat = $etatRepository->findOneBy(['id' => 6]);
-        $user = $participantRepository->findOneBy(['pseudo' => $userVide]);
-        $sortieRepository->ajoutInscrit($sortie,$user,$etat);
+
+        if($this->getUser() == null) {
+            $this->addFlash('error','Vous n\'êtes pas connecté pour vous inscrire à une activité');
+        }else {
+            if ($sortie->getInscrits()->count() === $sortie->getNbInscriptionMax()) {
+                $this->addFlash('error', 'Le nombre d\'inscrits maximum est déjà atteint pour cette sortie');
+            } else {
+                $userVide = $this->getUser()->getUserIdentifier();
+                $etat = $etatRepository->findOneBy(['id' => 6]);
+                $user = $participantRepository->findOneBy(['pseudo' => $userVide]);
+                $nb = 0;
+                foreach ($sortie->getInscrits() as $inscrit) {
+                    if ($user->getId() == $inscrit->getId()) {
+                        break;
+                    } else {
+                        $nb++;
+                        if ($nb === $sortie->getInscrits()->count()) {
+                            $sortieRepository->ajoutInscrit($sortie, $user, $etat);
+                        }
+                    }
+                }
+            }
+        }
         return $this->redirectToRoute('app_sortie_index', [], Response::HTTP_SEE_OTHER);
     }
 
     #[Route('sortie/activite/desister/{id}', name: 'app_sortie_desister', methods: ['POST','GET'])]
     public function desister(Sortie $sortie, ParticipantRepository $participantRepository,EtatRepository $etatRepository, SortieRepository $sortieRepository):Response{
-        $userVide = $this->getUser()->getUserIdentifier();
-        $etat = $etatRepository->findOneBy(['id' => 2]);
-        $user = $participantRepository->findOneBy(['pseudo' => $userVide]);
-        $sortieRepository->removeInscrit($sortie,$user,$etat);
+
+        if($this->getUser() == null) {
+            $this->addFlash('error', 'Vous n\'êtes pas connecté pour vous désister à cette sortie');
+        }else {
+            if($sortie->getInscrits()->count() === 0){
+                $this->addFlash('error','La liste des sorties est vide, vous ne pouvez pas vous désinscrire');
+            }else{
+                $userVide = $this->getUser()->getUserIdentifier();
+                $etat = $etatRepository->findOneBy(['id' => 2]);
+                $user = $participantRepository->findOneBy(['pseudo' => $userVide]);
+                $nb = 0;
+
+                foreach ($sortie->getInscrits() as $inscrit){
+                    if($user->getId() === $inscrit->getId()){
+                        $sortieRepository->removeInscrit($sortie,$user,$etat);
+                        break;
+                    }else{
+                        $nb++;
+                        if($nb === $sortie->getInscrits()->count()){
+                            $this->addFlash('error','Vous n\'êtes pas inscrit à cette sortie pour vous désister');
+                        }
+                    }
+                }
+            }
+        }
         return $this->redirectToRoute('app_sortie_index', [], Response::HTTP_SEE_OTHER);
     }
 }

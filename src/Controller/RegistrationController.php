@@ -18,31 +18,43 @@ class RegistrationController extends AbstractController
     #[Route('/register', name: 'app_register')]
     public function register(Request $request, UserPasswordHasherInterface $userPasswordHasher, UserAuthenticatorInterface $userAuthenticator, ParticipantAuthenticator $authenticator, EntityManagerInterface $entityManager): Response
     {
-        $user = new Participant();
-        $form = $this->createForm(RegistrationFormType::class, $user);
-        $form->handleRequest($request);
+        if($this->getUser() != null){
+            $this->addFlash('error','Vous êtes déjà connectez, vous ne pouvez pas créer de nouveau compte sans vous déconnecter');
+           return $this->redirectToRoute('app_sortie_index');
+        }else{
+            $user = new Participant();
+            $form = $this->createForm(RegistrationFormType::class, $user);
+            $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $user->setActif(0);
-            $user->setAdministrateur(0);
+            if ($form->isSubmitted() && $form->isValid()) {
+                $user->setActif(0);
+                $user->setAdministrateur(0);
 
-            $image = $form->get('photoProfil')->getData();
-            if($image){
-                $fichier = md5(uniqid()). '.'.$image->guessExtension();
-                $image->move(
-                    $this->getParameter('images_directory'),
-                    $fichier
-                );
-                $user->setPhotoProfil($fichier);
-            }
+                $image = $form->get('photoProfil')->getData();
+                if($image){
+                    $fichier = md5(uniqid()). '.'.$image->guessExtension();
+                    $image->move(
+                        $this->getParameter('images_directory'),
+                        $fichier
+                    );
+                    $user->setPhotoProfil($fichier);
+                }
 
                 // encode the plain password
-                $user->setPassword(
-                    $userPasswordHasher->hashPassword(
-                        $user,
-                        $form->get('plainPassword')->getData()
-                    )
-                );
+                if($form['plainPassword']->getData() === $form['confirmation']->getData()){
+                    $user->setPassword(
+                        $userPasswordHasher->hashPassword(
+                            $user,
+                            $form->get('plainPassword')->getData()
+                        )
+                    );
+                }else{
+                    $this->addFlash('error','Les mots de passe ne sont pas identiques');
+                    return $this->render('registration/register.html.twig', [
+                        'registrationForm' => $form->createView(),
+                    ]);
+                }
+
 
                 $entityManager->persist($user);
                 $entityManager->flush();
@@ -54,10 +66,12 @@ class RegistrationController extends AbstractController
                     $request
                 );
 
+            }
+
+            return $this->render('registration/register.html.twig', [
+                'registrationForm' => $form->createView(),
+            ]);
         }
 
-        return $this->render('registration/register.html.twig', [
-            'registrationForm' => $form->createView(),
-        ]);
     }
 }

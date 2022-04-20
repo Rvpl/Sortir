@@ -39,6 +39,21 @@ class RegistrationFormType extends AbstractType
             ->add('email', EmailType::class,[
                 "label" => "Email : ",
             ])
+            ->add('confirmation',PasswordType::class,[
+                'mapped' => false,
+                'attr' => ['autocomplete' => 'new-password'],
+                'constraints' => [
+                    new NotBlank([
+                        'message' => 'veuillez confirmer votre mot de passe',
+                    ]),
+                    new Length([
+                        'min' => 6,
+                        'minMessage' => 'Your password should be at least {{ limit }} characters',
+                        // max length allowed by Symfony for security reasons
+                        'max' => 4096,
+                    ]),
+                ],
+            ])
             ->add('plainPassword', PasswordType::class, [
                 // instead of being set onto the object directly,
                 // this is read and encoded in the controller
@@ -60,8 +75,8 @@ class RegistrationFormType extends AbstractType
             ->add('campus', EntityType::class,array(
                 'class' => Campus::class,
                 'choice_label' => 'nom',
+                'expanded' => true
             ))
-
             ->add('photoProfil',FileType::class,[
                 "label" => "Image de profil : ",
                 'mapped' => false,
