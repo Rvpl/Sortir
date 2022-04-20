@@ -1,1 +1,14 @@
-ERREUR 403
+{% extends 'base.html.twig' %}
+
+{% block title %}Accès refusé{% endblock %}
+
+{% block body %}
+    <div class="container-fluid">
+        <h1>Vous ne disposez pas des droits d'accès pour accéder à cette page </h1>
+        <img src="{{ asset('image/accessDenined.png') }}" alt="acces_refusé" style="max-width: 1000px;max-height:700px;padding-left: 400px">
+    </div>
+     <h1>"\_('c')_/"</h1>
+    <p>
+        Veuillez vous rediriger vers la page d'accueil
+    </p>
+{% endblock %}
