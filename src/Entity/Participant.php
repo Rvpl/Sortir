@@ -33,9 +33,19 @@ class Participant implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[Assert\NotBlank]
     #[ORM\Column(type: 'string', length: 30)]
+    #[Assert\Regex(
+        pattern: '/\d/',
+        match: false,
+        message: 'Votre nom ne peut contenir de chiffre',
+    )]
     private $nom;
 
     #[Assert\NotBlank]
+    #[Assert\Regex(
+        pattern: '/\d/',
+        match: false,
+        message: 'Votre prénom ne peut contenir de chiffre',
+    )]
     #[ORM\Column(type: 'string', length: 30)]
     private $prenom;
 
@@ -60,9 +70,9 @@ class Participant implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(type: 'string', length: 20,unique: true)]
     #[Assert\Regex(
-    pattern: '/^[a-z]+$/i',
-    htmlPattern: '^[a-zA-Z]+$',
-        message: 'Le pseudo ne peut contenir que des lettres',
+    pattern: '/^[0-9a-zA-Z]+$/i',
+    htmlPattern: '^[0-9a-zA-Z]+$',
+        message: 'Le pseudo ne peut contenir de caractères spéciaux',
     )]
     #[Assert\NotBlank]
     private $pseudo;
