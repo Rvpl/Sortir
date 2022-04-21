@@ -31,9 +31,7 @@
                 <td>{{ ville.nom }}</td>
                 <td>{{ ville.codePostal }}</td>
                 <td>
-                    <a href="{{ path('app_ville_show', {'id': ville.id}) }}">show</a>
-                    <a href="{{ path('app_ville_edit', {'id': ville.id}) }}">edit</a>
-                    <a href="{{ path('app_ville_delete', {'id': ville.id}) }}">delete</a>
+                    <a href="{{ path('app_ville_edit', {'id': ville.id}) }}">edit/delete</a>
                 </td>
             </tr>
             <tr>
