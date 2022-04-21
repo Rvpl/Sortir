@@ -6,7 +6,6 @@ use App\Entity\Etat;
 use App\Entity\Participant;
 use App\Entity\Sortie;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\ORMException;
 use Doctrine\Persistence\ManagerRegistry;
@@ -78,9 +77,6 @@ class SortieRepository extends ServiceEntityRepository
         return $qb->getQuery()
             ->getResult();
     }
-
-
-
 
     public function modifEtat(Sortie $sortie,bool $flush = true){
         $sortie->setEtat($sortie->getEtat());

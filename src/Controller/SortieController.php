@@ -27,7 +27,7 @@ class SortieController extends AbstractController
 {
     #[Route('/', name: 'app_sortie_index', methods: ['GET', 'POST'])]
     public function index(Request $request,SortieRepository $sortieRepository,CampusRepository $campusRepository,
-                          ParticipantRepository $participantRepository): Response
+                          ParticipantRepository $participantRepository,EtatRepository $etatRepository): Response
     {
         $sorties = [];
         $campus = new Campus();
@@ -49,7 +49,26 @@ class SortieController extends AbstractController
                 'participants' => $participantRepository->findAll(),
             ]);
         }else{
+            $ListeSorties = $sortieRepository->findAllFiltre();
+            foreach ($ListeSorties as $sortie){
+                $date = new \DateTime();
+                $dateTimeStamp = $date->getTimestamp();
+                $sortieHeureDebut = $sortie->getDateHeureDebut()->getTimestamp()-7200;
+                $sortieDuree = $sortie->getDuree()*60;
+                $dateLimite = $sortie->getDateLimiteInscription()->getTimestamp()-7200;
+                $finSortie = $sortieHeureDebut + $sortieDuree;
 
+                if($dateTimeStamp > $sortieHeureDebut && $dateTimeStamp < $finSortie){
+                    $sortie->setEtat($etatRepository->findOneBy(['id' => '3']));
+                }
+                if($dateTimeStamp > $finSortie){
+                    $sortie->setEtat($etatRepository->findOneBy(['id' => '4']));
+                }
+                if($dateTimeStamp > $dateLimite && $dateTimeStamp < $sortieHeureDebut){
+                    $sortie->setEtat($etatRepository->findOneBy(['id' => '6']));
+                }
+                $sortieRepository->modifEtat($sortie);
+            }
             return $this->renderForm('sortie/index.html.twig', [
                 'sorties' => $sortieRepository->findAllFiltre(),
                 'formRecherche' => $form,
@@ -218,7 +237,7 @@ class SortieController extends AbstractController
     #[Route('sortie/activite/inscription/{id}', name: 'app_sortie_inscription', methods: ['POST','GET'])]
     public function inscription(Sortie $sortie, ParticipantRepository $participantRepository,EtatRepository $etatRepository, SortieRepository $sortieRepository):Response{
 
-        if($this->getUser() == null) {
+        if(!$this->getUser()) {
             $this->addFlash('error','Vous n\'êtes pas connecté pour vous inscrire à une activité');
         }else {
             if ($sortie->getInscrits()->count() === $sortie->getNbInscriptionMax()) {
@@ -228,13 +247,18 @@ class SortieController extends AbstractController
                 $etat = $etatRepository->findOneBy(['id' => 6]);
                 $user = $participantRepository->findOneBy(['pseudo' => $userVide]);
                 $nb = 0;
-                foreach ($sortie->getInscrits() as $inscrit) {
-                    if ($user->getId() == $inscrit->getId()) {
-                        break;
-                    } else {
-                        $nb++;
-                        if ($nb === $sortie->getInscrits()->count()) {
-                            $sortieRepository->ajoutInscrit($sortie, $user, $etat);
+                if($sortie->getInscrits()->count() == 0){
+                    $sortieRepository->ajoutInscrit($sortie, $user, $etat);
+                }else{
+                    foreach ($sortie->getInscrits() as $inscrit) {
+                        if ($user->getId() == $inscrit->getId()) {
+                            $this->addFlash('error','Vous êtes déjà inscrit à cette activité');
+                            break;
+                        } else {
+                            $nb++;
+                            if ($nb === $sortie->getInscrits()->count()) {
+                                $sortieRepository->ajoutInscrit($sortie, $user, $etat);
+                            }
                         }
                     }
                 }

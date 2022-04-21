@@ -44,12 +44,10 @@ class SortieType extends AbstractType
             ])
             ->add('dateHeureDebut', DateTimeType::class, [
                 "label" => "Date et heure de la sortie : ",
-                'data' => new \DateTime(),
                 "widget" => "single_text"
             ])
-            ->add('duree', TimeType::class, [
+            ->add('duree', IntegerType::class, [
                 "label" => "Durée de l'événement :",
-                "widget" => "single_text",
             ])
             ->add('dateLimiteInscription',DateTimeType::class, [
                 "label" => "Date limite d'inscription : ",
