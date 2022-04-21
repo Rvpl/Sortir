@@ -61,7 +61,8 @@ class SortieModifType extends AbstractType
             ])
             ->add('infoSortie', TextareaType::class, [
                 "label" => "Description et informations : ",
-                'empty_data' => ''
+                'empty_data' => '',
+                'label_attr' => ['class' => 'form-descrip']
             ])
 
             ->add('ville',EntityType::class,[
