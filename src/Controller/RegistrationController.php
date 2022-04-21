@@ -19,7 +19,7 @@ class RegistrationController extends AbstractController
     public function register(Request $request, UserPasswordHasherInterface $userPasswordHasher, UserAuthenticatorInterface $userAuthenticator, ParticipantAuthenticator $authenticator, EntityManagerInterface $entityManager): Response
     {
         if($this->getUser() != null){
-            $this->addFlash('error','Vous êtes déjà connectez, vous ne pouvez pas créer de nouveau compte sans vous déconnecter');
+            $this->addFlash('error','Vous êtes déjà connecté, vous ne pouvez pas créer de nouveau compte sans vous déconnecter');
            return $this->redirectToRoute('app_sortie_index');
         }else{
             $user = new Participant();
