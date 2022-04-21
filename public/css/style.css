@@ -36,6 +36,7 @@ body{
     transform: scale(1);
 }
 form{
+    background-color: #f1f2f3;
     font-weight: bolder;
     width: 850px;
     padding: 60px;
@@ -492,19 +493,20 @@ form{
     width: 100px;
     box-sizing: border-box;
     border-radius: 6px;
-    background-color: rgba(191, 189, 189, 0.8);
+    background-color: rgba(217, 11, 11, 0.8);
     color: #f1f2f3;
     margin-left: 300px;
     box-shadow: 0 0 0 black;
-    transition: 2s;
+
 }
 .annul-profil:hover{
     text-align: center;
     width: 75px;
     height: 75px;
     border-radius: 50%;
-    background-color: rgba(217, 11, 11, 0.4);
-    animation: pulse 1s ease;
+    transition: 0.3s;
+    animation: pulse 1.5s infinite;
+    background-color: rgba(217, 11, 11, 0.6);
     color: #f1f2f3;
 
 }
