@@ -304,6 +304,13 @@ form{
 
 /*//////////////////////////////////////////////////////////////////////////PROFIL//////////////////////////////////////////////////////////////////*/
 
+#pp{
+    padding-top: 20px;
+    max-width: 200px;
+    margin-left: 130px;
+    border-radius: 300px;
+    margin-bottom: 20px;
+}
 .container-profil{
     font-size: 15px;
     margin: 6em auto;
