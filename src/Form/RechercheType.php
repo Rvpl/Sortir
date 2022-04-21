@@ -20,11 +20,14 @@ class RechercheType extends AbstractType
                 'choice_label' => 'nom'
             ])
             ->add('nom',TextType::class)
+
             ->add('dateHeureDebut',DateTimeType::class,[
-                'data' => new \DateTime()
+                'data' => new \DateTime(),
+                "widget" => "single_text"
             ])
             ->add('dateLimiteInscription',DateTimeType::class,[
-                'data' => new \DateTime()
+                'data' => new \DateTime(),
+                "widget" => "single_text"
             ])
 
         ;

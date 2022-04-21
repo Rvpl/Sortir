@@ -3,15 +3,18 @@
 {% block title %}Sorties{% endblock %}
 
 {% block body %}
-
     <div id="entete">
-        <b>Filtrer les sorties</b>
         {{ form_start(formRecherche) }}
-            {{ form_row(formRecherche.campus) }}
-            {{ form_row(formRecherche.nom) }}
-            {{ form_row(formRecherche.dateHeureDebut) }}
-            {{ form_row(formRecherche.dateLimiteInscription) }}
-        <button  type="submit" class="btn btn-primary">{{ button_label|default('Rechercher') }}</button>
+        <h3>Filtrer les sorties</h3>
+        <div class="gr-filtre-sortie">
+            <div class="filtre-sortie">{{ form_row(formRecherche.campus) }}</div>
+            <div class="filtre-sortie">{{ form_row(formRecherche.nom) }}</div>
+        </div>
+         <div class="gr-filtre-sortie">
+             <div class="filtre-sortie">{{ form_row(formRecherche.dateHeureDebut) }}</div>
+             <div class="filtre-sortie">{{ form_row(formRecherche.dateLimiteInscription) }}</div>
+         </div>
+        <button type="submit" class="btn-filtre">{{ button_label|default('Rechercher') }}</button>
         {{ form_end(formRecherche) }}
         <br>
     </div>
@@ -106,15 +109,20 @@
         {% endfor %}
         </tbody>
     </table>
+    <div class="bouton-user-admin">
     {% if app.user %}
     <a href="{{ path('app_sortie_new') }}">
-        <button class="btn btn-warning">Créer une sortie</button>
+        <button class="btn-user">Créer une sortie</button>
     </a>
 
     {% endif %}
     {% if is_granted('ROLE_ADMIN') %}
-        <a href="{{ path('app_campus_index') }}">Gestion des campus</a>
-        <a href="{{ path('app_ville_index') }}">Gestion des villes</a>
+        <a href="{{ path('app_campus_index') }}">
+            <button class="btn-admin">Gestion des campus</button>
+        </a>
+        <a href="{{ path('app_ville_index') }}">
+            <button class="btn-admin">Gestion des villes</button>
+        </a>
     {%endif%}
-
+    </div>
 {% endblock %}
