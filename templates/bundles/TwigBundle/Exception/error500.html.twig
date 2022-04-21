@@ -3,14 +3,14 @@
 {% block title %}Accès refusé{% endblock %}
 
 {% block body %}
-    <div class="container-fluid">
-        <div class="fun">
-            <h1>Ooops, une erreur est survenue </h1>
+    <div class="machin">
+        <h1 class="err">Ooops, une erreur est survenue </h1>
+        <div id="fun" class="container-fluid">
             <div>
                 <img src="{{ asset('image/oops.png') }}" alt="acces_refusé" style="max-width: 1000px;max-height:700px;padding-left: 300px">
             </div>
-            <p>La page demandée n'existe pas, veuillez vous rediriger vers la page d<a href="{{ path('app_sortie_index') }}">'accueil </a></p>
         </div>
-        </div>
+        <a href="{{ path('app_sortie_index') }}">Accueil </a>
+    </div>
 
 {% endblock %}

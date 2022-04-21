@@ -63,11 +63,7 @@ form{
     cursor: pointer;
 
 }
-@keyframes pulse {
-    to{
-        box-shadow: 0 0 0 5px rgba(0, 0, 0, 0.01);
-    }
-}
+
 
 
 .formSor input:hover{
@@ -631,15 +627,39 @@ form{
 .btn-user:hover{
     background-color: rgba(0, 184, 169,0.6);
 }
-
-/*.fun{
-    font-size: 200px;
-    animation-name: btn;
+.err{
+    font-size: 50px;
+    text-align: center;
+    animation-name: couleur;
     animation-duration: 3s;
+    color: #5eb5e0;
     animation-iteration-count: infinite;
     animation-timing-function: linear;
 }
-@keyframes btn {
+.machin{
+    height: 100vh;
+    background-image: url("../image/—Pngtree—colorful smoke texture texture map_348751.jpg");
+    background-size: cover;
+    animation-name: couleur;
+    animation-duration: 3s;
+    color: #5eb5e0;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+}
+#fun {
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 150px;
+    animation-name: gerbe;
+    animation-duration: 3s;
+    color: #5eb5e0;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+}
+
+@keyframes gerbe {
     0%{
         transform: rotate(0deg);
         filter: hue-rotate(0deg);
@@ -648,4 +668,18 @@ form{
         transform: rotate(360deg);
         filter: hue-rotate(360deg);
     }
-}*/
+}
+@keyframes couleur {
+    0%{
+        filter: hue-rotate(0deg);
+    }
+    100%{
+        filter: hue-rotate(360deg);
+    }
+}
+
+@keyframes pulse {
+    to{
+        box-shadow: 0 0 0 5px rgba(0, 0, 0, 0.01);
+    }
+}
