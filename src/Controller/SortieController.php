@@ -2,8 +2,6 @@
 
 namespace App\Controller;
 
-use App\Entity\Campus;
-use App\Entity\Participant;
 use App\Entity\Sortie;
 use App\Form\RechercheType;
 use App\Form\SortieAnnulType;
@@ -15,12 +13,13 @@ use App\Repository\LieuRepository;
 use App\Repository\ParticipantRepository;
 use App\Repository\SortieRepository;
 use App\Repository\VilleRepository;
+use Doctrine\ORM\OptimisticLockException;
+use Doctrine\ORM\ORMException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Validator\Constraints as Assert;
 
 #[Route('/')]
 class SortieController extends AbstractController
@@ -29,8 +28,6 @@ class SortieController extends AbstractController
     public function index(Request $request,SortieRepository $sortieRepository,CampusRepository $campusRepository,
                           ParticipantRepository $participantRepository,EtatRepository $etatRepository): Response
     {
-        $sorties = [];
-        $campus = new Campus();
         $sortieCherche = new Sortie();
         $form = $this->createForm(RechercheType::class);
         $form->handleRequest($request);
@@ -90,7 +87,6 @@ class SortieController extends AbstractController
         $sortie = new Sortie();
         $user = $participantRepository->findOneBy(['pseudo' => $this->getUser()->getUserIdentifier()]);
         $sortie->setCampus($user->getCampus());
-        $form = $this->createForm(SortieType::class,$sortie);
         $lieu = $lieuRepository->findAll();
         $ville = $villeRepository->findAll();
         $form = $this->createForm(SortieType::class, $sortie);
@@ -99,16 +95,7 @@ class SortieController extends AbstractController
 
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $messages = array();
-            if ($form['dateHeureDebut']->getData() < new \DateTime("now")) {
-                $this->addFlash('error','La date de début de l\'activité ne peut être inférieure à la date/heure du jour');
-            }
-            if ($form['dateLimiteInscription']->getData() < new \DateTime("now")) {
-                $this->addFlash('error','La date limite d\'inscription ne peut être inférieure à la date/heure du jour');
-            }
-            if ($form['dateLimiteInscription']->getData() > $form['dateHeureDebut']->getData()) {
-                $this->addFlash('error','La date limite d\'inscription ne peut être supérieure à la date de début de l\'actitivé');
-            }
+            $this->extracted($form);
 
 
             if ($form['dateHeureDebut']->getData() > new \DateTime("now") && $form['dateLimiteInscription']->getData() > new \DateTime("now") && $form['dateHeureDebut']->getData() > $form['dateLimiteInscription']->getData()) {
@@ -182,15 +169,7 @@ class SortieController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            if ($form['dateHeureDebut']->getData() < new \DateTime("now")) {
-                $this->addFlash('error','La date de début de l\'activité ne peut être inférieure à la date/heure du jour');
-            }
-            if ($form['dateLimiteInscription']->getData() < new \DateTime("now")) {
-                $this->addFlash('error','La date limite d\'inscription ne peut être inférieure à la date/heure du jour');
-            }
-            if ($form['dateLimiteInscription']->getData() > $form['dateHeureDebut']->getData()) {
-                $this->addFlash('error','La date limite d\'inscription ne peut être supérieure à la date de début de l\'actitivé');
-            }
+            $this->extracted($form);
 
             if ($form['dateHeureDebut']->getData() > new \DateTime("now") && $form['dateLimiteInscription']->getData() > new \DateTime("now") && $form['dateHeureDebut']->getData() > $form['dateLimiteInscription']->getData()) {
                 $sortie->setLieu($form['lieu']->getData());
@@ -215,6 +194,10 @@ class SortieController extends AbstractController
         ]);
     }
 
+    /**
+     * @throws OptimisticLockException
+     * @throws ORMException
+     */
     #[Route('sortie/{id}', name: 'app_sortie_delete', methods: ['POST'])]
     public function delete(Request $request, Sortie $sortie, SortieRepository $sortieRepository): Response
     {
@@ -295,5 +278,22 @@ class SortieController extends AbstractController
             }
         }
         return $this->redirectToRoute('app_sortie_index', [], Response::HTTP_SEE_OTHER);
+    }
+
+    /**
+     * @param FormInterface $form
+     * @return void
+     */
+    public function extracted(FormInterface $form): void
+    {
+        if ($form['dateHeureDebut']->getData() < new \DateTime("now")) {
+            $this->addFlash('error', 'La date de début de l\'activité ne peut être inférieure à la date/heure du jour');
+        }
+        if ($form['dateLimiteInscription']->getData() < new \DateTime("now")) {
+            $this->addFlash('error', 'La date limite d\'inscription ne peut être inférieure à la date/heure du jour');
+        }
+        if ($form['dateLimiteInscription']->getData() > $form['dateHeureDebut']->getData()) {
+            $this->addFlash('error', 'La date limite d\'inscription ne peut être supérieure à la date de début de l\'actitivé');
+        }
     }
 }
