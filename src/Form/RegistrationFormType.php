@@ -39,6 +39,7 @@ class RegistrationFormType extends AbstractType
                 "label" => "Email : ",
             ])
             ->add('confirmation',PasswordType::class,[
+                "label" => "Confirmation : ",
                 'mapped' => false,
                 'attr' => ['autocomplete' => 'new-password'],
                 'constraints' => [

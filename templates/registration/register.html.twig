@@ -19,10 +19,12 @@
                 <div class="formInscr">{{ form_row(registrationForm.plainPassword) }}</div>
             </div>
             <div class="formInscrInf">
-                <div class="formInscr">{{ form_row(registrationForm.photoProfil) }}</div>
+                <div class="formInscr">{{ form_row((registrationForm.confirmation)) }}</div>
                 <div class="formInscr">{{ form_row(registrationForm.campus) }}</div>
             </div>
-        {{ form_row((registrationForm.confirmation)) }}
+            <div class="formInscrInf">
+                <div class="formInscr">{{ form_row(registrationForm.photoProfil) }}</div>
+            </div>
 
         <button type="submit" class="btn-formIns">Enregistrer</button>
         {{ form_end(registrationForm) }}
