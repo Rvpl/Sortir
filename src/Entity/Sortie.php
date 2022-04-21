@@ -24,8 +24,7 @@ class Sortie
     #[ORM\Column(type: 'datetime')]
     private $dateHeureDebut;
 
-    #[Assert\Type("DateTimeInterface")]
-    #[ORM\Column(type: 'time')]
+    #[ORM\Column(type: 'integer')]
     private $duree;
 
     #[Assert\Type("DateTimeInterface")]
@@ -59,6 +58,8 @@ class Sortie
     public function __construct()
     {
         $this->inscrits = new ArrayCollection();
+        $this->setDateHeureDebut(new \DateTime());
+        $this->setDateLimiteInscription(new \DateTime());
     }
 
 
@@ -91,12 +92,12 @@ class Sortie
         return $this;
     }
 
-    public function getDuree(): ?DateTimeInterface
+    public function getDuree(): ?int
     {
         return $this->duree;
     }
 
-    public function setDuree(?\DateTimeInterface $duree): self
+    public function setDuree(?int $duree): self
     {
         $this->duree = $duree;
 

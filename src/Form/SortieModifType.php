@@ -46,9 +46,8 @@ class SortieModifType extends AbstractType
                 "label" => "Date et heure de la sortie : ",
                 "widget" => "single_text"
             ])
-            ->add('duree', TimeType::class, [
+            ->add('duree', IntegerType::class, [
                 "label" => "Durée :",
-                "widget" => "single_text"
 
             ])
             ->add('dateLimiteInscription',DateTimeType::class, [

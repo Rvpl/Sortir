@@ -34,7 +34,7 @@
                     <b>Code postal:</b> {{ sortie.ville.codePostal }}
                 </div>
                 <div class="col-6">
-                    <b>Durée:</b> {{ sortie.duree|date('H:i') }}
+                    <b>Durée:</b> {{ sortie.duree}}
                 </div>
                 <div class="col-6">
                     <b>Latitude:</b> {{ sortie.lieu.latitude }}°
@@ -73,13 +73,15 @@
             {% if app.user == sortie.organisateur %}
                 <p>État de la sortie : {{ sortie.etat.libelle }}</p>
 
-                {% if sortie.etat.id != 5 %}
+                {% if sortie.etat.id == 1 and sortie.etat.id == 2 %}
                     <a href="{{ path('app_sortie_edit',{'id': sortie.id}) }}">
                         <button>Modifier</button>
                     </a>
                     <button type="button" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@getbootstrap">Annuler un événement</button>
                     {% else %}
-                        <button type="button" data-bs-toggle="modal" data-bs-target="#cheh" data-bs-whatever="@getbootstrap">Réouvrir la sortie</button>
+                        {% if sortie.etat.id == 5 %}
+                            <button type="button" data-bs-toggle="modal" data-bs-target="#cheh" data-bs-whatever="@getbootstrap">Réouvrir la sortie</button>
+                        {% endif %}
                 {% endif %}
                 <a href="{{ path('app_sortie_delete',{'id':sortie.id}) }}">
                     <button>Supprimer la sortie</button>
