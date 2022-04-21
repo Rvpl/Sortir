@@ -75,8 +75,6 @@ class CampusController extends AbstractController
     {
         $form = $this->createForm(CampusType::class, $campus);
         $form->handleRequest($request);
-        $formCampus = $this->createForm(CampusType::class, $campus);
-        $formCampus->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $campusRepository->add($campus);
@@ -86,7 +84,6 @@ class CampusController extends AbstractController
         return $this->renderForm('campus/edit.html.twig', [
             'campus' => $campus,
             'formCampus' => $form,
-            'formAjout' => $formCampus
         ]);
     }
 

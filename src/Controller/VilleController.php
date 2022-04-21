@@ -82,8 +82,7 @@ class VilleController extends AbstractController
     {
         $form = $this->createForm(VilleType::class, $ville);
         $form->handleRequest($request);
-        $formVille = $this->createForm(VilleType::class, $ville);
-        $formVille->handleRequest($request);
+
         if ($form->isSubmitted() && $form->isValid()) {
             $villeRepository->add($ville);
             return $this->redirectToRoute('app_ville_index', [], Response::HTTP_SEE_OTHER);
@@ -92,7 +91,6 @@ class VilleController extends AbstractController
         return $this->renderForm('ville/edit.html.twig', [
             'ville' => $ville,
             'form' => $form,
-            'formAjout'=>$formVille
         ]);
     }
 
