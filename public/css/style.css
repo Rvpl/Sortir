@@ -5,13 +5,10 @@ body{
 }
 .container{
     font-family: monospace;
-    /*position: absolute;*/
 }
 /*////////////////////////////////////////////////////////FORMULAIRE DE SORTIE//////////////////////////////////////////////////////////////////////////:*/
 
 .container-formSor {
-    /*position: absolute;*/
-    /*left: 30%;*/
     font-size: 15px;
     display: flex;
     justify-content: center;
@@ -43,7 +40,7 @@ form{
     width: 850px;
     padding: 60px;
     box-sizing: border-box;
-    border-radius: 10px;
+    border-radius: 13px;
     box-shadow: 0px 10px 50px -10px rgba(0,0,0,0.6);
 }
 .test{
@@ -58,13 +55,12 @@ form{
     border: none;
     outline: none;
     box-sizing: border-box;
-    /*border-top: 1px dotted black;*/
-    /*border-bottom: 2px solid black;*/
     border-bottom: 0.5px solid rgba(0, 0, 0, 0.2);
     border-left: 1px solid black;
     background-color: rgba(191, 189, 189, 0);
     border-bottom-left-radius: 3px;
     box-shadow: 0 0 0 0 black;
+    cursor: pointer;
 
 }
 @keyframes pulse {
@@ -75,15 +71,12 @@ form{
 
 
 .formSor input:hover{
-    /*background-color: rgba(191, 189, 189, 0.2);*/
     border: none;
     border-bottom: 2px solid steelblue;
-
-    transition: 0.2s;
+    transition: 0.1s;
 
 }
 .formSor input:focus{
-    /*background-color: white;*/
     background-color: rgba(191, 189, 189, 0.1);
     border-bottom-left-radius: 2px;
     border: none;
@@ -98,19 +91,22 @@ form{
     outline: none;
     border: none;
     box-sizing: border-box;
-    border-top: 1px dotted black;
-    border-bottom: 2px solid black;
-    border-radius: 6px;
+    border-bottom: 0.5px solid rgba(0, 0, 0, 0.2);
+    border-left: 1px solid black;
+    background-color: rgba(191, 189, 189, 0);
+    border-bottom-left-radius: 3px;
     box-shadow: 0 0 0 0 black;
+    cursor: pointer;
 }
 .formSor select:hover{
-    background-color: rgba(191, 189, 189, 0.2);
-    border-top: none;
-    border-bottom: 3px solid steelblue;
-    transition: 0.3s;
+    border: none;
+    border-bottom: 2px solid steelblue;
+    transition: 0.1s;
+
 }
 .formSor select:focus{
-    background-color: white;
+    background-color: rgba(191, 189, 189, 0.1);
+    border-bottom-left-radius: 2px;
     border: none;
     border-bottom: 2px solid black;
     animation: pulse 1s ease;
@@ -123,19 +119,19 @@ form{
     outline: none;
     border: none;
     box-sizing: border-box;
-    border-top: 1px dotted black;
-    border-bottom: 2px solid black;
-    border-radius: 6px;
+    border-bottom: 0.5px solid rgba(0, 0, 0, 0.2);
+    border-left: 1px solid black;
+    background-color: rgba(191, 189, 189, 0);
+    border-bottom-left-radius: 3px;
     box-shadow: 0 0 0 0 black;
+    cursor: pointer;
 }
 .formSor textarea:hover{
-    background-color: rgba(191, 189, 189, 0);
-    border-top: none;
-    border-bottom: 3px solid steelblue;
-    transition: 0.3s;
+    border: none;
+    border-bottom: 2px solid steelblue;
+    transition: 0.1s;
 }
 .formSor textarea:focus{
-    background-color: white;
     border: none;
     border-bottom: 2px solid black;
     animation: pulse 1s ease;
@@ -151,22 +147,27 @@ form{
     width: 300px;
     color: black;
     box-sizing: border-box;
-    border-radius: 6px;
     text-align: center;
-    background-color: #f1f2f3;
-    border-top: 1px dotted black;
     border-bottom: 2px solid black;
     padding: 2px 10px;
+    border-bottom: 0.5px solid rgba(0, 0, 0, 0.2);
+    border-left: 1px solid black;
+    background-color: rgba(191, 189, 189, 0);
+    border-bottom-left-radius: 3px;
 }
 .formSor p:hover{
-    border-radius: 6px;
-    border-top: none;
+    background-color: rgba(161, 166, 161, 0.3);
+    border: none;
     border-bottom: 3px solid steelblue;
-    transition: 0.3s;
+    transition: 0.1s;
 }
 
 .sub-pub-ann{
     display: flex;
+}
+.modif{
+    display: flex;
+    width: 80%;
 }
 .btn-form{
     display: block;
@@ -180,7 +181,7 @@ form{
     transition: background-color 2s, transform 1s;
 }
 .btn-form:hover{
-    background-color:green;
+    background-color:rgba(24, 150, 28, 0.5);
     font-weight: bold;
     transition: 1s;
     transform: rotate(360deg);
@@ -193,6 +194,7 @@ form{
     outline: none;
     box-sizing: border-box;
     border-radius: 6px;
+    color: #f1f2f3;
     background-color: rgba(30, 131, 247,0.6);
     transition: background-color 2s, transform 1s;
 }
@@ -231,6 +233,8 @@ form{
     background-color: rgba(224, 31, 38, 0.7);
     text-align: center;
     border-radius: 10px;
+    box-shadow: 0 0 0 0 black;
+    animation: pulse 2s infinite;
 }
 /*/////////////////////////////////////////////////////////////////////FORMULAIRE INSCRIPTION////////////////////////////////////////////////////////////////////////////*/
 
@@ -296,7 +300,7 @@ form{
     transition: background-color 2s, transform 1s;
 }
 .btn-formIns:hover{
-    background-color:green;
+    background-color:rgba(24, 150, 28, 0.5);
     font-weight: bold;
     transition: 1s;
     transform: rotate(360deg);
@@ -305,30 +309,31 @@ form{
 /*//////////////////////////////////////////////////////////////////////////PROFIL//////////////////////////////////////////////////////////////////*/
 
 .container-profil{
-    /*position: absolute;*/
-    /*left: 30%;*/
     font-size: 15px;
     margin: 6em auto;
     font-family: monospace;
     font-weight: bolder;
-    width: 800px;
+    width: 600px;
     padding: 60px;
     box-sizing: border-box;
     border-radius: 10px;
     box-shadow: 0px 10px 50px -10px rgba(0,0,0,0.6);
 }
 
-.profil{
-    margin: 0 auto;
+.test-profil{
     display: flex;
     flex-direction: column;
-    width: 830px;
+    align-items: center;
+}
+.profil{
+    width: 200px;
 }
 .profil-content{
-    margin: 5px auto;
-    width: 20em;
-    padding: 5px 10px;
+    margin: 0 auto 18px;
 }
+
+
+
 .btn-profil{
     display: flex;
     justify-content: center;
@@ -350,13 +355,6 @@ form{
     font-size: 40px;
     text-align: center;
 }
-/*.h1-profil{
-    !*position: absolute;*!
-    !*left: 45%;*!
-    margin: 0 auto;
-
-
-}*/
 .title-profil{
     text-align: center;
 
@@ -396,17 +394,24 @@ form{
     border: none;
     outline: none;
     box-sizing: border-box;
-    border-top: 1px dotted black;
-    border-bottom: 2px solid black;
-    border-radius: 6px;
-    background-color: #f1f2f3;
+    border-bottom: 0.5px solid rgba(0, 0, 0, 0.2);
+    border-left: 1px solid black;
+    background-color: rgba(191, 189, 189, 0);
+    border-bottom-left-radius: 3px;
+    box-shadow: 0 0 0 0 black;
+    cursor: pointer;
 }
 .formMofif input:hover{
-    background-color: rgba(191, 189, 189, 0.2);
-    border-bottom: 3px solid steelblue;
-    border-top: none;
-    transition: 0.3s;
-
+    border: none;
+    border-bottom: 2px solid steelblue;
+    transition: 0.1s;
+}
+.formMofif input:focus{
+    background-color: rgba(191, 189, 189, 0.1);
+    border-bottom-left-radius: 2px;
+    border: none;
+    border-bottom: 2px solid black;
+    animation: pulse 1s ease;
 }
 .formMofif select{
     display: block;
@@ -416,15 +421,24 @@ form{
     outline: none;
     border: none;
     box-sizing: border-box;
-    border-top: 1px dotted black;
-    border-bottom: 2px solid black;
-    border-radius: 6px;
+    border-bottom: 0.5px solid rgba(0, 0, 0, 0.2);
+    border-left: 1px solid black;
+    background-color: rgba(191, 189, 189, 0);
+    border-bottom-left-radius: 3px;
+    box-shadow: 0 0 0 0 black;
+    cursor: pointer;
 }
 .formMofif select:hover{
-    background-color: rgba(191, 189, 189, 0.2);
-    border-top: none;
-    border-bottom: 3px solid steelblue;
-    transition: 0.3s;
+    border: none;
+    border-bottom: 2px solid steelblue;
+    transition: 0.1s;
+}
+.formMofif select:focus{
+    background-color: rgba(191, 189, 189, 0.1);
+    border-bottom-left-radius: 2px;
+    border: none;
+    border-bottom: 2px solid black;
+    animation: pulse 1s ease;
 }
 .btn-formMofif{
     display: block;
@@ -438,7 +452,7 @@ form{
     transition: background-color 2s, transform 1s;
 }
 .btn-formMofif:hover{
-    background-color:green;
+    background-color:rgba(24, 150, 28, 0.5);
     font-weight: bold;
     transition: 1s;
     transform: rotate(360deg);
@@ -470,7 +484,27 @@ form{
     color: #f1f2f3;
     transform: rotate(360deg);
 }
-button{
+.annul-profil{
+    text-align: center;
+    width: 100px;
+    box-sizing: border-box;
+    border-radius: 6px;
+    background-color: rgba(191, 189, 189, 0.8);
+    color: #f1f2f3;
+    margin-left: 300px;
+    box-shadow: 0 0 0 black;
+}
+.annul-profil:hover{
+    text-align: center;
+    width: 75px;
+    height: 75px;
+    border-radius: 50%;
+    background-color: rgba(217, 11, 11, 0.4);
+    animation: pulse 1s ease;
+    color: #f1f2f3;
+
+}
+/*button{
     animation-name: btn;
     animation-duration: 3s;
     animation-iteration-count: infinite;
@@ -485,4 +519,4 @@ button{
         transform: rotate(360deg);
         filter: hue-rotate(360deg);
     }
-}
+}*/

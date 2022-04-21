@@ -6,5 +6,7 @@
 
     {{ include('participant/_form.html.twig', {'button_label': 'Update'}) }}
 
-    <button><a href="{{ path('app_sortie_index') }}"></a>Annuler</button>
+    <a href="{{ path('app_sortie_index') }}">
+        <button class="annul-profil">Annuler </button>
+    </a>
 {% endblock %}

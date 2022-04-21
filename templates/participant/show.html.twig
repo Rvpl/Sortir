@@ -9,16 +9,18 @@
             <h3>{{ participant.pseudo }}</h3>
         </div>
         <img src="{{ asset('img/' ~ participant.photoProfil) }}" alt="">
-        <div class="profil">
-            <div class="profil-content">Prénom : {{ participant.prenom }}</div>
-            <div class="profil-content">Nom : {{ participant.nom }}</div>
-        </div>
-        <div class="profil">
-            <div class="profil-content">Téléphone : {{ participant.telephone }}</div>
-            <div class="profil-content">Email : {{ participant.email}}</div>
-        </div>
-        <div class="profil">
-            <div class="profil-content">Campus : {{ participant.campus.nom }}</div>
+        <div class="test-profil">
+            <div class="profil">
+                <div class="profil-content">Prénom : {{ participant.prenom }}</div>
+                <div class="profil-content">Nom : {{ participant.nom }}</div>
+            </div>
+            <div class="profil">
+                <div class="profil-content">Téléphone : {{ participant.telephone }}</div>
+                <div class="profil-content">Email : {{ participant.email}}</div>
+            </div>
+            <div class="profil">
+                <div class="profil-content">Campus : {{ participant.campus.nom }}</div>
+            </div>
         </div>
     <div class="btn-profil">
     {% if not app.user %}
